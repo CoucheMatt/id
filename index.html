@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hệ thống Quản lý Mã Định danh | DN-09072026-7057</title>
+    <title>Hệ thống Quản lý Mã Định danh | DN-20260709-7057</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -442,11 +442,11 @@
             👉 Rất đơn giản: Chỉ cần <strong>gắn dãy mã định danh 4 số cuối</strong> hoặc <strong>Ghép Danh sách Khách hàng vào Tiền tố/Hậu tố</strong>. Mỗi khi cần tìm lại, bạn chỉ việc gõ từ khóa vào ô tìm kiếm là ra ngay kết quả!
         </div>
         <div class="solution-tags">
-            <span class="tag-item">⚡ Script PowerShell - 01092026-2001</span>
-            <span class="tag-item">📊 CTP - UQ Basesheet - 01092026-6186</span>
-            <span class="tag-item">🏷️ Linh Nguyen - 181209-3569</span>
-            <span class="tag-item">🏷️ Catalogue Khang Thinh - 02092026-1103.pdf</span>
-            <span class="tag-item">📁 Do Nguyen - 01082020-3569</span>
+            <span class="tag-item">⚡ Script PowerShell - 20260901-2001</span>
+            <span class="tag-item">📊 CTP - UQ Basesheet - 20260901-6186</span>
+            <span class="tag-item">🏷️ Linh Nguyen - 200918-3569</span>
+            <span class="tag-item">🏷️ Catalogue Khang Thinh - 20260902-1103.pdf</span>
+            <span class="tag-item">📁 Do Nguyen - 20200801-3569</span>
             <span class="tag-item">🔍 Search 4 số cuối ra ngay</span>
         </div>
     </div>
@@ -461,13 +461,13 @@
             <label>Cấu trúc định danh</label>
             <select id="formatSelect" class="input-control">
                 <optgroup label="Cấu trúc Đặt tên File/Thư mục">
-                    <option value="type_date_rand" selected>Chuẩn Folder/Sheets: Ngày-4SốCuối (01092026-3569)</option>
-                    <option value="datetime_unique">Ngày giờ + Ngẫu nhiên 4 số (09072026-011329-5412)</option>
+                    <option value="type_date_rand" selected>Chuẩn Folder/Sheets: NămThángNgày-4SốCuối (20260901-3569)</option>
+                    <option value="datetime_unique">NămThángNgàyGiờ + Ngẫu nhiên 4 số (20260709-011329-5412)</option>
                     <option value="custom_excel_format">Excel AlphaNum (12345678-1234-A1B2)</option>
                 </optgroup>
                 <optgroup label="Cấu trúc Logistics cũ (v5.0)">
                     <option value="type_short_dash">Logistics: Rút gọn 3 gạch (2-507658-000-01)</option>
-                    <option value="type_live_time">Thời gian thực: Ngày-GiờPhútGiây</option>
+                    <option value="type_live_time">Thời gian thực: NămThángNgày-GiờPhútGiây</option>
                     <option value="type1">Lô gốc: Batch/Date (01-260626-000000895)</option>
                     <option value="type2">ISO-SKU: Phân đoạn (2-503-957-000-01)</option>
                     <option value="type_inc">Dãy số tăng dần (Sequential)</option>
@@ -497,8 +497,8 @@
         <div class="form-group">
             <label>Chế độ ghép Danh Sách Khách Hàng</label>
             <select id="listModeSelect" class="input-control" onchange="toggleListInput()">
-                <option value="prefix_list" selected>👉 Ghép DS kiểu (Do Nguyen - 01092026-2328)</option>
-                <option value="suffix_list">👈 Ghép DS kiểu (01092026-2787 - Do Nguyen)</option>
+                <option value="prefix_list" selected>👉 Ghép DS kiểu (Do Nguyen - 20260901-2328)</option>
+                <option value="suffix_list">👈 Ghép DS kiểu (20260901-2787 - Do Nguyen)</option>
                 <option value="none">❌ Không ghép Danh sách (Chỉ tạo mã ngẫu nhiên)</option>
             </select>
         </div>
@@ -579,7 +579,7 @@ Firebase</textarea>
     <div class="output-container" id="outputContainer"></div>
 
     <div class="footer">
-        <div>© 2026 Do Nguyen | DN-09072026-7057</div>
+        <div>© 2026 Do Nguyen | DN-20260709-7057</div>
         <div class="footer-links">
             <span>Email: <a href="mailto:vongcosay@gmail.com">vongcosay@gmail.com</a></span>
             <span>•</span>
@@ -701,6 +701,12 @@ Firebase</textarea>
         const charset = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         const now = new Date();
 
+        // Định dạng YYYYMMDD
+        const yearStr = now.getFullYear().toString();
+        const monthStr = String(now.getMonth() + 1).padStart(2, '0');
+        const dayStr = String(now.getDate()).padStart(2, '0');
+        const ymdStr = yearStr + monthStr + dayStr;
+
         for (let i = 1; i <= qty; i++) {
             let code = "";
             let metaLabel = "";
@@ -719,10 +725,9 @@ Firebase</textarea>
                     break;
 
                 case 'datetime_unique':
-                    const dateStr = String(now.getDate()).padStart(2, '0') + String(now.getMonth() + 1).padStart(2, '0') + now.getFullYear();
                     const timeStr = String(now.getHours()).padStart(2, '0') + String(now.getMinutes()).padStart(2, '0') + String(now.getSeconds()).padStart(2, '0');
                     const rand4 = String(uniqueEmpIds[i - 1] !== undefined ? uniqueEmpIds[i - 1] : Math.floor(Math.random() * 10000)).padStart(4, '0');
-                    code = `${dateStr}-${timeStr}-${rand4}`;
+                    code = `${ymdStr}-${timeStr}-${rand4}`;
                     metaLabel = "DateTime + Unique4";
                     break;
 
@@ -731,16 +736,15 @@ Firebase</textarea>
                     metaLabel = "3-Dash Logistics";
                     break;
                 case 'type_date_rand':
-                    code = `${String(now.getDate()).padStart(2,'0')}${String(now.getMonth()+1).padStart(2,'0')}${now.getFullYear()}-${Math.floor(Math.random()*9000)+1000}`;
+                    code = `${ymdStr}-${Math.floor(Math.random()*9000)+1000}`;
                     metaLabel = "Date-Random";
                     break;
                 case 'type_live_time':
-                    code = `${String(now.getDate()).padStart(2,'0')}${String(now.getMonth()+1).padStart(2,'0')}${now.getFullYear()}-${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}${String((now.getSeconds()+i)%60).padStart(2,'0')}`;
+                    code = `${ymdStr}-${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}${String((now.getSeconds()+i)%60).padStart(2,'0')}`;
                     metaLabel = "Timestamp";
                     break;
                 case 'type1':
-                    const dStr = String(now.getDate()).padStart(2,'0') + String(now.getMonth()+1).padStart(2,'0') + String(now.getFullYear()).slice(-2);
-                    code = `01-${dStr}-${Math.floor(Math.random()*8999+1000)}-${Math.floor(Math.random()*8999+1000)}-${suffixIndex}`;
+                    code = `01-${ymdStr}-${Math.floor(Math.random()*8999+1000)}-${Math.floor(Math.random()*8999+1000)}-${suffixIndex}`;
                     metaLabel = "Batch-Date";
                     break;
                 case 'type2':
