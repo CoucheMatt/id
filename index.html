@@ -196,6 +196,40 @@
             letter-spacing: 0.5px;
         }
 
+        .textarea-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .textarea-tools {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-tool {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            color: var(--text-dark);
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-tool:hover {
+            background: var(--primary-light);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
         .input-control {
             background: #ffffff;
             border: 1px solid var(--border-color);
@@ -216,7 +250,7 @@
         textarea.input-control {
             font-family: 'JetBrains Mono', monospace;
             resize: vertical;
-            min-height: 120px;
+            min-height: 140px;
             line-height: 1.5;
         }
 
@@ -407,6 +441,7 @@
             .code-card { flex-direction: column; align-items: flex-start; gap: 12px; }
             .btn-copy-sm { width: 100%; text-align: center; }
             .footer-links { flex-direction: column; gap: 4px; }
+            .textarea-header { flex-direction: column; align-items: flex-start; }
         }
     </style>
 </head>
@@ -509,7 +544,13 @@
         </div>
 
         <div class="form-group full-width" id="customListGroup">
-            <label style="color: var(--primary);">📋 Dán Danh sách Khách hàng / Thương hiệu (Mỗi đối tượng 1 dòng)</label>
+            <div class="textarea-header">
+                <label style="color: var(--primary);">📋 Dán Danh sách Khách hàng / Thương hiệu (Mỗi đối tượng 1 dòng)</label>
+                <div class="textarea-tools">
+                    <button class="btn-tool" onclick="removeVietnameseAccents()" title="Chuyển tiếng Việt thành không dấu chuẩn quốc tế">🌐 Bỏ dấu Tiếng Việt</button>
+                    <button class="btn-tool" onclick="removeDuplicates()" title="Loại bỏ các dòng bị lặp lại">✨ Lọc trùng (Unique)</button>
+                </div>
+            </div>
             <textarea id="customListInput" class="input-control" placeholder="Dán danh sách của bạn vào đây...">Do Nguyen
 CTP - UQ Basesheet
 Adobe Photoshop 7.0
@@ -593,6 +634,41 @@ Firebase</textarea>
 
 <script>
     let currentCodes = [];
+
+    // HÀM LOẠI BỎ TIẾNG VIỆT CÓ DẤU (NORMALIZATION)
+    function removeVietnameseAccents() {
+        const textarea = document.getElementById('customListInput');
+        let text = textarea.value;
+        if (!text.trim()) return;
+
+        text = text
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/đ/g, "d")
+            .replace(/Đ/g, "D");
+
+        textarea.value = text;
+    }
+
+    // HÀM LỌC TRÙNG DỮ LIỆU (UNIQUE)
+    function removeDuplicates() {
+        const textarea = document.getElementById('customListInput');
+        const rawText = textarea.value;
+        if (!rawText.trim()) return;
+
+        const lines = rawText.split('\n').map(line => line.trim());
+        const uniqueLines = [];
+        const seen = new Set();
+
+        lines.forEach(line => {
+            if (line.length > 0 && !seen.has(line)) {
+                seen.add(line);
+                uniqueLines.push(line);
+            }
+        });
+
+        textarea.value = uniqueLines.join('\n');
+    }
 
     // TỰ ĐỘNG ẨN/HIỆN Ô TEXTAREA DÁN DANH SÁCH HOẶC Ô SỐ LƯỢNG
     function toggleListInput() {
