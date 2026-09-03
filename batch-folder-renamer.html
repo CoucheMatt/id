@@ -3,13 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Công Cụ Quản Lý & Đổi Tên Thư Mục Server Hàng Loạt</title>
+    
+    <!-- SEO Primary Meta Tags -->
+    <title>Công Cụ Đổi Tên Thư Mục Server Hàng Loạt | Bỏ Dấu Tiếng Việt & Chèn Mã Online</title>
+    <meta name="title" content="Công Cụ Đổi Tên Thư Mục Server Hàng Loạt | Bỏ Dấu Tiếng Việt & Chèn Mã Online">
+    <meta name="description" content="Công cụ online giúp đổi tên thư mục hàng loạt trên Windows Server / NAS. Tự động loại bỏ dấu tiếng Việt, chèn mã định danh ngẫu nhiên (UUID, ORD, Ngày tháng) và xuất file PowerShell (.ps1), BAT tiện lợi.">
+    <meta name="keywords" content="đổi tên thư mục hàng loạt, doi ten folder hang loat, chuẩn hóa tên thư mục server, bỏ dấu tiếng việt folder, script powershell đổi tên thư mục, tool đổi tên file hàng loạt, rename folder batch, quản lý thư mục windows server, viết tool theo yêu cầu">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Do Nguyen">
+    <link rel="canonical" href="https://id.donguyen.net/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://id.donguyen.net/">
+    <meta property="og:title" content="Công Cụ Đổi Tên Thư Mục Server Hàng Loạt | Bỏ Dấu Tiếng Việt & Chèn Mã">
+    <meta property="og:description" content="Tự động hóa chuẩn hóa tên thư mục server, bỏ dấu tiếng Việt, chèn chuỗi ngẫu nhiên. Xuất lệnh CMD, file .BAT và .PS1 dùng ngay!">
+    <meta property="og:image" content="https://id.donguyen.net/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://id.donguyen.net/">
+    <meta property="twitter:title" content="Công Cụ Đổi Tên Thư Mục Server Hàng Loạt">
+    <meta property="twitter:description" content="Công cụ online đổi tên thư mục hàng loạt, bỏ dấu tiếng Việt, xuất file script PowerShell nhanh chóng.">
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Công Cụ Đổi Tên Thư Mục Server Hàng Loạt",
+      "url": "https://id.donguyen.net",
+      "description": "Công cụ web tạo mã script PowerShell/BAT hỗ trợ chuẩn hóa và đổi tên thư mục hàng loạt trên Server Windows.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Windows",
+      "author": {
+        "@type": "Person",
+        "name": "Do Nguyen",
+        "email": "vongcosay@gmail.com"
+      }
+    }
+    </script>
+
     <style>
         :root {
             --primary-color: #2563eb;
             --primary-hover: #1d4ed8;
             --success-color: #10b981;
             --success-hover: #059669;
+            --accent-color: #f59e0b;
             --dark-color: #0f172a;
             --bg-color: #f8fafc;
             --card-bg: #ffffff;
@@ -47,16 +88,16 @@
             margin-bottom: 24px;
         }
 
-        .header h2 {
+        .header h1 {
             color: var(--dark-color);
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 700;
             margin-bottom: 6px;
         }
 
         .header p {
             color: #64748b;
-            font-size: 13.5px;
+            font-size: 14px;
         }
 
         /* KHU VỰC MINH HỌA CẤU TRÚC THƯ MỤC */
@@ -156,6 +197,10 @@
             background-color: #fff;
         }
 
+        .form-group {
+            margin-bottom: 15px;
+        }
+
         .btn-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -212,6 +257,106 @@
             overflow-y: auto;
         }
 
+        /* KHU VỰC QUẢNG CÁO DỊCH VỤ TOOL */
+        .ad-banner {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border: 1px solid #bfdbfe;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .ad-banner-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1e40af;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ad-banner-desc {
+            font-size: 13.5px;
+            color: #1e3a8a;
+            line-height: 1.5;
+        }
+
+        .ad-banner-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 4px;
+        }
+
+        .tag {
+            background: #ffffff;
+            color: #2563eb;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11.5px;
+            border: 1px solid #93c5fd;
+        }
+
+        .ad-contact-btn {
+            display: inline-block;
+            align-self: flex-start;
+            margin-top: 6px;
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .ad-contact-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* KHU VỰC THÔNG TIN NGÂN HÀNG (DONATE / DEMO) */
+        .bank-section {
+            background: #fffbe2;
+            border: 1px solid #fef08a;
+            border-radius: 12px;
+            padding: 18px;
+            margin: 20px 0;
+        }
+
+        .bank-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #854d0e;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .bank-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+        }
+
+        .bank-card {
+            background: #ffffff;
+            border: 1px solid #fef08a;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 12.5px;
+            line-height: 1.6;
+        }
+
+        .bank-card strong {
+            color: #713f12;
+        }
+
         /* THÔNG TIN FOOTER BẢN QUYỀN */
         .footer-info {
             margin-top: 30px;
@@ -238,8 +383,8 @@
 
 <div class="app-container">
     <div class="header">
-        <h2>Công Cụ Đổi Tên Thư Mục Server Hàng Loạt</h2>
-        <p>Chuẩn hóa tên thư mục, loại bỏ tiếng Việt có dấu & chèn mã nhận dạng ngẫu nhiên</p>
+        <h1>Công Cụ Đổi Tên Thư Mục Server Hàng Loạt</h1>
+        <p>Chuẩn hóa tên thư mục, loại bỏ tiếng Việt có dấu & chèn mã nhận dạng ngẫu nhiên chuẩn SEO</p>
     </div>
 
     <!-- KHU VỰC TRUYỀN TẢI CẤU TRÚC THƯ MỤC MINH HỌA -->
@@ -324,6 +469,52 @@
     <div class="form-group">
         <label>Kết quả Mã lệnh / Đường dẫn mẫu:</label>
         <div id="outputDisplay" class="code-box">Bấm "Xem Thử Kết Quả" để sinh mã ngẫu nhiên mới...</div>
+    </div>
+
+    <!-- BANNER QUẢNG CÁO DỊCH VỤ NHẬN VIẾT TOOL -->
+    <div class="ad-banner">
+        <div class="ad-banner-title">
+            🚀 NHẬN VIẾT TOOL / PHẦN MỀM / SCRIPT THEO YÊU CẦU
+        </div>
+        <div class="ad-banner-desc">
+            Bạn cần tự động hóa công việc văn phòng, xử lý dữ liệu Excel/Database lớn, Tool quét dữ liệu Website, WordPress Plugin, hoặc ứng dụng VB.NET / C# / PowerShell chuyên biệt cho doanh nghiệp? Chúng tôi nhận lập trình giải pháp tối ưu, chính xác và nhanh chóng!
+        </div>
+        <div class="ad-banner-tags">
+            <span class="tag">#ToolOffice</span>
+            <span class="tag">#PowerShellScript</span>
+            <span class="tag">#AutomationTool</span>
+            <span class="tag">#VBNET_CSharp</span>
+            <span class="tag">#WordPressPlugin</span>
+            <span class="tag">#XuLyDuLieuHangLoat</span>
+        </div>
+        <a href="mailto:vongcosay@gmail.com?subject=Lien%20He%20Viet%20Tool%20Theo%20Yeu%20Cau" class="ad-contact-btn">📩 Liên Hệ Đặt Hàng Ngay</a>
+    </div>
+
+    <!-- KHU VỰC STK NGÂN HÀNG DEMO / DONATE -->
+    <div class="bank-section">
+        <div class="bank-title">
+            ☕ ỦNG HỘ TÁC GIẢ / THÔNG TIN CHUYỂN KHỎAN DEMO
+        </div>
+        <div class="bank-grid">
+            <div class="bank-card">
+                <strong>MB BANK (Quân Đội)</strong><br>
+                • STK: <code>999999999999</code><br>
+                • Chủ TK: NGUYEN VAN DO<br>
+                • Chi nhánh: TP.HCM
+            </div>
+            <div class="bank-card">
+                <strong>VIETCOMBANK</strong><br>
+                • STK: <code>0071000000000</code><br>
+                • Chủ TK: NGUYEN VAN DO<br>
+                • Chi nhánh: Tân Bình
+            </div>
+            <div class="bank-card">
+                <strong>VÍ MOMO / ZALOPAY</strong><br>
+                • SĐT: <code>0900000000</code><br>
+                • NGUYEN VAN DO<br>
+                • Nội dung: <i>Donate Tool Doi Ten</i>
+            </div>
+        </div>
     </div>
 
     <!-- KHU VỰC THÔNG TIN BẢN QUYỀN & LIÊN HỆ -->
@@ -488,7 +679,7 @@
             const fmt = suffixFormat.value;
 
             return `$paths = @(${pathArrayStr});
-$map = @{'à'='a';'á'='a';'ả'='a';'ã'='a';'ạ'='a';'ă'='a';'ằ'='a';'ắ'='a';'ẳ'='a';'ẵ'='a';'ặ'='a';'â'='a';'ầ'='a';'ấ'='a';'ẩ'='a';'ẫ'='a';'ậ'='a';'đ'='d';'è'='e';'é'='e';'ẻ'='e';'ẽ'='e';'ẹ'='e';'ê'='e';'ề'='e';'ế'='e';'ể'='e';'ễ'='e';'ệ'='e';'ì'='i';'í'='i';'ỉ'='i';'ĩ'='i';'ị'='i';'ò'='o';'ó'='o';'ỏ'='o';'õ'='o';'ọ'='o';'ô'='o';'ồ'='o';'ố'='o';'ổ'='o';'ỗ'='o';'ộ'='o';'ơ'='o';'ờ'='o';'ớ'='o';'ở'='o';'ỡ'='o';'ợ'='o';'ù'='u';'ú'='u';'ủ'='u';'ũ'='u';'ụ'='u';'ư'='u';'ừ'='u';'ứ'='u';'ử'='u';'ữ'='u';'ự'='u';'ỳ'='y';'ý'='y';'ỷ'='y';'ỹ'='y';'ỵ'='y';'À'='A';'Á'='A';'Ả'='A';'Ã'='A';'Ạ'='A';'Ă'='A';'Ằ'='A';'Ắ'='A';'Ẳ'='A';'Ẵ'='A';'Ặ'='A';'Â'='A';'Ầ'='A';'Ấ'='A';'Ẩ'='A';'Ẫ'='A';'Ậ'='A';'Đ'='D';'È'='E';'É'='E';'Ẻ'='E';'Ẽ'='E';'Ẹ'='E';'Ê'='E';'Ề'='E';'Ế'='E';'Ể'='E';'Ễ'='E';'Ệ'='E';'Ì'='I';'Í'='I';'Ỉ'='I';'Ĩ'='I';'Ị'='I';'Ò'='O';'Ó'='O';'Ỏ'='O';'Õ'='O';'Ọ'='O';'Ô'='O';'Ồ'='O';'Ố'='O';'Ổ'='O';'Ỗ'='O';'Ộ'='O';'Ơ'='O';'Ờ'='O';'Ớ'='O';'Ở'='O';'Ỡ'='O';'Ợ'='O';'Ù'='U';'Ú'='U';'Ủ'='U';'Ũ'='U';'Ụ'='U';'Ư'='U';'Ừ'='U';'Ứ'='U';'Ử'='U';'Ữ'='U';'Ự'='U';'Ỳ'='Y';'Ý'='Y';'Ỷ'='Y';'Ỹ'='Y';'Ỵ'='Y'};
+$map = @{'à'='a';'á'='a';'ả'='a';'ã'='a';'ạ'='a';'ă'='a';'ằ'='a';'ắ'='a';'ẳ'='a';'ẵ'='a';'ặ'='a';'â'='a';'ầ'='a';'ấ'='a';'ẩ'='a';'ẫ'='a';'ậ'='a';'đ'='d';'è'='e';'é'='e';'ẻ'='e';'ẽ'='e';'ẹ'='e';'ê'='e';'ề'='e';'ế'='e';'ể'='e';'ễ'='e';'ệ'='e';'ì'='i';'í'='i';'ỉ'='i';'ĩ'='i';'ị'='i';'ò'='o';'ó'='o';'ỏ'='o';'õ'='o';'ọ'='o';'ô'='o';'ồ'='o';'ố'='o';'ổ'='o';'ỗ'='o';'ơ'='o';'ờ'='o';'ớ'='o';'ở'='o';'ỡ'='o';'ợ'='o';'ù'='u';'ú'='u';'ủ'='u';'ũ'='u';'ụ'='u';'ư'='u';'ừ'='u';'ứ'='u';'ử'='u';'ữ'='u';'ự'='u';'ỳ'='y';'ý'='y';'ỷ'='y';'ỹ'='y';'ỵ'='y';'À'='A';'Á'='A';'Ả'='A';'Ã'='A';'Ạ'='A';'Ă'='A';'Ằ'='A';'Ắ'='A';'Ẳ'='A';'Ẵ'='A';'Ặ'='A';'Â'='A';'Ầ'='A';'Ấ'='A';'Ẩ'='A';'Ẫ'='A';'Ậ'='A';'Đ'='D';'È'='E';'É'='E';'Ẻ'='E';'Ẽ'='E';'Ẹ'='E';'Ê'='E';'Ề'='E';'Ế'='E';'Ể'='E';'Ễ'='E';'Ệ'='E';'Ì'='I';'Í'='I';'Ỉ'='I';'Ĩ'='I';'Ị'='I';'Ò'='O';'Ó'='O';'Ỏ'='O';'Õ'='O';'Ọ'='O';'Ô'='O';'Ồ'='O';'Ố'='O';'Ổ'='O';'Ỗ'='O';'Ộ'='O';'Ơ'='O';'Ờ'='O';'Ớ'='O';'Ở'='O';'Ỡ'='O';'Ợ'='O';'Ù'='U';'Ú'='U';'Ủ'='U';'Ũ'='U';'Ụ'='U';'Ư'='U';'Ừ'='U';'Ứ'='U';'Ử'='U';'Ữ'='U';'Ự'='U';'Ỳ'='Y';'Ý'='Y';'Ỷ'='Y';'Ỹ'='Y';'Ỵ'='Y'};
 function Get-RandomStr($len) { -join ((48..57) + (65..90) | Get-Random -Count $len | ForEach-Object {[char]$_}) }
 
 foreach ($p in $paths) {
