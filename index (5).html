@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Công Cụ Quản Lý & Đổi Tên Thư Mục Server Hàng Loạt</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --success-color: #10b981;
+            --success-hover: #059669;
+            --dark-color: #0f172a;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --text-color: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 30px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .app-container {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 950px;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h2 {
+            color: var(--dark-color);
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 13.5px;
+        }
+
+        /* KHU VỰC MINH HỌA CẤU TRÚC THƯ MỤC */
+        .tree-container {
+            background: #f1f5f9;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .tree-title {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tree-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 12px;
+        }
+
+        .tree-card {
+            background: #ffffff;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            font-family: 'Consolas', monospace;
+            font-size: 12.5px;
+            line-height: 1.6;
+        }
+
+        .tree-card strong {
+            display: block;
+            margin-bottom: 4px;
+            color: var(--primary-color);
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .folder { color: #d97706; }
+        .folder-new { color: #059669; font-weight: bold; }
+
+        /* CẤU HÌNH TÙY CHỌN */
+        .grid-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-weight: 600;
+            color: var(--dark-color);
+            font-size: 13px;
+        }
+
+        select, input[type="text"] {
+            width: 100%;
+            padding: 9px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 13px;
+            outline: none;
+            background: #fff;
+        }
+
+        textarea {
+            width: 100%;
+            height: 130px;
+            padding: 12px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 13px;
+            font-family: 'Consolas', monospace;
+            outline: none;
+            resize: vertical;
+            background-color: #fafafa;
+        }
+
+        textarea:focus {
+            border-color: var(--primary-color);
+            background-color: #fff;
+        }
+
+        .btn-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .btn {
+            padding: 11px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary { background-color: var(--primary-color); color: white; }
+        .btn-primary:hover { background-color: var(--primary-hover); }
+
+        .btn-success { background-color: var(--success-color); color: white; }
+        .btn-success:hover { background-color: var(--success-hover); }
+
+        .btn-dark { background-color: var(--dark-color); color: white; }
+        .btn-dark:hover { background-color: #1e293b; }
+
+        .toast {
+            display: none;
+            background-color: #d1fae5;
+            color: #065f46;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            border: 1px solid #a7f3d0;
+        }
+
+        .code-box {
+            background-color: var(--dark-color);
+            color: #f1f5f9;
+            padding: 16px;
+            border-radius: 10px;
+            font-family: 'Consolas', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            word-break: break-all;
+            white-space: pre-wrap;
+            max-height: 230px;
+            overflow-y: auto;
+        }
+
+        /* THÔNG TIN FOOTER BẢN QUYỀN */
+        .footer-info {
+            margin-top: 30px;
+            padding-top: 18px;
+            border-top: 1px dashed var(--border-color);
+            text-align: center;
+            font-size: 12.5px;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .footer-info a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer-info a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="header">
+        <h2>Công Cụ Đổi Tên Thư Mục Server Hàng Loạt</h2>
+        <p>Chuẩn hóa tên thư mục, loại bỏ tiếng Việt có dấu & chèn mã nhận dạng ngẫu nhiên</p>
+    </div>
+
+    <!-- KHU VỰC TRUYỀN TẢI CẤU TRÚC THƯ MỤC MINH HỌA -->
+    <div class="tree-container">
+        <div class="tree-title">📌 Minh Họa Cấu Trúc Thư Mục Thực Tế (Thay đổi ngẫu nhiên mỗi lần tạo)</div>
+        <div class="tree-grid">
+            <div class="tree-card">
+                <strong>❌ Cấu trúc gốc (Có dấu / Chưa có mã):</strong>
+                <span class="folder">📁 \\Server\Phòng Ban</span><br>
+                ├── <span class="folder">📁 Đô Nguyễn</span><br>
+                ├── <span class="folder">📁 Kế Toán</span><br>
+                └── <span class="folder">📁 Tài Liệu Cty</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;└── <span class="folder">📁 Hồ Sơ Lương</span>
+            </div>
+            <div class="tree-card">
+                <strong>✅ Kết quả mẫu hiện tại:</strong>
+                <span id="treePreview">
+                    <!-- Javascript sẽ tự động Render vào đây -->
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- CẤU HÌNH TÙY CHỌN -->
+    <div class="grid-options">
+        <div class="option-group">
+            <label for="accentOption">1. Xử lý dấu tiếng Việt:</label>
+            <select id="accentOption">
+                <option value="remove">Bỏ dấu tiếng Việt (Có dấu → Không dấu)</option>
+                <option value="keep">Giữ nguyên có dấu</option>
+            </select>
+        </div>
+
+        <div class="option-group">
+            <label for="enableInsert">2. Chế độ chèn chuỗi/Mã:</label>
+            <select id="enableInsert">
+                <option value="yes">BẬT (Có chèn thêm chuỗi/mã)</option>
+                <option value="no">TẮT (Không chèn thêm - Chỉ đổi tên/bỏ dấu)</option>
+            </select>
+        </div>
+
+        <div class="option-group">
+            <label for="positionOption">3. Vị trí chèn:</label>
+            <select id="positionOption">
+                <option value="after">Chèn vào SAU tên thư mục</option>
+                <option value="before">Chèn vào TRƯỚC tên thư mục</option>
+            </select>
+        </div>
+
+        <div class="option-group">
+            <label for="suffixFormat">4. Kiểu chuỗi/Mã chèn thêm:</label>
+            <select id="suffixFormat">
+                <option value="date_rand"> - YYYYMMDD-RAND (VD: - 20260903-2001)</option>
+                <option value="uuid_short"> - 8Số-4Số-4KýTự (VD: - 46787266-2470-F7HX)</option>
+                <option value="code_parts"> - X-XXX-XXX-XXX-XX (VD: - 2-597-303-000-00)</option>
+                <option value="ord_date"> - ORD-YYYYMMDD-RAND (VD: - ORD-20260903-UQY8DQ)</option>
+                <option value="ord_short"> - ORD-RAND (VD: - ORD-3XZV80)</option>
+                <option value="custom">Nhập chuỗi tùy chỉnh...</option>
+            </select>
+        </div>
+
+        <div class="option-group" style="grid-column: span 2;">
+            <label for="customText">5. Chuỗi tùy chỉnh (Nếu chọn nhập chuỗi tùy chỉnh):</label>
+            <input type="text" id="customText" placeholder="VD: - Backup" disabled>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="inputPaths">Danh sách đường dẫn (Mỗi đường dẫn 1 dòng):</label>
+        <textarea id="inputPaths"></textarea>
+    </div>
+
+    <div class="btn-grid">
+        <button id="btnPreview" class="btn btn-primary">🔄 Xem Thử Kết Quả (Mã Mới)</button>
+        <button id="btnCopyCMD" class="btn btn-success">📋 Copy Lệnh CMD</button>
+        <button id="btnDownloadBat" class="btn btn-dark">💾 Tải File .BAT</button>
+        <button id="btnDownloadPs1" class="btn btn-dark">💾 Tải File .PS1</button>
+    </div>
+
+    <div id="toast" class="toast">✓ Đã sao chép lệnh CMD vào Clipboard!</div>
+
+    <div class="form-group">
+        <label>Kết quả Mã lệnh / Đường dẫn mẫu:</label>
+        <div id="outputDisplay" class="code-box">Bấm "Xem Thử Kết Quả" để sinh mã ngẫu nhiên mới...</div>
+    </div>
+
+    <!-- KHU VỰC THÔNG TIN BẢN QUYỀN & LIÊN HỆ -->
+    <div class="footer-info">
+        © 2026 Do Nguyen | DN-20260709-7057<br>
+        Email: <a href="mailto:vongcosay@gmail.com">vongcosay@gmail.com</a> • Web: <a href="https://id.donguyen.net" target="_blank">id.donguyen.net</a>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        const samplePaths = [
+            "\\\\Server\\Phòng Ban\\Script PowerShell",
+            "\\\\Server\\Phòng Ban\\CTP - UQ Basesheet",
+            "\\\\192.168.1.10\\Phòng Ban\\Linh Nguyen",
+            "\\\\192.168.1.10\\Phòng Ban\\Tran vach Panel",
+            "D:\\Tài Liệu Cty\\Catalogue Khang Thinh",
+            "D:\\Tài Liệu Cty\\To roi A4 Khang Thinh",
+            "\\\\Server01\\Shared\\Do Nguyen"
+        ];
+
+        const inputPaths = document.getElementById('inputPaths');
+        inputPaths.value = samplePaths.join('\n');
+
+        const enableInsert = document.getElementById('enableInsert');
+        const positionOption = document.getElementById('positionOption');
+        const suffixFormat = document.getElementById('suffixFormat');
+        const customText = document.getElementById('customText');
+        const outputDisplay = document.getElementById('outputDisplay');
+        const treePreview = document.getElementById('treePreview');
+        const toast = document.getElementById('toast');
+
+        function toggleInsertControls() {
+            const isEnabled = enableInsert.value === 'yes';
+            positionOption.disabled = !isEnabled;
+            suffixFormat.disabled = !isEnabled;
+            customText.disabled = !isEnabled || suffixFormat.value !== 'custom';
+        }
+
+        enableInsert.addEventListener('change', toggleInsertControls);
+        suffixFormat.addEventListener('change', toggleInsertControls);
+
+        function removeVietnameseTones(str) {
+            return str
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/đ/g, 'd')
+                .replace(/Đ/g, 'D');
+        }
+
+        function normalizePath(path) {
+            let p = path.trim().replace(/\//g, '\\');
+            p = p.replace(/\\+/g, '\\');
+            if (path.trim().startsWith('\\\\') || path.trim().startsWith('//')) {
+                p = '\\\\' + p.replace(/^\\+/, '');
+            }
+            return p;
+        }
+
+        function getPathList() {
+            return inputPaths.value
+                .split('\n')
+                .map(line => normalizePath(line))
+                .filter(line => line.length > 0);
+        }
+
+        function getRandomString(length) {
+            const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+
+        function generateRandomTag() {
+            if (enableInsert.value === 'no') return '';
+
+            const now = new Date();
+            const yyyy = now.getFullYear();
+            const mm = String(now.getMonth() + 1).padStart(2, '0');
+            const dd = String(now.getDate()).padStart(2, '0');
+            const dateStr = `${yyyy}${mm}${dd}`;
+
+            const fmt = suffixFormat.value;
+
+            if (fmt === 'date_rand') {
+                return ` - ${dateStr}-${Math.floor(1000 + Math.random() * 9000)}`;
+            }
+            if (fmt === 'uuid_short') {
+                return ` - ${Math.floor(10000000 + Math.random() * 90000000)}-${Math.floor(1000 + Math.random() * 9000)}-${getRandomString(4)}`;
+            }
+            if (fmt === 'code_parts') {
+                return ` - ${Math.floor(1+Math.random()*9)}-${Math.floor(100+Math.random()*899)}-${Math.floor(100+Math.random()*899)}-000-00`;
+            }
+            if (fmt === 'ord_date') {
+                return ` - ORD-${dateStr}-${getRandomString(6)}`;
+            }
+            if (fmt === 'ord_short') {
+                return ` - ORD-${getRandomString(6)}`;
+            }
+            if (fmt === 'custom') {
+                return customText.value ? ` ${customText.value}` : '';
+            }
+            return '';
+        }
+
+        function formatName(name) {
+            const removeAccents = document.getElementById('accentOption').value === 'remove';
+            const isInsert = enableInsert.value === 'yes';
+            const isBefore = document.getElementById('positionOption').value === 'before';
+
+            let cleanName = removeAccents ? removeVietnameseTones(name) : name;
+            const tag = generateRandomTag();
+            
+            return isInsert ? (isBefore ? (tag.trim() + " " + cleanName) : (cleanName + tag)) : cleanName;
+        }
+
+        function updateTreeIllustration() {
+            const f1 = formatName("Do Nguyen");
+            const f2 = formatName("Ke Toan");
+            const f3 = formatName("Tai Lieu Cty");
+            const f4 = formatName("Ho So Luong");
+
+            treePreview.innerHTML = `
+                <span class="folder">📁 \\Server\\Phòng Ban</span><br>
+                ├── <span class="folder-new">📁 ${f1}</span><br>
+                ├── <span class="folder-new">📁 ${f2}</span><br>
+                └── <span class="folder-new">📁 ${f3}</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;└── <span class="folder-new">📁 ${f4}</span>
+            `;
+        }
+
+        function generatePreview() {
+            const paths = getPathList();
+            if (paths.length === 0) {
+                outputDisplay.innerText = 'Vui lòng nhập đường dẫn!';
+                return;
+            }
+
+            updateTreeIllustration();
+
+            const previewText = paths.map(p => {
+                const parts = p.split('\\');
+                let lastFolder = parts.pop() || parts.pop();
+                const newFolder = formatName(lastFolder);
+                
+                return `${p}\n  ➔ ${parts.join('\\')}\\${newFolder}`;
+            }).join('\n\n');
+
+            outputDisplay.innerText = "=== KẾT QUẢ XEM THỬ MẪU (MỖI LẦN BẤM SẼ RA MÃ MỚI HOÀN TOÀN) ===\n\n" + previewText;
+        }
+
+        function generatePowerShellCode(paths) {
+            if (paths.length === 0) paths = ['\\\\Server\\Phòng Ban'];
+            const pathArrayStr = paths.map(p => `'${p}'`).join(',');
+
+            const removeAccents = document.getElementById('accentOption').value === 'remove';
+            const isInsert = enableInsert.value === 'yes';
+            const isBefore = document.getElementById('positionOption').value === 'before';
+            const fmt = suffixFormat.value;
+
+            return `$paths = @(${pathArrayStr});
+$map = @{'à'='a';'á'='a';'ả'='a';'ã'='a';'ạ'='a';'ă'='a';'ằ'='a';'ắ'='a';'ẳ'='a';'ẵ'='a';'ặ'='a';'â'='a';'ầ'='a';'ấ'='a';'ẩ'='a';'ẫ'='a';'ậ'='a';'đ'='d';'è'='e';'é'='e';'ẻ'='e';'ẽ'='e';'ẹ'='e';'ê'='e';'ề'='e';'ế'='e';'ể'='e';'ễ'='e';'ệ'='e';'ì'='i';'í'='i';'ỉ'='i';'ĩ'='i';'ị'='i';'ò'='o';'ó'='o';'ỏ'='o';'õ'='o';'ọ'='o';'ô'='o';'ồ'='o';'ố'='o';'ổ'='o';'ỗ'='o';'ộ'='o';'ơ'='o';'ờ'='o';'ớ'='o';'ở'='o';'ỡ'='o';'ợ'='o';'ù'='u';'ú'='u';'ủ'='u';'ũ'='u';'ụ'='u';'ư'='u';'ừ'='u';'ứ'='u';'ử'='u';'ữ'='u';'ự'='u';'ỳ'='y';'ý'='y';'ỷ'='y';'ỹ'='y';'ỵ'='y';'À'='A';'Á'='A';'Ả'='A';'Ã'='A';'Ạ'='A';'Ă'='A';'Ằ'='A';'Ắ'='A';'Ẳ'='A';'Ẵ'='A';'Ặ'='A';'Â'='A';'Ầ'='A';'Ấ'='A';'Ẩ'='A';'Ẫ'='A';'Ậ'='A';'Đ'='D';'È'='E';'É'='E';'Ẻ'='E';'Ẽ'='E';'Ẹ'='E';'Ê'='E';'Ề'='E';'Ế'='E';'Ể'='E';'Ễ'='E';'Ệ'='E';'Ì'='I';'Í'='I';'Ỉ'='I';'Ĩ'='I';'Ị'='I';'Ò'='O';'Ó'='O';'Ỏ'='O';'Õ'='O';'Ọ'='O';'Ô'='O';'Ồ'='O';'Ố'='O';'Ổ'='O';'Ỗ'='O';'Ộ'='O';'Ơ'='O';'Ờ'='O';'Ớ'='O';'Ở'='O';'Ỡ'='O';'Ợ'='O';'Ù'='U';'Ú'='U';'Ủ'='U';'Ũ'='U';'Ụ'='U';'Ư'='U';'Ừ'='U';'Ứ'='U';'Ử'='U';'Ữ'='U';'Ự'='U';'Ỳ'='Y';'Ý'='Y';'Ỷ'='Y';'Ỹ'='Y';'Ỵ'='Y'};
+function Get-RandomStr($len) { -join ((48..57) + (65..90) | Get-Random -Count $len | ForEach-Object {[char]$_}) }
+
+foreach ($p in $paths) {
+    if (Test-Path $p) {
+        Get-ChildItem -Path $p -Recurse -Directory | Sort-Object {$_.FullName.Length} -Descending | ForEach-Object {
+            $baseName = $_.Name;
+            ${removeAccents ? 'foreach ($k in $map.Keys) { $baseName = $baseName.Replace($k, $map[$k]) };' : ''}
+            $tag = "";
+            ${isInsert && fmt === 'date_rand' ? '$tag = " - " + (Get-Date -Format "yyyyMMdd") + "-" + (Get-Random -Minimum 1000 -Maximum 9999);' : ''}
+            ${isInsert && fmt === 'uuid_short' ? '$tag = " - " + (Get-Random -Minimum 10000000 -Maximum 99999999) + "-" + (Get-Random -Minimum 1000 -Maximum 9999) + "-" + (Get-RandomStr 4);' : ''}
+            ${isInsert && fmt === 'code_parts' ? '$tag = " - " + (Get-Random -Minimum 1 -Maximum 9) + "-" + (Get-Random -Minimum 100 -Maximum 899) + "-" + (Get-Random -Minimum 100 -Maximum 899) + "-000-00";' : ''}
+            ${isInsert && fmt === 'ord_date' ? '$tag = " - ORD-" + (Get-Date -Format "yyyyMMdd") + "-" + (Get-RandomStr 6);' : ''}
+            ${isInsert && fmt === 'ord_short' ? '$tag = " - ORD-" + (Get-RandomStr 6);' : ''}
+            ${isInsert && fmt === 'custom' ? '$tag = " ' + (customText.value || '') + '";' : ''}
+            
+            $newName = ${isInsert ? (isBefore ? '$tag + $baseName' : '$baseName + $tag') : '$baseName'};
+            if ($newName -ne $_.Name) { Rename-Item -Path $_.FullName -NewName $newName -ErrorAction SilentlyContinue }
+        }
+    }
+}`;
+        }
+
+        function downloadFile(filename, text) {
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            element.setAttribute('download', filename);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        document.getElementById('btnPreview').addEventListener('click', generatePreview);
+
+        document.getElementById('btnCopyCMD').addEventListener('click', function() {
+            const paths = getPathList();
+            const psCode = generatePowerShellCode(paths).replace(/\r?\n/g, ' ');
+            const cmdCode = `powershell -NoProfile -ExecutionPolicy Bypass -Command "${psCode.replace(/"/g, '\"')}"`;
+
+            outputDisplay.innerText = cmdCode;
+            navigator.clipboard.writeText(cmdCode).then(() => {
+                toast.style.display = 'block';
+                setTimeout(() => toast.style.display = 'none', 3000);
+            });
+        });
+
+        document.getElementById('btnDownloadBat').addEventListener('click', function() {
+            const paths = getPathList();
+            const psCode = generatePowerShellCode(paths);
+            const batContent = `@echo off\r\nchcp 65001 > nul\r\necho Dang xu ly doi ten thu muc hang loat...\r\npowershell -NoProfile -ExecutionPolicy Bypass -Command "${psCode.replace(/\r?\n/g, ' ')}"\r\necho Hoan thanh!\r\npause`;
+            downloadFile('DoiTenThuMuc.bat', batContent);
+        });
+
+        document.getElementById('btnDownloadPs1').addEventListener('click', function() {
+            const paths = getPathList();
+            const psCode = generatePowerShellCode(paths);
+            downloadFile('DoiTenThuMuc.ps1', psCode);
+        });
+
+        generatePreview();
+    });
+</script>
+
+</body>
+</html>
