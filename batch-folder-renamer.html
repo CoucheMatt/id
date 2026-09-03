@@ -7,8 +7,8 @@
     <!-- SEO Primary Meta Tags -->
     <title>Công Cụ Đổi Tên Thư Mục Server Hàng Loạt | Bỏ Dấu Tiếng Việt & Chèn Mã Online</title>
     <meta name="title" content="Công Cụ Đổi Tên Thư Mục Server Hàng Loạt | Bỏ Dấu Tiếng Việt & Chèn Mã Online">
-    <meta name="description" content="Công cụ online giúp đổi tên thư mục hàng loạt trên Windows Server / NAS. Tự động loại bỏ dấu tiếng Việt, chèn mã định danh ngẫu nhiên (UUID, ORD, Ngày tháng) và xuất file PowerShell (.ps1), BAT tiện lợi.">
-    <meta name="keywords" content="đổi tên thư mục hàng loạt, doi ten folder hang loat, chuẩn hóa tên thư mục server, bỏ dấu tiếng việt folder, script powershell đổi tên thư mục, tool đổi tên file hàng loạt, rename folder batch, quản lý thư mục windows server, viết tool theo yêu cầu">
+    <meta name="description" content="Công cụ online giúp đổi tên thư mục hàng loạt trên Windows Server / NAS. Tự động loại bỏ dấu tiếng Việt, chèn mã định danh ngẫu nhiên (UUID, ORD, Ngày tháng) và xuất file PowerShell (.ps1), BAT tiện lợi. Nhận viết Google Apps Script, Excel VBA, Macro Google Sheets theo yêu cầu.">
+    <meta name="keywords" content="đổi tên thư mục hàng loạt, doi ten folder hang loat, chuẩn hóa tên thư mục server, bỏ dấu tiếng việt folder, script powershell đổi tên thư mục, tool đổi tên file hàng loạt, rename folder batch, quản lý thư mục windows server, viết tool theo yêu cầu, google apps script, webapps google script, macro google sheets, excel vba, lap trinh vba excel">
     <meta name="robots" content="index, follow">
     <meta name="author" content="Do Nguyen">
     <link rel="canonical" href="https://id.donguyen.net/">
@@ -17,7 +17,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://id.donguyen.net/">
     <meta property="og:title" content="Công Cụ Đổi Tên Thư Mục Server Hàng Loạt | Bỏ Dấu Tiếng Việt & Chèn Mã">
-    <meta property="og:description" content="Tự động hóa chuẩn hóa tên thư mục server, bỏ dấu tiếng Việt, chèn chuỗi ngẫu nhiên. Xuất lệnh CMD, file .BAT và .PS1 dùng ngay!">
+    <meta property="og:description" content="Tự động hóa chuẩn hóa tên thư mục server, bỏ dấu tiếng Việt, chèn chuỗi ngẫu nhiên. Xuất lệnh CMD, file .BAT, .PS1, thiết kế Google Apps Script, Excel VBA & Macro Google Sheets theo yêu cầu!">
     <meta property="og:image" content="https://id.donguyen.net/og-image.jpg">
 
     <!-- Twitter -->
@@ -68,19 +68,21 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
-            padding: 30px 20px;
+            padding: 20px 12px;
             display: flex;
             justify-content: center;
+            overflow-x: hidden;
         }
 
         .app-container {
             background: var(--card-bg);
             width: 100%;
             max-width: 950px;
-            padding: 30px;
+            padding: 24px;
             border-radius: 16px;
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
             border: 1px solid var(--border-color);
+            overflow: hidden;
         }
 
         .header {
@@ -90,14 +92,15 @@
 
         .header h1 {
             color: var(--dark-color);
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
             margin-bottom: 6px;
+            line-height: 1.3;
         }
 
         .header p {
             color: #64748b;
-            font-size: 14px;
+            font-size: 13.5px;
         }
 
         /* KHU VỰC MINH HỌA CẤU TRÚC THƯ MỤC */
@@ -105,12 +108,12 @@
             background: #f1f5f9;
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 16px;
+            padding: 14px;
             margin-bottom: 24px;
         }
 
         .tree-title {
-            font-size: 13.5px;
+            font-size: 13px;
             font-weight: 700;
             color: var(--dark-color);
             margin-bottom: 10px;
@@ -121,18 +124,20 @@
 
         .tree-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 12px;
         }
 
         .tree-card {
             background: #ffffff;
-            padding: 12px 16px;
+            padding: 12px;
             border-radius: 8px;
             border: 1px solid var(--border-color);
             font-family: 'Consolas', monospace;
-            font-size: 12.5px;
+            font-size: 12px;
             line-height: 1.6;
+            word-break: break-all;
+            overflow-x: auto;
         }
 
         .tree-card strong {
@@ -145,22 +150,28 @@
         .folder { color: #d97706; }
         .folder-new { color: #059669; font-weight: bold; }
 
-        /* CẤU HÌNH TÙY CHỌN */
+        /* CẤU HÌNH TÙY CHỌN (TỐI ƯU RESPONSIVE MOBILE) */
         .grid-options {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 16px;
             background-color: #f8fafc;
             border: 1px solid var(--border-color);
-            padding: 18px;
+            padding: 16px;
             border-radius: 12px;
             margin-bottom: 20px;
+            width: 100%;
         }
 
         .option-group {
             display: flex;
             flex-direction: column;
             gap: 8px;
+            min-width: 0; /* Ngăn chặn hiện tượng phình khung flexbox/grid */
+        }
+
+        .option-group.span-full {
+            grid-column: 1 / -1;
         }
 
         label {
@@ -171,12 +182,16 @@
 
         select, input[type="text"] {
             width: 100%;
+            max-width: 100%;
             padding: 9px 12px;
             border: 1px solid var(--border-color);
             border-radius: 8px;
             font-size: 13px;
             outline: none;
             background: #fff;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
         }
 
         textarea {
@@ -203,13 +218,13 @@
 
         .btn-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 10px;
             margin: 20px 0;
         }
 
         .btn {
-            padding: 11px 16px;
+            padding: 11px 14px;
             border: none;
             border-radius: 8px;
             font-size: 13px;
@@ -246,10 +261,10 @@
         .code-box {
             background-color: var(--dark-color);
             color: #f1f5f9;
-            padding: 16px;
+            padding: 14px;
             border-radius: 10px;
             font-family: 'Consolas', monospace;
-            font-size: 13px;
+            font-size: 12.5px;
             line-height: 1.5;
             word-break: break-all;
             white-space: pre-wrap;
@@ -262,7 +277,7 @@
             background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
             border: 1px solid #bfdbfe;
             border-radius: 12px;
-            padding: 20px;
+            padding: 18px;
             margin: 25px 0;
             display: flex;
             flex-direction: column;
@@ -270,16 +285,17 @@
         }
 
         .ad-banner-title {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
             color: #1e40af;
             display: flex;
             align-items: center;
             gap: 8px;
+            line-height: 1.4;
         }
 
         .ad-banner-desc {
-            font-size: 13.5px;
+            font-size: 13px;
             color: #1e3a8a;
             line-height: 1.5;
         }
@@ -297,7 +313,7 @@
             font-weight: 600;
             padding: 4px 10px;
             border-radius: 20px;
-            font-size: 11.5px;
+            font-size: 11px;
             border: 1px solid #93c5fd;
         }
 
@@ -319,17 +335,17 @@
             background-color: var(--primary-hover);
         }
 
-        /* KHU VỰC THÔNG TIN NGÂN HÀNG (DONATE / DEMO) */
+        /* KHU VỰC STK NGÂN HÀNG DEMO / DONATE */
         .bank-section {
             background: #fffbe2;
             border: 1px solid #fef08a;
             border-radius: 12px;
-            padding: 18px;
+            padding: 16px;
             margin: 20px 0;
         }
 
         .bank-title {
-            font-size: 14px;
+            font-size: 13.5px;
             font-weight: 700;
             color: #854d0e;
             margin-bottom: 12px;
@@ -340,7 +356,7 @@
 
         .bank-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 12px;
         }
 
@@ -349,7 +365,7 @@
             border: 1px solid #fef08a;
             padding: 12px;
             border-radius: 8px;
-            font-size: 12.5px;
+            font-size: 12px;
             line-height: 1.6;
         }
 
@@ -363,7 +379,7 @@
             padding-top: 18px;
             border-top: 1px dashed var(--border-color);
             text-align: center;
-            font-size: 12.5px;
+            font-size: 12px;
             color: #64748b;
             line-height: 1.6;
         }
@@ -376,6 +392,41 @@
 
         .footer-info a:hover {
             text-decoration: underline;
+        }
+
+        /* CSS MEDIA QUERIES DÀNH RIÊNG CHO MOBILE */
+        @media (max-width: 640px) {
+            body {
+                padding: 12px 6px;
+            }
+
+            .app-container {
+                padding: 16px 12px;
+                border-radius: 12px;
+            }
+
+            .header h1 {
+                font-size: 19px;
+            }
+
+            .grid-options {
+                grid-template-columns: 1fr;
+                padding: 12px;
+                gap: 12px;
+            }
+
+            .option-group.span-full {
+                grid-column: 1;
+            }
+
+            .btn-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .ad-contact-btn {
+                width: 100%;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -422,7 +473,7 @@
             <label for="enableInsert">2. Chế độ chèn chuỗi/Mã:</label>
             <select id="enableInsert">
                 <option value="yes">BẬT (Có chèn thêm chuỗi/mã)</option>
-                <option value="no">TẮT (Không chèn thêm - Chỉ đổi tên/bỏ dấu)</option>
+                <option value="no">TẮT (Không chèn - Chỉ đổi tên/bỏ dấu)</option>
             </select>
         </div>
 
@@ -446,7 +497,7 @@
             </select>
         </div>
 
-        <div class="option-group" style="grid-column: span 2;">
+        <div class="option-group span-full">
             <label for="customText">5. Chuỗi tùy chỉnh (Nếu chọn nhập chuỗi tùy chỉnh):</label>
             <input type="text" id="customText" placeholder="VD: - Backup" disabled>
         </div>
@@ -474,18 +525,20 @@
     <!-- BANNER QUẢNG CÁO DỊCH VỤ NHẬN VIẾT TOOL -->
     <div class="ad-banner">
         <div class="ad-banner-title">
-            🚀 NHẬN VIẾT TOOL / PHẦN MỀM / SCRIPT THEO YÊU CẦU
+            🚀 NHẬN LẬP TRÌNH TOOL / GOOGLE APPS SCRIPT / EXCEL VBA THEO YÊU CẦU
         </div>
         <div class="ad-banner-desc">
-            Bạn cần tự động hóa công việc văn phòng, xử lý dữ liệu Excel/Database lớn, Tool quét dữ liệu Website, WordPress Plugin, hoặc ứng dụng VB.NET / C# / PowerShell chuyên biệt cho doanh nghiệp? Chúng tôi nhận lập trình giải pháp tối ưu, chính xác và nhanh chóng!
+            Bạn cần tự động hóa công việc văn phòng, xây dựng ứng dụng Web Apps Google Apps Script, kết nối API, tạo Macro Google Sheets / Excel VBA tự động, xử lý dữ liệu lớn, Tool quét dữ liệu Website, WordPress Plugin hoặc phần mềm VB.NET / C# / PowerShell chuyên biệt cho doanh nghiệp? Chúng tôi nhận lập trình giải pháp tối ưu, chính xác và nhanh chóng!
         </div>
         <div class="ad-banner-tags">
-            <span class="tag">#ToolOffice</span>
+            <span class="tag">#GoogleAppsScript</span>
+            <span class="tag">#WebAppsGoogleScript</span>
+            <span class="tag">#MacroGoogleSheet</span>
+            <span class="tag">#ExcelVBA</span>
             <span class="tag">#PowerShellScript</span>
             <span class="tag">#AutomationTool</span>
             <span class="tag">#VBNET_CSharp</span>
             <span class="tag">#WordPressPlugin</span>
-            <span class="tag">#XuLyDuLieuHangLoat</span>
         </div>
         <a href="mailto:vongcosay@gmail.com?subject=Lien%20He%20Viet%20Tool%20Theo%20Yeu%20Cau" class="ad-contact-btn">📩 Liên Hệ Đặt Hàng Ngay</a>
     </div>
