@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giới Thiệu Cá Nhân - Tech & Design Enthusiast</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-gradient: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            --text-main: #0f172a;
+            --text-sub: #475569;
+            --bg-gradient: linear-gradient(135deg, #f0f6ff 0%, #e0e7ff 100%);
+            --card-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 30px 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 24px;
+            padding: 36px;
+            max-width: 850px;
+            box-shadow: 0 20px 40px -15px rgba(37, 99, 235, 0.12);
+        }
+
+        /* Header Profile */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ffffff;
+            box-shadow: 0 8px 16px rgba(37, 99, 235, 0.2);
+            flex-shrink: 0;
+        }
+
+        .badge {
+            align-self: flex-start;
+            background: #dbeafe;
+            color: #1e40af;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+            display: inline-block;
+        }
+
+        .main-title {
+            color: var(--text-main);
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .description {
+            color: var(--text-sub);
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 28px;
+        }
+
+        /* Phân loại các nhóm kỹ năng */
+        .skill-group {
+            margin-bottom: 20px;
+        }
+
+        .group-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            background-color: #f1f5f9;
+            color: #334155;
+            border: 1px solid #e2e8f0;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .tag:hover {
+            background-color: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Khu vực Thông tin liên hệ */
+        .action-area {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 14px;
+            color: var(--text-sub);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contact-item a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        .btn-contact {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--primary-gradient);
+            color: #ffffff;
+            padding: 12px 26px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+            transition: all 0.3s ease;
+        }
+
+        .btn-contact:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(37, 99, 235, 0.35);
+        }
+
+        @media (max-width: 576px) {
+            .card { padding: 24px; }
+            .profile-header { flex-direction: column; align-items: flex-start; }
+            .avatar { width: 75px; height: 75px; }
+            .action-area { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <img class="avatar" src="https://avatars.githubusercontent.com/u/171990589?s=400&u=c29e9ad5163049dcd02604fbff2a8efefc86bd3c&v=4" alt="Avatar">
+            <div>
+                <span class="badge">💡 Tech & Design Enthusiast</span>
+                <h1 class="main-title">Hỗ Trợ Tự Động Hóa, Website & Giải Pháp Kỹ Thuật Tổng Hợp</h1>
+            </div>
+        </div>
+
+        <!-- Giới thiệu -->
+        <p class="description">
+            Chào bạn! Mình không phải là coder chuyên nghiệp theo trường lớp, mà là người đam mê công nghệ và thích "mò mẫm" trải nghiệm thực tế. Tích lũy qua nhiều năm xử lý công việc, mình có kinh nghiệm thực chiến đa dạng từ thiết kế đồ họa, tự động hóa văn phòng, quản trị hệ thống hosting/server cho đến xây dựng website và tích hợp hệ thống.
+        </p>
+
+        <!-- Danh sách Kỹ năng phân nhóm -->
+        <div class="skill-group">
+            <div class="group-title">🎨 Thiết kế & Đồ họa</div>
+            <div class="tag-container">
+                <span class="tag">Adobe Photoshop 7</span>
+                <span class="tag">CorelDRAW 12</span>
+                <span class="tag">Adobe Illustrator CS</span>
+                <span class="tag">Adobe Acrobat 7</span>
+                <span class="tag">Action</span>
+            </div>
+        </div>
+
+        <div class="skill-group">
+            <div class="group-title">⚡ Lập trình & Tự động hóa (Automation)</div>
+            <div class="tag-container">
+                <span class="tag">PowerShell</span>
+                <span class="tag">Google Apps Script</span>
+                <span class="tag">JavaScript</span>
+                <span class="tag">VBA</span>
+                <span class="tag">Macro trong Excel</span>
+                <span class="tag">Spreadsheets</span>
+                <span class="tag">Anaconda</span>
+            </div>
+        </div>
+
+        <div class="skill-group">
+            <div class="group-title">🌐 Web CMS, Forum & E-Commerce</div>
+            <div class="tag-container">
+                <span class="tag">WordPress</span>
+                <span class="tag">Joomla 1.5</span>
+                <span class="tag">NukeViet</span>
+                <span class="tag">vBulletin</span>
+                <span class="tag">Magento</span>
+                <span class="tag">OpenCart</span>
+                <span class="tag">PrestaShop</span>
+            </div>
+        </div>
+
+        <div class="skill-group">
+            <div class="group-title">🖥️ Server, Hosting & Mạng</div>
+            <div class="tag-container">
+                <span class="tag">cPanel</span>
+                <span class="tag">Plesk</span>
+                <span class="tag">DirectAdmin</span>
+                <span class="tag">Windows Server</span>
+                <span class="tag">Domain controller</span>
+                <span class="tag">Localhost</span>
+                <span class="tag">XAMPP for Windows</span>
+                <span class="tag">Apache</span>
+                <span class="tag">Microsoft Azure</span>
+            </div>
+        </div>
+
+        <div class="skill-group">
+            <div class="group-title">🔌 Nhà cung cấp & Dịch vụ tích hợp</div>
+            <div class="tag-container">
+                <span class="tag">Nhan Hoa</span>
+                <span class="tag">Mat Bao</span>
+                <span class="tag">P.A Vietnam</span>
+                <span class="tag">LiveChat</span>
+                <span class="tag">PayPal</span>
+            </div>
+        </div>
+
+        <!-- Thông tin liên hệ & Nút Action -->
+        <div class="action-area">
+            <div class="contact-info">
+                <div class="contact-item">
+                    📞 ĐT: <a href="tel:0983XXXXXX">0983.XX.XX.XX</a>
+                </div>
+                <div class="contact-item">
+                    📧 Email: <a href="mailto:vongcosay@gmail.com">vongcosay@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    🌐 Web: <a href="https://id.donguyen.net" target="_blank">id.donguyen.net</a>
+                </div>
+            </div>
+            
+            <a href="tel:0983XXXXXX" class="btn-contact">
+                📞 Gọi Liên Hệ Ngay
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>
