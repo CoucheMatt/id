@@ -41,6 +41,15 @@
             box-shadow: 0 20px 40px -15px rgba(37, 99, 235, 0.12);
         }
 
+        /* Mã phiên bản / Ngày cập nhật - Căn phải, không khung */
+        .doc-update-info {
+            font-size: 12px;
+            font-family: monospace;
+            color: #94a3b8;
+            text-align: right;
+            margin-bottom: 12px;
+        }
+
         /* Header Profile */
         .profile-header {
             display: flex;
@@ -59,6 +68,13 @@
             flex-shrink: 0;
         }
 
+        .author-name {
+            color: var(--primary);
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
         .badge {
             align-self: flex-start;
             background: #dbeafe;
@@ -69,7 +85,7 @@
             border-radius: 20px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             display: inline-block;
         }
 
@@ -85,6 +101,62 @@
             font-size: 15px;
             line-height: 1.7;
             margin-bottom: 28px;
+        }
+
+        /* Section Title chung */
+        .section-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Phần Dự án tiêu biểu */
+        .projects-section {
+            margin-bottom: 28px;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+        }
+
+        .project-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .project-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .project-icon {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .project-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .project-desc {
+            font-size: 13px;
+            color: var(--text-sub);
+            line-height: 1.5;
         }
 
         /* Phân loại các nhóm kỹ năng */
@@ -187,16 +259,21 @@
             .profile-header { flex-direction: column; align-items: flex-start; }
             .avatar { width: 75px; height: 75px; }
             .action-area { flex-direction: column; align-items: flex-start; }
+            .projects-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
     <div class="card">
+        <!-- Mã CV - Căn phải, không khung -->
+        <div class="doc-update-info">📌 CV: 20260907-194053-3629</div>
+
         <!-- Profile Header -->
         <div class="profile-header">
             <img class="avatar" src="https://avatars.githubusercontent.com/u/171990589?s=400&u=c29e9ad5163049dcd02604fbff2a8efefc86bd3c&v=4" alt="Avatar">
             <div>
+                <div class="author-name">Do Nguyen</div>
                 <span class="badge">💡 Tech & Design Enthusiast</span>
                 <h1 class="main-title">Hỗ Trợ Tự Động Hóa, Website & Giải Pháp Kỹ Thuật Tổng Hợp</h1>
             </div>
@@ -207,7 +284,31 @@
             Chào bạn! Mình không phải là coder chuyên nghiệp theo trường lớp, mà là người đam mê công nghệ và thích "mò mẫm" trải nghiệm thực tế. Tích lũy qua nhiều năm xử lý công việc, mình có kinh nghiệm thực chiến đa dạng từ thiết kế đồ họa, tự động hóa văn phòng, quản trị hệ thống hosting/server cho đến xây dựng website và tích hợp hệ thống.
         </p>
 
+        <!-- Dự án tiêu biểu -->
+        <div class="projects-section">
+            <div class="section-title">🚀 Dự án tiêu biểu</div>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-icon">📂</div>
+                    <div class="project-name">Phần mềm Tìm kiếm Thư mục</div>
+                    <div class="project-desc">Công cụ hỗ trợ tra cứu, lọc và quản lý cấu trúc thư mục/tập tin nhanh chóng cho công việc văn phòng.</div>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">📧</div>
+                    <div class="project-name">Hệ Thống Soạn Thảo & Gửi Email Chuẩn Hóa</div>
+                    <div class="project-desc">Web App hỗ trợ tạo mã Ticket tự động, chèn thông tin thời gian realtime, phòng ban và quản lý gửi mail nội bộ chuyên nghiệp.</div>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">📋</div>
+                    <div class="project-name">Form Biểu mẫu Cập nhật Dữ liệu</div>
+                    <div class="project-desc">Hệ thống biểu mẫu trực tuyến giúp thu thập, đồng bộ và cập nhật dữ liệu tự động vào cơ sở dữ liệu/Google Sheets.</div>
+                </div>
+            </div>
+        </div>
+
         <!-- Danh sách Kỹ năng phân nhóm -->
+        <div class="section-title">🛠️ Kỹ năng chuyên môn</div>
+
         <div class="skill-group">
             <div class="group-title">🎨 Thiết kế & Đồ họa</div>
             <div class="tag-container">
@@ -283,6 +384,9 @@
                 </div>
                 <div class="contact-item">
                     🌐 Web: <a href="https://id.donguyen.net" target="_blank">id.donguyen.net</a>
+                </div>
+                <div class="contact-item">
+                    📍 Địa chỉ: 18 Ba Đình, Thanh Xuân, Hà Nội
                 </div>
             </div>
             
