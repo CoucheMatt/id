@@ -159,6 +159,62 @@
             line-height: 1.5;
         }
 
+        /* Phần Timeline - Lịch sử làm việc */
+        .timeline-section {
+            margin-bottom: 28px;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 20px;
+            border-left: 2px solid #e2e8f0;
+            margin-left: 8px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 18px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -27px;
+            top: 4px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+
+        .timeline-date {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .timeline-location {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .timeline-desc {
+            font-size: 13px;
+            color: var(--text-sub);
+            line-height: 1.6;
+        }
+
         /* Phân loại các nhóm kỹ năng */
         .skill-group {
             margin-bottom: 20px;
@@ -302,6 +358,38 @@
                     <div class="project-icon">📋</div>
                     <div class="project-name">Form Biểu mẫu Cập nhật Dữ liệu</div>
                     <div class="project-desc">Hệ thống biểu mẫu trực tuyến giúp thu thập, đồng bộ và cập nhật dữ liệu tự động vào cơ sở dữ liệu/Google Sheets.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timeline Kinh nghiệm làm việc -->
+        <div class="timeline-section">
+            <div class="section-title">💼 Lịch sử làm việc</div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">2006 – 2010</div>
+                    <div class="timeline-location">Phú Nhuận, TP.HCM</div>
+                    <div class="timeline-desc">Thiết kế đồ họa, bình file in ấn, điều độ công việc và quản lý tiến độ đi in gia công.</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2011</div>
+                    <div class="timeline-location">Hà Nội</div>
+                    <div class="timeline-desc">Thiết kế đồ họa, trực tiếp vận hành và xử lý bài in trên máy in nhanh kỹ thuật số (KTS).</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2011 – 2015</div>
+                    <div class="timeline-location">Công ty Chế bản - Tân Phú, TP.HCM</div>
+                    <div class="timeline-desc">Bình file chế bản, kiểm tra kỹ thuật tập tin trước khi xuất kẽm (CTP) và phim.</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2015 – Hiện tại</div>
+                    <div class="timeline-location">Long An</div>
+                    <div class="timeline-desc">
+                        Kiểm tra định dạng file PDF trước khi ghi kẽm cho thợ in; xử lý các sự cố kỹ thuật trong quá trình in ấn & máy ghi kẽm; tổng hợp báo cáo sản lượng đơn hàng, vật tư kẽm định kỳ hàng ngày, tuần, quý, năm.
+                    </div>
                 </div>
             </div>
         </div>
