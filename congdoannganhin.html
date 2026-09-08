@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Báo Cáo Tiến Độ Sản Xuất - RD2608-120696</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,12 +47,17 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden; /* Chống tràn ngang tuyệt đối */
+        }
+
         body {
             font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
             background: linear-gradient(180deg, #e5ebd3 0%, var(--bg-main) 300px);
             color: var(--text-body);
             line-height: 1.5;
-            padding: 32px 16px;
+            padding: 16px 12px;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
@@ -69,125 +74,99 @@
         .app-bar {
             background: linear-gradient(135deg, #1f6b16 0%, var(--pantone-360c) 100%);
             border-radius: var(--radius-lg);
-            padding: 32px;
+            padding: 20px;
             color: white;
-            margin-bottom: 24px;
+            margin-bottom: 16px;
             box-shadow: var(--shadow-md);
             position: relative;
             overflow: hidden;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 16px;
             border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .app-bar::before {
-            content: '';
-            position: absolute;
-            top: -50px;
-            right: -50px;
-            width: 250px;
-            height: 250px;
-            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
-            pointer-events: none;
         }
 
         .order-badge {
             background: rgba(255, 255, 255, 0.22);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            padding: 6px 16px;
+            padding: 4px 12px;
             border-radius: 30px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 800;
-            letter-spacing: 0.8px;
+            letter-spacing: 0.5px;
             text-transform: uppercase;
             display: inline-block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .order-id {
-            font-size: 32px;
+            font-size: 22px;
             font-weight: 800;
-            letter-spacing: -0.8px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            letter-spacing: -0.5px;
+            word-break: break-word;
         }
 
         .order-meta-info {
             background: rgba(0, 0, 0, 0.18);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            padding: 14px 22px;
+            padding: 12px 16px;
             border-radius: var(--radius-md);
             border: 1px solid rgba(255,255,255,0.25);
-            font-size: 13.5px;
+            font-size: 12.5px;
             display: flex;
             flex-direction: column;
             gap: 4px;
+            width: 100%;
+            word-break: break-word;
         }
 
         /* CARD THÔNG TIN ĐƠN HÀNG */
         .info-card {
             background: var(--card-bg);
             border-radius: var(--radius-lg);
-            padding: 28px;
-            margin-bottom: 24px;
+            padding: 20px 16px;
+            margin-bottom: 16px;
             box-shadow: var(--shadow-card);
             border: 1px solid var(--border-color);
         }
 
         .card-header-title {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 800;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            letter-spacing: 0.5px;
+            margin-bottom: 14px;
         }
 
         .info-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-        }
-
-        @media (max-width: 1024px) {
-            .info-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-
-        @media (max-width: 600px) {
-            .info-grid { grid-template-columns: 1fr; }
+            grid-template-columns: 1fr;
+            gap: 12px;
         }
 
         .info-box {
             background: var(--pantone-9061c-subtle);
-            padding: 14px 18px;
+            padding: 12px 14px;
             border-radius: var(--radius-md);
             border: 1px solid rgba(226, 232, 223, 0.8);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .info-box:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-sm);
         }
 
         .info-label {
-            font-size: 11px;
+            font-size: 10px;
             color: var(--text-muted);
             font-weight: 700;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
             text-transform: uppercase;
         }
 
         .info-val {
-            font-size: 16px;
+            font-size: 14.5px;
             font-weight: 800;
             color: var(--text-title);
             word-break: break-word;
@@ -204,11 +183,10 @@
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            padding: 4px 10px;
+            padding: 4px 8px;
             border-radius: 8px;
-            font-size: 11px;
+            font-size: 10.5px;
             font-weight: 800;
-            border: 1px solid rgba(0, 0, 0, 0.06);
         }
 
         .tag-9061c { background-color: var(--pantone-9061c); color: #3e4a36; }
@@ -218,51 +196,50 @@
         .timeline-card {
             background: var(--card-bg);
             border-radius: var(--radius-lg);
-            padding: 32px;
+            padding: 20px 14px;
             box-shadow: var(--shadow-card);
             border: 1px solid var(--border-color);
         }
 
         .timeline {
             position: relative;
-            padding-left: 40px;
-            margin-top: 24px;
+            padding-left: 28px;
+            margin-top: 16px;
         }
 
         .timeline::before {
             content: '';
             position: absolute;
-            left: 14px;
+            left: 10px;
             top: 12px;
             bottom: 30px;
-            width: 4px;
+            width: 3px;
             background: #cbd5e1;
             border-radius: 2px;
         }
 
         .timeline-step {
             position: relative;
-            margin-bottom: 36px;
+            margin-bottom: 24px;
         }
 
         .timeline-step:last-child { margin-bottom: 0; }
 
         .step-node {
             position: absolute;
-            left: -40px;
+            left: -28px;
             top: 2px;
-            width: 32px;
-            height: 32px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
             background: #fff;
-            border: 4px solid #cbd5e1;
+            border: 3px solid #cbd5e1;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 800;
             z-index: 2;
-            transition: all 0.3s ease;
         }
 
         .timeline-step.completed .step-node {
@@ -275,86 +252,72 @@
             background: var(--pantone-360c);
             border-color: #ffffff;
             color: white;
-            box-shadow: 0 0 0 5px rgba(63, 180, 53, 0.3);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(63, 180, 53, 0.5); }
-            70% { box-shadow: 0 0 0 12px rgba(63, 180, 53, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(63, 180, 53, 0); }
+            box-shadow: 0 0 0 4px rgba(63, 180, 53, 0.3);
         }
 
         .step-content {
             background: #ffffff;
             border: 1px solid var(--border-color);
             border-radius: var(--radius-md);
-            padding: 24px;
+            padding: 14px 12px;
             box-shadow: 0 2px 12px rgba(0,0,0,0.02);
-        }
-
-        .timeline-step.processing .step-content {
-            border-color: var(--pantone-360c);
-            background: linear-gradient(180deg, #ffffff 0%, var(--pantone-9061c-subtle) 100%);
-            box-shadow: 0 8px 24px rgba(63, 180, 53, 0.08);
+            overflow: hidden;
         }
 
         .step-top {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 14px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 12px;
         }
 
         .step-title {
-            font-size: 18px;
+            font-size: 15px;
             font-weight: 800;
             color: var(--text-title);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 6px;
             flex-wrap: wrap;
         }
 
         .step-code-badge {
-            font-size: 11px;
+            font-size: 10px;
             font-family: monospace;
             background: #0f172a;
             color: #ffffff;
-            padding: 3px 10px;
-            border-radius: 6px;
+            padding: 2px 6px;
+            border-radius: 4px;
             font-weight: 800;
         }
 
         .step-pill {
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 800;
-            padding: 5px 14px;
+            padding: 3px 10px;
             border-radius: 20px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         .completed .step-pill { background: #d1fae5; color: #065f46; }
         .processing .step-pill { background: var(--pantone-360c-light); color: var(--pantone-360c-dark); }
         .pending .step-pill { background: #f1f5f9; color: #64748b; }
 
-        /* SUMMARY BOX & PROGRESS BAR */
+        /* SUMMARY BOX */
         .step-summary-box {
             background: var(--pantone-9061c-subtle);
             border: 1px solid rgba(63, 180, 53, 0.25);
             border-radius: var(--radius-sm);
-            padding: 14px 18px;
-            margin-bottom: 18px;
+            padding: 10px 12px;
+            margin-bottom: 14px;
         }
 
         .summary-row {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 13.5px;
-            flex-wrap: wrap;
-            gap: 12px;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 12px;
         }
 
         .sum-val { font-weight: 800; color: var(--pantone-360c-dark); }
@@ -363,8 +326,8 @@
             font-weight: 800;
             color: var(--waste-red);
             background: var(--waste-red-bg);
-            padding: 3px 10px;
-            border-radius: 8px;
+            padding: 2px 6px;
+            border-radius: 6px;
             border: 1px solid rgba(239, 68, 68, 0.25);
             display: inline-flex;
             align-items: center;
@@ -372,24 +335,23 @@
         }
 
         .progress-bar {
-            height: 10px;
+            height: 8px;
             background: #e2e8f0;
-            border-radius: 6px;
+            border-radius: 4px;
             overflow: hidden;
-            margin-top: 10px;
+            margin-top: 8px;
         }
 
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, #277e23 0%, var(--pantone-360c) 100%);
-            border-radius: 6px;
         }
 
-        /* SUB TIMELINE THEO NGÀY VÀ CA */
+        /* SUB TIMELINE */
         .sub-timeline {
             position: relative;
-            padding-left: 24px;
-            margin-top: 16px;
+            padding-left: 14px;
+            margin-top: 12px;
             border-left: 2px dashed #cbd5e1;
         }
 
@@ -397,70 +359,59 @@
             position: relative;
             background: #ffffff;
             border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 16px 18px;
-            margin-bottom: 16px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.01);
+            border-radius: var(--radius-sm);
+            padding: 12px 10px;
+            margin-bottom: 12px;
         }
-
-        .shift-block:last-child { margin-bottom: 0; }
 
         .shift-node-point {
             position: absolute;
-            left: -31px;
-            top: 20px;
-            width: 12px;
-            height: 12px;
+            left: -20px;
+            top: 16px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             background: var(--pantone-360c);
-            border: 3px solid #ffffff;
-            box-shadow: 0 0 0 2px rgba(63, 180, 53, 0.4);
+            border: 2px solid #ffffff;
         }
 
         .date-shift-header {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 13px;
+            flex-direction: column;
+            align-items: flex-start;
+            font-size: 12px;
             font-weight: 800;
             color: var(--text-title);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 8px;
-            flex-wrap: wrap;
-            gap: 8px;
+            padding-bottom: 6px;
+            gap: 6px;
         }
 
         .date-badge {
             color: var(--pantone-360c-dark);
             background: var(--pantone-360c-light);
-            padding: 3px 10px;
-            border-radius: 6px;
-            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
         }
 
         .shift-tag {
             background: #0f172a;
             color: #ffffff;
-            padding: 3px 10px;
-            border-radius: 6px;
-            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
             font-family: monospace;
-            font-weight: 700;
         }
 
-        /* BADGES ROLE CHỨC DANH */
         .role-badge {
             display: inline-flex;
             align-items: center;
-            gap: 4px;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 800;
-            padding: 3px 10px;
-            border-radius: 20px;
+            padding: 2px 6px;
+            border-radius: 12px;
             text-transform: uppercase;
-            letter-spacing: 0.4px;
-            margin-left: 6px;
         }
 
         .role-to-truong { background: #0f172a; color: #facc15; border: 1px solid #eab308; }
@@ -469,11 +420,10 @@
         .role-phu-may { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
         .role-ky-thuat { background: #7c3aed; color: #ffffff; }
 
-        /* DANH SÁCH NHÂN SỰ inline */
         .workers-grid-row {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
 
         .worker-inline-card {
@@ -481,133 +431,146 @@
             flex-direction: column;
             background: #ffffff;
             border: 1px solid var(--border-color);
-            padding: 12px 16px;
+            padding: 10px;
             border-radius: var(--radius-sm);
             gap: 8px;
         }
 
-        .worker-inline-card.is-leader {
-            border-color: #f59e0b;
-            background: #fffdf5;
-        }
-
         .worker-row-top {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
         }
 
         .worker-left {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
         .avatar-sm {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             background: var(--pantone-9061c);
             color: var(--pantone-360c-dark);
             font-weight: 800;
-            font-size: 12px;
+            font-size: 11px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            border: 1.5px solid rgba(63, 180, 53, 0.4);
         }
 
         .worker-name-inline {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 800;
             color: var(--text-title);
         }
 
         .worker-id-badge {
-            font-size: 11px;
+            font-size: 10px;
             color: var(--text-muted);
             background: #f1f5f9;
-            padding: 2px 8px;
-            border-radius: 6px;
+            padding: 2px 6px;
+            border-radius: 4px;
             font-family: monospace;
-            font-weight: 700;
-            margin-left: 2px;
         }
 
         .worker-report-right {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 12px;
+            gap: 6px;
+            font-size: 11px;
             background: var(--pantone-9061c-subtle);
             border: 1px solid rgba(63, 180, 53, 0.2);
-            padding: 5px 14px;
-            border-radius: 20px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            width: 100%;
+            justify-content: space-between;
+            flex-wrap: wrap;
         }
 
-        .log-code { font-family: monospace; font-weight: 800; color: var(--pantone-360c-dark); }
-        .log-qty { font-weight: 800; color: var(--text-title); }
+        .log-code { 
+            font-family: monospace; 
+            font-weight: 800; 
+            color: var(--pantone-360c-dark);
+            word-break: break-all;
+        }
 
         .tech-note-box {
-            font-size: 12px;
+            font-size: 11.5px;
             color: var(--note-amber);
             background: var(--note-amber-bg);
             border: 1px dashed rgba(217, 119, 6, 0.35);
-            padding: 8px 14px;
+            padding: 8px;
+            border-radius: 6px;
+        }
+
+        .cross-dept-alert, .received-dept-notice {
+            margin-top: 10px;
+            padding: 10px;
             border-radius: 8px;
-            display: flex;
-            align-items: flex-start;
-            gap: 6px;
+            font-size: 12px;
+            word-break: break-word;
         }
 
         .cross-dept-alert {
-            margin-top: 14px;
             background: #fef2f2;
             border: 1px solid #fecaca;
-            border-left: 5px solid var(--waste-red);
-            padding: 12px 16px;
-            border-radius: 10px;
-            font-size: 12.5px;
+            border-left: 4px solid var(--waste-red);
             color: #991b1b;
         }
 
         .received-dept-notice {
-            margin-bottom: 16px;
             background: #fef2f2;
             border: 2px solid #ef4444;
-            padding: 14px 18px;
-            border-radius: var(--radius-sm);
-            font-size: 13.5px;
             color: #991b1b;
-            box-shadow: 0 4px 14px rgba(239, 68, 68, 0.12);
+            margin-bottom: 12px;
         }
 
         .notice-header {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
+            flex-direction: column;
             font-weight: 800;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             border-bottom: 1px dashed #fecaca;
-            padding-bottom: 6px;
-            gap: 8px;
-            flex-wrap: wrap;
+            padding-bottom: 4px;
+            gap: 2px;
         }
 
-        /* FOOTER */
         footer {
             text-align: center;
-            padding: 32px 10px 10px 10px;
-            font-size: 13px;
+            padding: 24px 8px 8px 8px;
+            font-size: 11px;
             color: var(--text-muted);
-            margin-top: auto;
+            word-break: break-all;
         }
 
-        footer a { color: var(--pantone-360c-dark); text-decoration: none; font-weight: 700; }
-        footer a:hover { text-decoration: underline; }
+        /* MEDIA QUERIES TỐI ƯU MÀN HÌNH TỪ TABLET ĐẾN PC */
+        @media (min-width: 640px) {
+            body { padding: 24px 16px; }
+            .app-bar { flex-direction: row; align-items: center; padding: 28px; }
+            .order-id { font-size: 28px; }
+            .order-meta-info { width: auto; font-size: 13.5px; }
+            .info-grid { grid-template-columns: repeat(2, 1fr); }
+            .step-top { flex-direction: row; justify-content: space-between; align-items: center; }
+            .summary-row { flex-direction: row; justify-content: space-between; align-items: center; }
+            .date-shift-header { flex-direction: row; justify-content: space-between; align-items: center; }
+            .worker-row-top { flex-direction: row; justify-content: space-between; align-items: center; }
+            .worker-report-right { width: auto; }
+            .notice-header { flex-direction: row; justify-content: space-between; }
+        }
+
+        @media (min-width: 1024px) {
+            .info-grid { grid-template-columns: repeat(4, 1fr); }
+            .timeline-card { padding: 32px; }
+            .timeline { padding-left: 40px; }
+            .timeline::before { left: 14px; }
+            .step-node { left: -40px; width: 32px; height: 32px; font-size: 13px; }
+        }
     </style>
 </head>
 <body>
@@ -622,15 +585,13 @@
             </div>
             <div class="order-meta-info">
                 <div>🏢 Khách hàng: <strong>Apple</strong></div>
-                <div>🏷️ Mã Lệnh Hiện Tại: <strong>20260909-001154-9469</strong></div>
+                <div>🏷️ Mã Lệnh: <strong>20260909-001154-9469</strong></div>
             </div>
         </div>
 
         <!-- Thông tin sản xuất -->
         <div class="info-card">
-            <div class="card-header-title">
-                <span>📋 Thông tin lệnh sản xuất</span>
-            </div>
+            <div class="card-header-title">📋 Thông tin lệnh sản xuất</div>
             <div class="info-grid">
                 <div class="info-box">
                     <div class="info-label">Sản phẩm</div>
@@ -656,7 +617,7 @@
 
         <!-- Timeline Quy Trình Sản Xuất -->
         <div class="timeline-card">
-            <div class="card-header-title">📍 Nhật ký tiến độ từng công đoạn theo thời gian</div>
+            <div class="card-header-title">📍 Nhật ký tiến độ từng công đoạn</div>
 
             <div class="timeline">
 
@@ -768,7 +729,7 @@
                     </div>
                 </div>
 
-                <!-- 3. IN ẤN (CÙNG CA 3 NHƯNG KHÁC NGÀY) -->
+                <!-- 3. IN ẤN -->
                 <div class="timeline-step processing">
                     <div class="step-node">➔</div>
                     <div class="step-content">
@@ -783,7 +744,7 @@
                         <div class="step-summary-box">
                             <div class="summary-row">
                                 <span>Mục tiêu SL: <strong>100,000 SP</strong></span>
-                                <span>Sum SL Lũy Kế (Các ca): <span class="sum-val">65,000 SP (65%)</span></span>
+                                <span>Sum SL Lũy Kế: <span class="sum-val">65,000 SP (65%)</span></span>
                                 <span>Tổng Hư hỏng: <span class="waste-val">-45 con</span></span>
                             </div>
                             <div class="progress-bar">
@@ -797,7 +758,7 @@
                             <div class="shift-block">
                                 <div class="shift-node-point"></div>
                                 <div class="date-shift-header">
-                                    <span>📅 Ngày: <span class="date-badge">08/09/2026</span> — Ca Đêm (Lượt báo cáo 1)</span>
+                                    <span>📅 Ngày: <span class="date-badge">08/09/2026</span> — Ca Đêm (Lượt 1)</span>
                                     <span class="shift-tag">CA 3</span>
                                 </div>
                                 <div class="workers-grid-row">
@@ -825,13 +786,13 @@
                             <div class="shift-block" style="border-color: var(--pantone-360c); background: #fcfdfe;">
                                 <div class="shift-node-point" style="background: var(--pantone-360c-dark);"></div>
                                 <div class="date-shift-header">
-                                    <span>📅 Ngày: <span class="date-badge">09/09/2026</span> — Ca Đêm (Dan Le làm Tổ Trưởng trực tiếp)</span>
+                                    <span>📅 Ngày: <span class="date-badge">09/09/2026</span> — Ca Đêm (Dan Le)</span>
                                     <span class="shift-tag" style="background: var(--pantone-360c);">CA 3 (ĐANG CHẠY)</span>
                                 </div>
                                 <div class="workers-grid-row">
                                     
                                     <!-- Dan Le -->
-                                    <div class="worker-inline-card is-leader">
+                                    <div class="worker-inline-card" style="border-color: #f59e0b; background: #fffdf5;">
                                         <div class="worker-row-top">
                                             <div class="worker-left">
                                                 <div class="avatar-sm">DL</div>
@@ -848,7 +809,7 @@
                                             </div>
                                         </div>
                                         <div class="tech-note-box">
-                                            ⚠️ <strong>Ghi chú kỹ thuật:</strong> Tay kê hông nhảy nhẹ, đã chỉnh lại cẩn thận.
+                                            ⚠️ <strong>Ghi chú:</strong> Tay kê hông nhảy nhẹ, đã chỉnh lại cẩn thận.
                                         </div>
                                     </div>
 
@@ -876,9 +837,9 @@
 
                         <!-- CẢNH BÁO ĐÃ GỬI BỘ PHẬN THÀNH PHẨM -->
                         <div class="cross-dept-alert">
-                            <div class="notice-header" style="border-bottom: none; padding-bottom: 0;">
-                                <span>📤 LƯU Ý ĐÃ GỬI BỘ PHẬN THÀNH PHẨM:</span>
-                                <span>20260909-002046-2163 — Dan Le (ID: 0511892)</span>
+                            <div class="notice-header">
+                                <span>📤 LƯU Ý ĐÃ GỬI THÀNH PHẨM:</span>
+                                <span>Dan Le (ID: 0511892)</span>
                             </div>
                             <div style="font-weight: 800; margin-top: 3px;">
                                 ⚠️ "Tô màu đỏ bị ké nhiều, bỏ dùm nhé!"
@@ -903,10 +864,10 @@
                         <!-- LỜI NHẮN NHẬN ĐƯỢC -->
                         <div class="received-dept-notice">
                             <div class="notice-header">
-                                <span>📩 THÔNG BÁO TỪ BỘ PHẬN IN ẤN (V9CMQH):</span>
-                                <span style="font-family: monospace; font-weight: 700;">20260909-002046-2163 — Dan Le (ID: 0511892)</span>
+                                <span>📩 THÔNG BÁO TỪ IN ẤN (V9CMQH):</span>
+                                <span style="font-family: monospace;">Dan Le (ID: 0511892)</span>
                             </div>
-                            <div style="font-size: 14px; font-weight: 800; color: #b91c1c;">
+                            <div style="font-size: 13px; font-weight: 800; color: #b91c1c;">
                                 🚨 <strong>LƯU Ý GIA CÔNG KHẨN:</strong> "Tô màu đỏ bị ké nhiều, bỏ dùm nhé!"
                             </div>
                         </div>
@@ -927,12 +888,12 @@
                             <div class="shift-block">
                                 <div class="shift-node-point" style="background: var(--status-pending);"></div>
                                 <div class="date-shift-header">
-                                    <span>📅 Dự kiến: <span class="date-badge">09/09/2026</span> — Ca Sáng (Tiếp nhận gia công)</span>
+                                    <span>📅 Dự kiến: <span class="date-badge">09/09/2026</span> — Ca Sáng</span>
                                     <span class="shift-tag">CA 1 (SẮP TỚI)</span>
                                 </div>
                                 <div class="workers-grid-row">
                                     
-                                    <div class="worker-inline-card is-leader">
+                                    <div class="worker-inline-card" style="border-color: #f59e0b; background: #fffdf5;">
                                         <div class="worker-row-top">
                                             <div class="worker-left">
                                                 <div class="avatar-sm">NM</div>
@@ -957,7 +918,7 @@
                                             </div>
                                         </div>
                                         <div class="tech-note-box">
-                                            ⚠️ <strong>Ghi chú:</strong> Thợ bế sẽ bế chuẩn bước chip RFID và lọc bỏ toàn bộ các con ké màu đỏ theo thông báo.
+                                            ⚠️ <strong>Ghi chú:</strong> Thợ bế sẽ bế chuẩn bước chip RFID và lọc bỏ các con ké màu đỏ theo thông báo.
                                         </div>
                                     </div>
 
