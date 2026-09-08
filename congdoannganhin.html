@@ -1,1 +1,915 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo Cáo Tiến Độ Sản Xuất - RFHT2608-120696</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Tông màu Pantone ngành In */
+            --pantone-360c: #3FB435;         /* Xanh lá Pantone 360 C */
+            --pantone-360c-dark: #277e23;
+            --pantone-360c-light: #eaf7ea;
+            --pantone-9061c: #e3ebd8;        /* Kem nhạt Pantone 9061 C */
+            --pantone-9061c-subtle: #f6f9f3;
+            
+            --bg-main: #edf2ea;
+            --card-bg: #ffffff;
+            --text-title: #111827;
+            --text-body: #374151;
+            --text-muted: #6b7280;
+            --border-color: #e5e7eb;
+            
+            /* Trạng thái & Phế phẩm */
+            --status-completed: #10b981;
+            --status-processing: #3FB435;
+            --status-pending: #9ca3af;
+            --waste-red: #ef4444;
+            --waste-red-bg: #fef2f2;
+            --note-amber: #d97706;
+            --note-amber-bg: #fffbeb;
 
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 10px 25px -5px rgba(63, 180, 53, 0.1);
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-body);
+            line-height: 1.5;
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Mở rộng khung báo cáo tối đa 1200px cho Máy tính */
+        .wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            flex: 1;
+        }
+
+        /* HEADER & APPBAR */
+        .app-bar {
+            background: linear-gradient(135deg, var(--pantone-360c-dark) 0%, var(--pantone-360c) 100%);
+            border-radius: var(--radius-lg);
+            padding: 28px 28px;
+            color: white;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .app-bar::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .order-badge {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 6px;
+        }
+
+        .order-id {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .order-meta-info {
+            background: rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(8px);
+            padding: 10px 18px;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255,255,255,0.2);
+            font-size: 13px;
+        }
+
+        /* CARD THÔNG TIN ĐƠN HÀNG - RỘNG THOÁNG TRÊN DESKTOP */
+        .info-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .card-header-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        @media (max-width: 1024px) {
+            .info-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 600px) {
+            .info-grid { grid-template-columns: 1fr; }
+        }
+
+        .info-box {
+            background: var(--pantone-9061c-subtle);
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(226, 232, 223, 0.8);
+        }
+
+        .info-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .info-val {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--text-title);
+            word-break: break-word;
+        }
+
+        .color-chips {
+            display: flex;
+            gap: 6px;
+            margin-top: 4px;
+            flex-wrap: wrap;
+        }
+
+        .color-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .tag-9061c { background-color: var(--pantone-9061c); color: #3e4a36; }
+        .tag-360c { background-color: var(--pantone-360c-light); color: var(--pantone-360c-dark); }
+
+        /* TIMELINE SECTION */
+        .timeline-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 36px;
+            margin-top: 20px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 12px;
+            top: 10px;
+            bottom: 30px;
+            width: 3px;
+            background: #e5e7eb;
+            border-radius: 2px;
+        }
+
+        .timeline-step {
+            position: relative;
+            margin-bottom: 32px;
+        }
+
+        .timeline-step:last-child { margin-bottom: 0; }
+
+        .step-node {
+            position: absolute;
+            left: -36px;
+            top: 2px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #fff;
+            border: 3px solid #d1d5db;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 800;
+            z-index: 2;
+        }
+
+        .timeline-step.completed .step-node {
+            background: var(--status-completed);
+            border-color: var(--status-completed);
+            color: white;
+        }
+
+        .timeline-step.processing .step-node {
+            background: var(--pantone-360c);
+            border-color: var(--pantone-360c-light);
+            color: white;
+            box-shadow: 0 0 0 5px rgba(63, 180, 53, 0.25);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(63, 180, 53, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(63, 180, 53, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(63, 180, 53, 0); }
+        }
+
+        .step-content {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        .timeline-step.processing .step-content {
+            border-color: var(--pantone-360c);
+            background: linear-gradient(180deg, #ffffff 0%, var(--pantone-9061c-subtle) 100%);
+        }
+
+        .step-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .step-title {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text-title);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .step-code-badge {
+            font-size: 11px;
+            font-family: monospace;
+            background: #111827;
+            color: #ffffff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .step-pill {
+            font-size: 11px;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: 12px;
+            text-transform: uppercase;
+        }
+
+        .completed .step-pill { background: #d1fae5; color: #065f46; }
+        .processing .step-pill { background: var(--pantone-360c-light); color: var(--pantone-360c-dark); }
+        .pending .step-pill { background: #f3f4f6; color: #6b7280; }
+
+        /* THỐNG KÊ SẢN LƯỢNG & PHẾ PHẨM */
+        .step-summary-box {
+            background: var(--pantone-9061c-subtle);
+            border: 1px solid rgba(63, 180, 53, 0.2);
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            margin-bottom: 16px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .sum-val { font-weight: 800; color: var(--pantone-360c-dark); }
+        
+        .waste-val {
+            font-weight: 800;
+            color: var(--waste-red);
+            background: var(--waste-red-bg);
+            padding: 2px 10px;
+            border-radius: 6px;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--pantone-360c);
+            border-radius: 4px;
+        }
+
+        /* KHU VỰC CHIA THEO NHIỀU CA LÀM VIỆC (SHIFT CONTAINERS) */
+        .shift-container {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 14px 16px;
+            margin-top: 12px;
+        }
+
+        .shift-title-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--text-title);
+            margin-bottom: 10px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 6px;
+        }
+
+        .shift-tag {
+            background: #111827;
+            color: #ffffff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-family: monospace;
+        }
+
+        /* VAI TRÒ / CHỨC DANH (ROLE BADGES) */
+        .role-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-left: 4px;
+        }
+
+        .role-to-truong { background: #111827; color: #facc15; border: 1px solid #eab308; }
+        .role-truong-may { background: #0284c7; color: #ffffff; }
+        .role-tho-be { background: #ea580c; color: #ffffff; }
+        .role-phu-may { background: #f3f4f6; color: #4b5563; border: 1px solid #d1d5db; }
+        .role-ky-thuat { background: #7c3aed; color: #ffffff; }
+
+        /* DANH SÁCH NHÂN SỰ NẰM NGANG DỄ NHÌN */
+        .workers-grid-row {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .worker-inline-card {
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            gap: 6px;
+        }
+
+        .worker-inline-card.is-leader {
+            border-color: #f59e0b;
+            background: #fffdf5;
+        }
+
+        .worker-row-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .worker-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar-sm {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--pantone-9061c);
+            color: var(--pantone-360c-dark);
+            font-weight: 800;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border: 1px solid rgba(63, 180, 53, 0.3);
+        }
+
+        .worker-name-inline {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--text-title);
+        }
+
+        .worker-id-badge {
+            font-size: 11px;
+            color: var(--text-muted);
+            background: #f3f4f6;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: 700;
+            margin-left: 2px;
+        }
+
+        .worker-report-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            background: var(--pantone-9061c-subtle);
+            border: 1px solid rgba(63, 180, 53, 0.2);
+            padding: 4px 12px;
+            border-radius: 12px;
+        }
+
+        .log-code { font-family: monospace; font-weight: 800; color: var(--pantone-360c-dark); }
+        .log-qty { font-weight: 800; color: var(--text-title); }
+
+        .tech-note-box {
+            font-size: 11.5px;
+            color: var(--note-amber);
+            background: var(--note-amber-bg);
+            border: 1px dashed rgba(217, 119, 6, 0.3);
+            padding: 6px 12px;
+            border-radius: 6px;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .cross-dept-alert {
+            margin-top: 12px;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-left: 4px solid var(--waste-red);
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 12px;
+            color: #991b1b;
+        }
+
+        .received-dept-notice {
+            margin-bottom: 14px;
+            background: #fef2f2;
+            border: 2px solid #ef4444;
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            color: #991b1b;
+            box-shadow: 0 2px 10px rgba(239, 68, 68, 0.1);
+        }
+
+        .notice-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-weight: 800;
+            margin-bottom: 6px;
+            border-bottom: 1px dashed #fecaca;
+            padding-bottom: 6px;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 28px 10px 10px 10px;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: auto;
+        }
+
+        footer a { color: var(--pantone-360c-dark); text-decoration: none; font-weight: 700; }
+        footer a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        
+        <!-- Header Đơn Hàng -->
+        <div class="app-bar">
+            <div>
+                <span class="order-badge">Báo Cáo Tiến Độ Ngành In</span>
+                <div class="order-id">Đơn Hàng: RFHT2608-120696</div>
+            </div>
+            <div class="order-meta-info">
+                <div>🏢 Khách hàng: <strong>WALMART</strong></div>
+                <div>🏷️ Mã Lệnh: <strong>20260909-001154-9469</strong></div>
+            </div>
+        </div>
+
+        <!-- Chi tiết sản phẩm Rộng rãi thoáng trên Máy tính -->
+        <div class="info-card">
+            <div class="card-header-title">
+                <span>📋 Thông tin lệnh sản xuất</span>
+            </div>
+            <div class="info-grid">
+                <div class="info-box">
+                    <div class="info-label">Sản phẩm</div>
+                    <div class="info-val">WNMU38001RFID</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label">Tổng số lượng đơn</div>
+                    <div class="info-val">100,000 con/nhãn</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label">Code kỹ thuật</div>
+                    <div class="info-val">2-454-413-000-00</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label">Phối màu Pantone</div>
+                    <div class="color-chips">
+                        <span class="color-tag tag-9061c">● Pantone 9061 C</span>
+                        <span class="color-tag tag-360c">● Pantone 360 C</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timeline Quy Trình Sản Xuất -->
+        <div class="timeline-card">
+            <div class="card-header-title">📍 Nhật ký tiến độ từng công đoạn</div>
+
+            <div class="timeline">
+
+                <!-- 1. Thiết Kế -->
+                <div class="timeline-step completed">
+                    <div class="step-node">✓</div>
+                    <div class="step-content">
+                        <div class="step-top">
+                            <span class="step-title">
+                                1. Thiết Kế (Pre-press)
+                                <span class="step-code-badge">A1-DES</span>
+                            </span>
+                            <span class="step-pill">Hoàn thành</span>
+                        </div>
+
+                        <div class="step-summary-box">
+                            <div class="summary-row">
+                                <span>Mục tiêu SL: <strong>100,000 SP</strong></span>
+                                <span>Sum SL: <span class="sum-val">100,000 SP (100%)</span></span>
+                                <span>Hư hỏng: <span class="waste-val">0 con</span></span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 100%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Báo cáo Ca Hành Chính -->
+                        <div class="shift-container">
+                            <div class="shift-title-header">
+                                <span>🕒 Ca Hành Chính</span>
+                                <span class="shift-tag">CA HÀNH CHÍNH</span>
+                            </div>
+                            <div class="workers-grid-row">
+                                <div class="worker-inline-card">
+                                    <div class="worker-row-top">
+                                        <div class="worker-left">
+                                            <div class="avatar-sm">DN</div>
+                                            <div>
+                                                <span class="worker-name-inline">Do Nguyen</span>
+                                                <span class="worker-id-badge">ID: 0107906</span>
+                                                <span class="role-badge role-ky-thuat">THIẾT KẾ</span>
+                                            </div>
+                                        </div>
+                                        <div class="worker-report-right">
+                                            📌 <span class="log-code">20260908-083015-1024</span>
+                                            <span class="log-qty">• 100,000 SP</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Kẽm -->
+                <div class="timeline-step completed">
+                    <div class="step-node">✓</div>
+                    <div class="step-content">
+                        <div class="step-top">
+                            <span class="step-title">
+                                2. Xuất Kẽm (CTP)
+                                <span class="step-code-badge">B2-CTP</span>
+                            </span>
+                            <span class="step-pill">Hoàn thành</span>
+                        </div>
+
+                        <div class="step-summary-box">
+                            <div class="summary-row">
+                                <span>Mục tiêu SL: <strong>4 Bộ kẽm</strong></span>
+                                <span>Sum SL: <span class="sum-val">4 Bộ (100%)</span></span>
+                                <span>Hư hỏng: <span class="waste-val">-1 kẽm</span></span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 100%;"></div>
+                            </div>
+                        </div>
+
+                        <div class="shift-container">
+                            <div class="shift-title-header">
+                                <span>🕒 Ca Ngày (Ca 1)</span>
+                                <span class="shift-tag">CA 1</span>
+                            </div>
+                            <div class="workers-grid-row">
+                                <div class="worker-inline-card">
+                                    <div class="worker-row-top">
+                                        <div class="worker-left">
+                                            <div class="avatar-sm">LA</div>
+                                            <div>
+                                                <span class="worker-name-inline">Lê Văn A</span>
+                                                <span class="worker-id-badge">ID: 0822104</span>
+                                                <span class="role-badge role-ky-thuat">KỸ THUẬT CTP</span>
+                                            </div>
+                                        </div>
+                                        <div class="worker-report-right">
+                                            📌 <span class="log-code">20260908-141522-5812</span>
+                                            <span class="log-qty">• 4 Bộ</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. IN ẤN - V9CMQH (CHIA LÀM NHIỀU CA: CA 2 & CA 3) -->
+                <div class="timeline-step processing">
+                    <div class="step-node">➔</div>
+                    <div class="step-content">
+                        <div class="step-top">
+                            <span class="step-title">
+                                3. In Ấn (Printing)
+                                <span class="step-code-badge">V9CMQH</span>
+                            </span>
+                            <span class="step-pill">Đang sản xuất</span>
+                        </div>
+
+                        <div class="step-summary-box">
+                            <div class="summary-row">
+                                <span>Mục tiêu SL: <strong>100,000 SP</strong></span>
+                                <span>Sum SL Lũy Kế (Các ca): <span class="sum-val">65,000 SP (65%)</span></span>
+                                <span>Tổng Hư hỏng: <span class="waste-val">-45 con</span></span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 65%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- ================= CA 2 ================= -->
+                        <div class="shift-container">
+                            <div class="shift-title-header">
+                                <span>🕒 Ca Chiều (Ca 2) — Đã hoàn thành ca</span>
+                                <span class="shift-tag">CA 2</span>
+                            </div>
+                            <div class="workers-grid-row">
+                                <div class="worker-inline-card">
+                                    <div class="worker-row-top">
+                                        <div class="worker-left">
+                                            <div class="avatar-sm">DN</div>
+                                            <div>
+                                                <span class="worker-name-inline">Do Nguyen</span>
+                                                <span class="worker-id-badge">ID: 0107906</span>
+                                                <span class="role-badge role-truong-may">⚡ TRƯỞNG MÁY</span>
+                                            </div>
+                                        </div>
+                                        <div class="worker-report-right">
+                                            📌 <span class="log-code">20260909-001154-9469</span>
+                                            <span class="log-qty">• +35,000 SP</span>
+                                            <span class="waste-val">-25</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ================= CA 3 ================= -->
+                        <div class="shift-container" style="border-color: var(--pantone-360c);">
+                            <div class="shift-title-header">
+                                <span>🕒 Ca Đêm (Ca 3) — Dan Le làm Tổ Trưởng trực tiếp</span>
+                                <span class="shift-tag" style="background: var(--pantone-360c);">CA 3 (ĐANG CHẠY)</span>
+                            </div>
+                            <div class="workers-grid-row">
+                                
+                                <!-- Dan Le (TỔ TRƯỞNG CA 3) -->
+                                <div class="worker-inline-card is-leader">
+                                    <div class="worker-row-top">
+                                        <div class="worker-left">
+                                            <div class="avatar-sm">DL</div>
+                                            <div>
+                                                <span class="worker-name-inline">Dan Le</span>
+                                                <span class="worker-id-badge">ID: 0511892</span>
+                                                <span class="role-badge role-to-truong">👑 TỔ TRƯỞNG</span>
+                                            </div>
+                                        </div>
+                                        <div class="worker-report-right">
+                                            📌 <span class="log-code">20260909-002046-2163</span>
+                                            <span class="log-qty">• +30,000 SP</span>
+                                            <span class="waste-val">-20</span>
+                                        </div>
+                                    </div>
+                                    <div class="tech-note-box">
+                                        ⚠️ <strong>Ghi chú kỹ thuật:</strong> Tay kê hông nhảy nhẹ, đã chỉnh lại cẩn thận.
+                                    </div>
+                                </div>
+
+                                <!-- Lê Văn A (PHỤ MÁY CA 3) -->
+                                <div class="worker-inline-card">
+                                    <div class="worker-row-top">
+                                        <div class="worker-left">
+                                            <div class="avatar-sm">LA</div>
+                                            <div>
+                                                <span class="worker-name-inline">Lê Văn A</span>
+                                                <span class="worker-id-badge">ID: 0822104</span>
+                                                <span class="role-badge role-phu-may">🛠️ PHỤ MÁY</span>
+                                            </div>
+                                        </div>
+                                        <div class="worker-report-right" style="opacity: 0.7;">
+                                            <span>Hỗ trợ cấp giấy Ca 3</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- LƯU Ý ĐÃ GỬI BỘ PHẬN THÀNH PHẨM -->
+                        <div class="cross-dept-alert">
+                            <div class="notice-header" style="border-bottom: none; padding-bottom: 0;">
+                                <span>📤 LƯU Ý ĐÃ GỬI BỘ PHẬN THÀNH PHẨM:</span>
+                                <span>20260909-002046-2163 — Dan Le (ID: 0511892)</span>
+                            </div>
+                            <div style="font-weight: 800; margin-top: 3px;">
+                                ⚠️ "Tô màu đỏ bị ké nhiều, bỏ dùm nhé!"
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- 4. THÀNH PHẨM -->
+                <div class="timeline-step pending">
+                    <div class="step-node">4</div>
+                    <div class="step-content">
+                        <div class="step-top">
+                            <span class="step-title">
+                                4. Thành Phẩm & QC
+                                <span class="step-code-badge">D4-FIN</span>
+                            </span>
+                            <span class="step-pill">Chờ xử lý</span>
+                        </div>
+
+                        <!-- LỜI NHẮN NHẬN ĐƯỢC NỔI BẬT ĐẦU KHÂU -->
+                        <div class="received-dept-notice">
+                            <div class="notice-header">
+                                <span>📩 THÔNG BÁO TỪ BỘ PHẬN IN ẤN (V9CMQH):</span>
+                                <span style="font-family: monospace; font-weight: 700;">20260909-002046-2163 — Dan Le (ID: 0511892)</span>
+                            </div>
+                            <div style="font-size: 13.5px; font-weight: 800; color: #b91c1c;">
+                                🚨 <strong>LƯU Ý GIA CÔNG KHẨN:</strong> "Tô màu đỏ bị ké nhiều, bỏ dùm nhé!"
+                            </div>
+                        </div>
+
+                        <div class="step-summary-box">
+                            <div class="summary-row">
+                                <span>Mục tiêu SL: <strong>100,000 SP</strong></span>
+                                <span>Sum SL: <span class="sum-val">0 SP (0%)</span></span>
+                                <span>Hư hỏng: <span class="waste-val">0 con</span></span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Dự kiến Ca Sáng hôm sau -->
+                        <div class="shift-container">
+                            <div class="shift-title-header">
+                                <span>🕒 Ca Sáng (Dự kiến tiếp nhận)</span>
+                                <span class="shift-tag">CA SÁNG HÔM SAU</span>
+                            </div>
+                            <div class="workers-grid-row">
+                                
+                                <div class="worker-inline-card is-leader">
+                                    <div class="worker-row-top">
+                                        <div class="worker-left">
+                                            <div class="avatar-sm">NM</div>
+                                            <div>
+                                                <span class="worker-name-inline">Nguyễn Thị Mai</span>
+                                                <span class="worker-id-badge">ID: 009823</span>
+                                                <span class="role-badge role-to-truong">👑 TỔ TRƯỞNG</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="worker-inline-card">
+                                    <div class="worker-row-top">
+                                        <div class="worker-left">
+                                            <div class="avatar-sm">TB</div>
+                                            <div>
+                                                <span class="worker-name-inline">Phạm Văn Bình</span>
+                                                <span class="worker-id-badge">ID: 0733190</span>
+                                                <span class="role-badge role-tho-be">✂️ THỢ BẾ</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tech-note-box">
+                                        ⚠️ <strong>Ghi chú:</strong> Thợ bế sẽ bế chuẩn bước chip RFID và lọc bỏ toàn bộ các con ké màu đỏ.
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Chân trang -->
+        <footer>
+            © 2026 Do Nguyen | 08082026-5948 - <a href="http://baocao.donguyen.net" target="_blank">baocao.donguyen.net</a>
+        </footer>
+
+    </div>
+
+</body>
+</html>
