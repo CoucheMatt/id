@@ -1,0 +1,1387 @@
+
+
+<!DOCTYPE html>
+
+<html lang="vi">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Form Nhập Liệu - Bổ Sung Số UP & Đơn Vị (Fix UID)</title>
+
+    <style>
+
+        /* Tông màu Pantone 360 C & 9021 C */
+
+        :root { 
+
+            --primary: #6CC24A; --primary-dark: #58A639; --secondary: #D4D0C7; 
+
+            --bg: #F8F9FA; --surface: #ffffff; --border: #E0E0E0; --text: #333333;
+
+        }
+
+        
+
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 10px; display: flex; flex-direction: column; align-items: center; }
+
+        .container { background-color: var(--surface); padding: 15px 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); width: 100%; max-width: 1550px; margin-bottom: 12px; box-sizing: border-box; border-top: 4px solid var(--primary); }
+
+        
+
+        h2, h3 { color: var(--primary-dark); text-transform: uppercase; margin: 0; font-size: 16px; font-weight: 800; letter-spacing: 0.5px;}
+
+        h2 { text-align: center; margin-bottom: 10px; }
+
+        .section-title { font-size: 13px; font-weight: bold; color: var(--primary-dark); border-bottom: 1px solid var(--secondary); padding-bottom: 4px; margin: 5px 0 10px; }
+
+        
+
+        /* Cấu Hình Chung */
+
+        .config-grid { display: grid; grid-template-columns: 0.8fr 0.7fr 2.5fr 1fr; gap: 8px; margin-bottom: 10px; }
+
+        label { font-weight: 600; font-size: 11px; color: #555; margin-bottom: 3px; display: block; text-transform: uppercase;}
+
+        input[type="text"], input[type="date"], input[type="number"], select { 
+
+            width: 100%; padding: 5px 8px; border: 1px solid var(--border); border-radius: 4px; 
+
+            font-size: 12px; box-sizing: border-box; height: 30px; background-color: #FAFAFA; transition: 0.2s;
+
+        }
+
+        input:focus, select:focus { outline: none; border-color: var(--primary); background-color: #fff; box-shadow: 0 0 0 2px rgba(108,194,74,0.2);}
+
+        
+
+        /* Form Nhập Liệu List */
+
+        .id-list { background: #fbfbfb; border: 1px dashed #ccc; padding: 8px; border-radius: 6px; }
+
+        .id-row { background: #fff; padding: 10px; border-radius: 5px; border: 1px solid var(--secondary); margin-bottom: 8px; transition: all 0.2s ease; border-left: 3px solid var(--primary); box-shadow: 0 1px 3px rgba(0,0,0,0.02);}
+
+        
+
+        .row-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+
+        .uid-badge { background: var(--secondary); color: #333; font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
+
+        .row-actions { display: flex; gap: 4px; }
+
+        .action-btn { background: #f1f3f5; border: 1px solid #ddd; color: #333; font-size: 11px; border-radius: 4px; cursor: pointer; padding: 3px 6px; display: flex; align-items: center; justify-content: center; height: 24px; font-weight: 600;}
+
+        .action-btn:hover { background: #e2e6ea; }
+
+        .action-btn.delete { color: #dc3545; background: #fff5f5; border-color: #ffc9c9;}
+
+        .action-btn.copy-up { color: #0056b3; background: #e2f0ff; border-color: #b8daff;}
+
+        
+
+        /* Điều chỉnh Grid cho 7 ô input */
+
+        .row-inputs { display: grid; gap: 8px; grid-template-columns: 1fr 0.6fr 1.2fr 1.5fr 0.5fr 0.8fr 0.8fr; margin-bottom: 6px; }
+
+        .row-notes { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; background: #f9f9f9; padding: 6px; border-radius: 4px; border: 1px solid #eee; }
+
+        .btn-toggle-all { background: var(--secondary); border: none; border-radius: 3px; cursor: pointer; font-size: 12px; padding: 4px 8px; font-weight: bold; color: #333; height: 26px; }
+
+        .cb-group { display: flex; gap: 10px; flex-wrap: wrap; }
+
+        .cb-item { display: flex; align-items: center; gap: 4px; font-size: 11px; cursor: pointer; margin: 0; color: #444; font-weight: 500;}
+
+        .cb-item input { width: 13px; height: 13px; margin: 0; accent-color: var(--primary);}
+
+        .note-input { flex-grow: 1; min-width: 150px; height: 26px !important; }
+
+        
+
+        @media (max-width: 1000px) { .row-inputs { grid-template-columns: 1fr 0.8fr 1fr 1fr 0.8fr; } }
+
+        @media (max-width: 768px) { .config-grid { grid-template-columns: 1fr 1fr; } .row-inputs { grid-template-columns: 1fr 1fr 1fr; } }
+
+        @media (max-width: 480px) { .row-notes { flex-direction: column; align-items: stretch; } .cb-group { justify-content: space-between; } .row-inputs { grid-template-columns: 1fr 1fr; } }
+
+
+
+        button.btn-add { background-color: var(--secondary); color: #333; padding: 8px 12px; border: 1px solid #bab5a9; border-radius: 4px; font-weight: bold; cursor: pointer; margin-top: 5px; font-size: 12px; }
+
+        button.btn-submit { background-color: var(--primary); width: 100%; padding: 12px; font-size: 14px; margin-top: 15px; border: none; border-radius: 5px; font-weight: bold; color: white; cursor: pointer; text-transform: uppercase; box-shadow: 0 2px 4px rgba(108,194,74,0.3); transition: 0.2s;}
+
+        button.btn-submit:hover { background-color: var(--primary-dark); transform: translateY(-1px);}
+
+        
+
+        /* Bảng Kết Quả */
+
+        .table-header-box { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;}
+
+        .search-box { padding: 6px 10px; font-size: 12px; border: 1px solid var(--border); border-radius: 20px; width: 320px; outline: none; background: #f4f6f8; transition: 0.3s;}
+
+        .search-box:focus { background: #fff; border-color: var(--primary); box-shadow: 0 0 5px rgba(108,194,74,0.3);}
+
+        
+
+        .table-responsive { overflow-x: auto; max-height: 550px; overflow-y: auto; border-radius: 6px; border: 1px solid #f0f0f0; box-shadow: 0 0 10px rgba(0,0,0,0.02);}
+
+        table { width: 100%; border-collapse: collapse; font-size: 11px; white-space: nowrap; margin: 0; background: #fff;}
+
+        th, td { border-bottom: 1px solid #f0f0f0; padding: 10px 8px; text-align: left; vertical-align: middle; }
+
+        th { background-color: #fafbfc; color: #666; position: sticky; top: 0; z-index: 1; text-transform: uppercase; font-size: 10px; font-weight: 700; border-bottom: 2px solid #eaeaea; letter-spacing: 0.5px;}
+
+        tr:hover { background-color: #f6fafe; }
+
+        
+
+        /* Gom Cột (Stacked) */
+
+        .td-stacked { display: flex; flex-direction: column; gap: 3px; justify-content: center;}
+
+        .txt-main { font-weight: bold; color: #222; font-size: 12px; }
+
+        .txt-sub-blue { color: #0052cc; font-size: 11px; font-style: italic; font-weight: 600;}
+
+        .txt-sub-gray { color: #888; font-size: 10px; display: flex; align-items: center; gap: 3px;}
+
+        .txt-sub-orange { color: #e67e22; font-size: 10px; text-transform: uppercase; font-weight: 600;}
+
+        .stt-cell { font-weight: bold; color: #555; text-align: center; }
+
+        
+
+        /* Edit inline hover effect */
+
+        .txt-main:hover[ondblclick], .txt-sub-blue:hover[ondblclick], .txt-sub-gray:hover[ondblclick], .txt-sub-orange:hover[ondblclick], td:hover[ondblclick] { background-color: #eaf5e1; cursor: pointer; border-radius: 2px; padding: 0 2px; margin: 0 -2px;}
+
+        .edit-input, .edit-select { width: 100%; box-sizing: border-box; padding: 2px 4px; border: 1px solid var(--primary); border-radius: 3px; font-size: 11px; outline: none; background: #fff;}
+
+        .edit-select { cursor: pointer; padding: 0 2px;}
+
+        
+
+        .text-wrap { white-space: normal; min-width: 100px; }
+
+        .note-wrap { white-space: normal; min-width: 120px; color: #7f8c8d; display: flex; justify-content: space-between; align-items: center; gap: 5px;}
+
+        .note-text { flex-grow: 1; }
+
+        .btn-copy-note { background: none; border: none; cursor: pointer; font-size: 12px; padding: 2px; border-radius: 3px; opacity: 0.6;}
+
+        .btn-copy-note:hover { background: #eee; opacity: 1;}
+
+        .new-row { background-color: #e8f5e9 !important; transition: 1s; }
+
+
+
+        /* Badges */
+
+        .code-badge { padding: 3px 6px; border-radius: 12px; font-weight: bold; font-size: 10px; color: #fff; display: inline-block;}
+
+        .code-9OT { background-color: #0052cc; } 
+
+        .code-9L0 { background-color: #6554c0; } 
+
+        .code-IDP { background-color: #ff991f; } 
+
+        .code-default { background-color: #7a869a; }
+
+        .size-badge { padding: 3px 6px; border-radius: 12px; font-weight: bold; font-size: 10px; color: #fff; display: inline-block; white-space: nowrap; background-color: #36b37e;}
+
+        .qty-badge { font-weight: bold; font-size: 12px; color: #172b4d;}
+
+        .action-cell { display: flex; flex-direction: column; gap: 4px; align-items: center;}
+
+
+
+        /* Footer */
+
+        .footer { margin-top: 15px; padding: 10px; text-align: center; font-size: 11px; color: #888; line-height: 1.6; width: 100%; max-width: 1250px; }
+
+        .footer a { color: var(--primary-dark); text-decoration: none; font-weight: bold; }
+
+        .footer a:hover { text-decoration: underline; }
+
+    </style>
+
+</head>
+
+<body>
+
+
+
+    <!-- Datalist Autocomplete -->
+
+    <datalist id="spCodeList"></datalist>
+
+    <datalist id="spNameList"></datalist>
+
+
+
+    <div class="container">
+
+        <h2>NHẬP LIỆU SẢN XUẤT</h2>
+
+        <form id="dataForm">
+
+            <div class="section-title">1. Cấu Hình Chung</div>
+
+            <div class="config-grid">
+
+                <div><label>Ngày</label><input type="date" id="dateInput" required></div>
+
+                <div><label>Ca</label>
+
+                    <select id="shift" required>
+
+                        <option value="CA 3">CA 3</option><option value="CA HC">CA HC</option>
+
+                        <option value="CA 1">CA 1</option><option value="CA 2">CA 2</option>
+
+                    </select>
+
+                </div>
+
+                <div><label>Vật Tư (KÍCH THƯỚC | MÃ VT | Đơn Vị | Thương Hiệu | Chi Tiết)</label>
+
+                    <select id="materialCode" required>
+
+                        <option value="">-- Chọn Vật Tư --</option>
+
+                        <option value="9OT105532" data-size="-" data-unit="Lít" data-brand="Platea" data-detail="Hóa Chất Rửa Bản, Chemicals">- | 9OT105532 | Lít | Platea | Hóa Chất Rửa Bản</option>
+
+                        <option value="9L000057-000-SM" data-size="660x745" data-unit="Tấm" data-brand="KAIZEN" data-detail="UV, PRO/OFF: Bản in TD9">660x745 | 9L000057-000-SM | Tấm | KAIZEN | UV, PRO/OFF</option>
+
+                        <option value="IDP105754" data-size="605 x 745" data-unit="Tấm" data-brand="IrisH" data-detail="DVO, Prepress, Plates">605 x 745 | IDP105754 | Tấm | IrisH | DVO, Prepress</option>
+
+                    </select>
+
+                </div>
+
+                <div><label>Người Dùng</label>
+
+                    <select id="username" required>
+
+                        <option value="">-- Chọn --</option>
+
+                        <option value="Do Nguyen">Do Nguyen</option><option value="Chi Nguyen">Chi Nguyen</option>
+
+                        <option value="An Tran">An Tran</option><option value="Binh Le">Binh Le</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="section-title">2. Danh Sách Đơn Hàng</div>
+
+            <div class="id-list" id="idContainer"></div>
+
+            <button type="button" class="btn-add" id="btnAddRow">➕ Thêm Dòng Nhập</button>
+
+            <button type="submit" class="btn-submit">💾 LƯU DỮ LIỆU</button>
+
+        </form>
+
+    </div>
+
+
+
+    <div class="container">
+
+        <div class="table-header-box">
+
+            <h3 style="display: flex; align-items: baseline; gap: 10px;">
+
+                Dữ Liệu Đã Nhập 
+
+                <span style="font-size: 11px; font-weight: normal; color: #888; text-transform: none;">*(Nhấp đôi chuột vào chữ để sửa)*</span>
+
+            </h3>
+
+            <input type="text" id="searchInput" class="search-box" placeholder="🔍 Tìm kiếm tự do bất kỳ dữ liệu nào...">
+
+        </div>
+
+        <div class="table-responsive">
+
+            <table id="dataTable">
+
+                <thead>
+
+                    <tr>
+
+                        <th style="width: 30px; text-align: center;">STT</th>
+
+                        <th>UID</th>
+
+                        <th>NGÀY / ID / TIMESTAMP</th>
+
+                        <th>CODE SP / SẢN PHẨM / SỐ UP</th>
+
+                        <th>MÃ VT / ĐƠN VỊ</th>
+
+                        <th>KÍCH THƯỚC</th>
+
+                        <th>THƯƠNG HIỆU</th>
+
+                        <th>CHI TIẾT VT</th>
+
+                        <th style="text-align: center;">TỔNG</th>
+
+                        <th>MÁY IN</th>
+
+                        <th>MÁY GHI</th>
+
+                        <th>GHI CHÚ</th>
+
+                        <th>NGƯỜI DÙNG / CA</th>
+
+                        <th style="text-align: center;">⚙️</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="resultBody">
+
+                    <!-- Javascript sẽ đổ data vào đây -->
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    
+
+    <div class="footer">
+
+        © 2026 Do Nguyen | CTP - UQ Basesheet - 20260909-5045 | 📊 Dữ liệu ID HoanThanh<br>
+
+        Email: <a href="mailto:rbis.vn.ctp.pp2@averydennison.com">rbis.vn.ctp.pp2@averydennison.com</a> | Tel: 3010<br>
+
+        Website: <a href="http://averydennison.com" target="_blank">averydennison.com</a>
+
+    </div>
+
+
+
+    <script>
+
+        // Data Gợi ý Tự Động
+
+        const materialsData = [
+
+            { code: "9OT105532", size: "-", unit: "Lít", brand: "Platea", detail: "Hóa Chất Rửa Bản, Chemicals", label: "- | 9OT105532 | Lít | Platea | Hóa Chất Rửa Bản" },
+
+            { code: "9L000057-000-SM", size: "660x745", unit: "Tấm", brand: "KAIZEN", detail: "UV, PRO/OFF: Bản in TD9", label: "660x745 | 9L000057-000-SM | Tấm | KAIZEN | UV, PRO/OFF" },
+
+            { code: "IDP105754", size: "605 x 745", unit: "Tấm", brand: "IrisH", detail: "DVO, Prepress, Plates", label: "605 x 745 | IDP105754 | Tấm | IrisH | DVO, Prepress" }
+
+        ];
+
+
+
+        const printers = ['5C2', '6C', 'CD1', 'CD2', 'CDUV', 'SC1', 'XL', 'CD3'];
+
+        const ctpMachines = ['MCU', 'SCU', 'Khác'];
+
+        const users = ['Do Nguyen', 'Chi Nguyen', 'An Tran', 'Binh Le'];
+
+        const shifts = ['CA 3', 'CA HC', 'CA 1', 'CA 2'];
+
+        const idContainer = document.getElementById('idContainer');
+
+
+
+        function getPrinterOptions() {
+
+            return `<option value="">-Máy In-</option>` + printers.map(p => `<option value="${p}">${p}</option>`).join('');
+
+        }
+
+        function getCtpOptions() {
+
+            return `<option value="">-Máy Ghi-</option>` + ctpMachines.map(p => `<option value="${p}">${p}</option>`).join('');
+
+        }
+
+        function generateUniqueId() {
+
+            return "U-" + Math.random().toString(36).substring(2, 7).toUpperCase();
+
+        }
+
+        function getFormattedDateTime() {
+
+            const now = new Date();
+
+            const y = now.getFullYear(), m = String(now.getMonth()+1).padStart(2,'0'), d = String(now.getDate()).padStart(2,'0');
+
+            const h = String(now.getHours()).padStart(2,'0'), min = String(now.getMinutes()).padStart(2,'0'), s = String(now.getSeconds()).padStart(2,'0');
+
+            return `${d}/${m}/${y} ${h}:${min}:${s}`;
+
+        }
+
+
+
+        function getCodeBadge(code) {
+
+            if(!code) return "";
+
+            let colorClass = "code-default";
+
+            if(code.startsWith("9OT")) colorClass = "code-9OT";
+
+            else if(code.startsWith("9L0")) colorClass = "code-9L0";
+
+            else if(code.startsWith("IDP")) colorClass = "code-IDP";
+
+            return `<span class="code-badge ${colorClass}">${code}</span>`;
+
+        }
+
+
+
+        const sizeColorMap = {};
+
+        const sizePalette = ['#36b37e', '#ff991f', '#0052cc', '#6554c0', '#ff5630', '#00b8d9'];
+
+        let paletteIndex = 0;
+
+
+
+        function getSizeBadge(size) {
+
+            let normalizedSize = (size || "").replace(/\\s+/g, '').toLowerCase();
+
+            if(normalizedSize === "" || normalizedSize === "-") return size; 
+
+            if(!sizeColorMap[normalizedSize]) {
+
+                sizeColorMap[normalizedSize] = sizePalette[paletteIndex % sizePalette.length];
+
+                paletteIndex++;
+
+            }
+
+            return `<span class="size-badge" style="background-color: ${sizeColorMap[normalizedSize]}">${size}</span>`;
+
+        }
+
+
+
+        function createRowElement() {
+
+            const uid = generateUniqueId();
+
+            const row = document.createElement('div');
+
+            row.className = 'id-row';
+
+            row.innerHTML = `
+
+                <div class="row-header">
+
+                    <span class="uid-badge">${uid}</span>
+
+                    <input type="hidden" name="uid[]" value="${uid}">
+
+                    <div class="row-actions">
+
+                        <button type="button" class="action-btn" onclick="moveUp(this)">⬆️</button>
+
+                        <button type="button" class="action-btn" onclick="moveDown(this)">⬇️</button>
+
+                        <button type="button" class="action-btn" onclick="duplicateRow(this)">📑</button>
+
+                        <button type="button" class="action-btn delete" onclick="removeRow(this)">❌</button>
+
+                    </div>
+
+                </div>
+
+                <div class="row-inputs">
+
+                    <input type="text" name="orderId[]" required placeholder="ID Đơn (VD: #D15155)">
+
+                    <input type="text" name="itemUp[]" maxlength="6" pattern="\\d*" inputmode="numeric" placeholder="Số UP (VD: 12)">
+
+                    <input type="text" name="itemCode[]" required list="spCodeList" placeholder="Code SP (Nhập gợi ý)">
+
+                    <input type="text" name="itemId[]" required list="spNameList" placeholder="Sản Phẩm (Nhập gợi ý)">
+
+                    <input type="number" name="itemQty[]" required min="1" placeholder="SL">
+
+                    <select name="itemPrinter[]">${getPrinterOptions()}</select>
+
+                    <select name="itemCtp[]">${getCtpOptions()}</select>
+
+                </div>
+
+                <div class="row-notes">
+
+                    <button type="button" class="btn-toggle-all" onclick="toggleAllCheckboxes(this)" title="Chọn/Bỏ chọn tất cả">☑</button>
+
+                    <div class="cb-group">
+
+                        <label class="cb-item"><input type="checkbox" value="01. Bay kẽm" class="note-cb"> 01. Bay kẽm</label>
+
+                        <label class="cb-item"><input type="checkbox" value="02. Trầy kẽm" class="note-cb"> 02. Trầy kẽm</label>
+
+                        <label class="cb-item"><input type="checkbox" value="03. Bắt màng" class="note-cb"> 03. Bắt màng</label>
+
+                    </div>
+
+                    <input type="text" class="note-input" name="itemCustomNote[]" placeholder="Dán (Ctrl+V) ghi chú vào đây...">
+
+                </div>
+
+            `;
+
+            return row;
+
+        }
+
+
+
+        function toggleAllCheckboxes(btn) {
+
+            const rowNotes = btn.closest('.row-notes');
+
+            const checkboxes = rowNotes.querySelectorAll('.note-cb');
+
+            const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+
+            checkboxes.forEach(cb => cb.checked = !allChecked);
+
+            btn.style.backgroundColor = !allChecked ? "var(--primary)" : "var(--secondary)";
+
+            btn.style.color = !allChecked ? "#fff" : "#333";
+
+        }
+
+
+
+        function appendEmptyRow() { idContainer.appendChild(createRowElement()); }
+
+        function removeRow(btn) { 
+
+            btn.closest('.id-row').remove(); 
+
+            if (idContainer.children.length === 0) appendEmptyRow(); 
+
+        }
+
+        function moveUp(btn) { const r = btn.closest('.id-row'); if (r.previousElementSibling) r.parentNode.insertBefore(r, r.previousElementSibling); }
+
+        function moveDown(btn) { const r = btn.closest('.id-row'); if (r.nextElementSibling) r.parentNode.insertBefore(r.nextElementSibling, r); }
+
+        
+
+        function duplicateRow(btn) {
+
+            const current = btn.closest('.id-row');
+
+            const clone = createRowElement();
+
+            clone.querySelector('input[name="orderId[]"]').value = current.querySelector('input[name="orderId[]"]').value;
+
+            clone.querySelector('input[name="itemUp[]"]').value = current.querySelector('input[name="itemUp[]"]').value;
+
+            clone.querySelector('input[name="itemCode[]"]').value = current.querySelector('input[name="itemCode[]"]').value;
+
+            clone.querySelector('input[name="itemId[]"]').value = current.querySelector('input[name="itemId[]"]').value;
+
+            clone.querySelector('input[name="itemQty[]"]').value = current.querySelector('input[name="itemQty[]"]').value;
+
+            clone.querySelector('select[name="itemPrinter[]"]').value = current.querySelector('select[name="itemPrinter[]"]').value;
+
+            clone.querySelector('select[name="itemCtp[]"]').value = current.querySelector('select[name="itemCtp[]"]').value;
+
+            clone.querySelector('input[name="itemCustomNote[]"]').value = current.querySelector('input[name="itemCustomNote[]"]').value;
+
+            
+
+            const checkedBoxes = Array.from(current.querySelectorAll('.note-cb:checked')).map(cb => cb.value);
+
+            clone.querySelectorAll('.note-cb').forEach(cb => { if (checkedBoxes.includes(cb.value)) cb.checked = true; });
+
+            current.parentNode.insertBefore(clone, current.nextSibling);
+
+        }
+
+
+
+        function updateSTT() {
+
+            const rows = document.querySelectorAll('#resultBody tr');
+
+            rows.forEach((row, index) => {
+
+                row.querySelector('.stt-cell').innerText = rows.length - index; 
+
+            });
+
+        }
+
+
+
+        function filterTable() {
+
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+            const currentUser = document.getElementById('username').value;
+
+            const rows = document.querySelectorAll('#resultBody tr');
+
+
+
+            rows.forEach(row => {
+
+                const rowText = row.innerText.toLowerCase(); 
+
+                const userStr = row.querySelector('.val-user').innerText; 
+
+
+
+                const matchSearch = rowText.includes(searchTerm);
+
+                const matchUser = currentUser === "" || userStr === currentUser;
+
+
+
+                if (matchSearch && matchUser) row.style.display = '';
+
+                else row.style.display = 'none';
+
+            });
+
+        }
+
+        document.getElementById('searchInput').addEventListener('input', filterTable);
+
+        document.getElementById('username').addEventListener('change', filterTable);
+
+
+
+        function copyNoteText(btn) {
+
+            const textToCopy = btn.previousElementSibling.innerText;
+
+            if (!textToCopy) return;
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+
+                btn.innerText = '✅'; setTimeout(() => btn.innerText = '📋', 1500);
+
+            });
+
+        }
+
+
+
+        // COPY NGƯỢC LÊN FORM
+
+        function copyToForm(btn) {
+
+            const row = btn.closest('tr');
+
+            
+
+            const orderId = row.querySelector('.val-orderId').innerText.trim();
+
+            const itemCode = row.querySelector('.val-itemCode').innerText.trim();
+
+            const itemId = row.querySelector('.val-itemId').innerText.replace('SP: ', '').trim();
+
+            
+
+            const upNode = row.querySelector('.val-up');
+
+            const itemUp = upNode ? upNode.innerText.replace('UP: ', '').trim() : '';
+
+
+
+            const qty = row.querySelector('.val-qty').innerText.trim();
+
+            const printer = row.querySelector('.val-printer').innerText.trim();
+
+            const ctp = row.querySelector('.val-ctp').innerText.trim();
+
+            const noteSpan = row.querySelector('.note-text');
+
+            const noteText = noteSpan ? noteSpan.innerText.trim() : "";
+
+
+
+            const newRow = createRowElement();
+
+            document.getElementById('idContainer').appendChild(newRow);
+
+
+
+            newRow.querySelector('input[name="orderId[]"]').value = orderId;
+
+            newRow.querySelector('input[name="itemUp[]"]').value = itemUp;
+
+            newRow.querySelector('input[name="itemCode[]"]').value = itemCode;
+
+            newRow.querySelector('input[name="itemId[]"]').value = itemId;
+
+            newRow.querySelector('input[name="itemQty[]"]').value = qty;
+
+            newRow.querySelector('select[name="itemPrinter[]"]').value = printer;
+
+            newRow.querySelector('select[name="itemCtp[]"]').value = ctp;
+
+
+
+            const noteParts = noteText.split(',').map(s => s.trim()).filter(s => s);
+
+            const checkboxes = newRow.querySelectorAll('.note-cb');
+
+            const customNoteParts = [];
+
+
+
+            noteParts.forEach(part => {
+
+                let matched = false;
+
+                checkboxes.forEach(cb => {
+
+                    if (cb.value === part) { cb.checked = true; matched = true; }
+
+                });
+
+                if (!matched) customNoteParts.push(part);
+
+            });
+
+
+
+            if (customNoteParts.length > 0) {
+
+                newRow.querySelector('input[name="itemCustomNote[]"]').value = customNoteParts.join(', ');
+
+            }
+
+            
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        }
+
+
+
+        // EDIT INLINE (NHẤP ĐÔI)
+
+        function editCell(cell, type) {
+
+            if (cell.querySelector('.edit-input') || cell.querySelector('.edit-select')) return; 
+
+            
+
+            let originalText = cell.innerText.trim();
+
+            if (type === 'itemId' && originalText.startsWith('SP: ')) originalText = originalText.replace('SP: ', '');
+
+            if (type === 'up' && originalText.startsWith('UP: ')) originalText = originalText.replace('UP: ', '');
+
+            if (type === 'shift' && originalText.startsWith('CA LÀM VIỆC: ')) originalText = originalText.replace('CA LÀM VIỆC: ', '');
+
+            if (type === 'matCode') originalText = cell.closest('td').getAttribute('data-code');
+
+            if (type === 'timestamp') originalText = originalText.replace('🕒 ', '');
+
+            if (type === 'note') {
+
+                const noteSpan = cell.querySelector('.note-text');
+
+                originalText = noteSpan ? noteSpan.innerText.trim() : "";
+
+            }
+
+            
+
+            const originalHTML = cell.innerHTML; 
+
+            let input;
+
+
+
+            if (['matCode', 'printer', 'ctp', 'shift', 'user'].includes(type)) {
+
+                input = document.createElement('select');
+
+                input.className = 'edit-select';
+
+                
+
+                let optionsList = [];
+
+                if (type === 'printer') optionsList = printers;
+
+                else if (type === 'ctp') optionsList = ctpMachines;
+
+                else if (type === 'shift') optionsList = shifts;
+
+                else if (type === 'user') optionsList = users;
+
+                
+
+                if (type === 'matCode') {
+
+                    materialsData.forEach(mat => {
+
+                        const optionElement = new Option(mat.label, mat.code, false, mat.code === originalText);
+
+                        input.add(optionElement);
+
+                    });
+
+                } else {
+
+                    optionsList.forEach(opt => {
+
+                        const optionElement = new Option(opt, opt, false, opt === originalText);
+
+                        input.add(optionElement);
+
+                    });
+
+                }
+
+            } else {
+
+                input = document.createElement('input');
+
+                input.type = (type === 'qty') ? 'number' : 'text';
+
+                if(type === 'up') { input.maxLength = 6; input.pattern = "\\d*"; }
+
+                input.value = originalText;
+
+                input.className = 'edit-input';
+
+            }
+
+            
+
+            cell.innerHTML = '';
+
+            cell.appendChild(input);
+
+            input.focus();
+
+            
+
+            const saveEdit = () => {
+
+                const newVal = input.value.trim();
+
+                if(newVal === originalText && type !== 'matCode') {
+
+                    cell.innerHTML = originalHTML; 
+
+                    return;
+
+                }
+
+                
+
+                if (type === 'matCode') {
+
+                    const selectedMat = materialsData.find(m => m.code === newVal);
+
+                    if (selectedMat) {
+
+                        cell.closest('td').setAttribute('data-code', newVal);
+
+                        cell.innerHTML = getCodeBadge(newVal);
+
+                        
+
+                        const row = cell.closest('tr');
+
+                        row.querySelector('.col-size').innerHTML = getSizeBadge(selectedMat.size);
+
+                        row.querySelector('.col-brand').innerHTML = `<b>${selectedMat.brand}</b>`;
+
+                        row.querySelector('.col-detail').innerHTML = selectedMat.detail;
+
+                        row.querySelector('.val-unit').innerText = selectedMat.unit;
+
+                    } else cell.innerHTML = originalHTML; 
+
+                } 
+
+                else if (type === 'itemId') cell.innerHTML = `SP: ${newVal}`;
+
+                else if (type === 'up') cell.innerHTML = newVal ? `UP: ${newVal}` : '';
+
+                else if (type === 'shift') cell.innerHTML = `CA LÀM VIỆC: ${newVal}`;
+
+                else if (type === 'timestamp') cell.innerHTML = `🕒 ${newVal}`;
+
+                else if (type === 'printer' || type === 'ctp') cell.innerHTML = `<b>${newVal}</b>`;
+
+                else if (type === 'note') {
+
+                    let html = `<span class="note-text">${newVal}</span>`;
+
+                    if(newVal) html += `<button type="button" class="btn-copy-note" onclick="copyNoteText(this)" title="Copy">📋</button>`;
+
+                    cell.innerHTML = html;
+
+                } else {
+
+                    cell.innerText = newVal;
+
+                }
+
+                
+
+                if(type === 'user') filterTable(); 
+
+            };
+
+            
+
+            input.addEventListener('blur', saveEdit);
+
+            input.addEventListener('keydown', (e) => {
+
+                if (e.key === 'Enter') input.blur();
+
+                if (e.key === 'Escape') cell.innerHTML = originalHTML;
+
+            });
+
+        }
+
+
+
+        function deleteSavedRow(btn) {
+
+            if(confirm("Bạn có chắc chắn muốn xóa dòng dữ liệu này?")) {
+
+                const row = btn.closest('tr');
+
+                row.style.background = '#ffe3e3';
+
+                row.style.transition = '0.3s';
+
+                setTimeout(() => { row.remove(); updateSTT(); }, 300);
+
+            }
+
+        }
+
+
+
+        // TẠO ROW HTML - Đã bọc div để ngăn lỗi table-cell
+
+        function createResultRowHTML(data) {
+
+            let noteHTML = `<span class="note-text">${data.note}</span>`;
+
+            if(data.note) noteHTML += `<button type="button" class="btn-copy-note" onclick="copyNoteText(this)" title="Copy">📋</button>`;
+
+
+
+            let upHTML = data.up ? `<div class="txt-sub-gray val-up" ondblclick="editCell(this, 'up')">UP: ${data.up}</div>` : `<div class="txt-sub-gray val-up" ondblclick="editCell(this, 'up')"></div>`;
+
+
+
+            return `
+
+                <td class="stt-cell"></td>
+
+                <td><span style="color:#888; font-size:10px; font-weight:bold;">${data.uid}</span></td>
+
+                <td>
+
+                    <div class="td-stacked">
+
+                        <div class="txt-main val-date" ondblclick="editCell(this, 'text')">${data.date}</div>
+
+                        <div class="txt-sub-blue val-orderId" ondblclick="editCell(this, 'text')">${data.orderId}</div>
+
+                        <div class="txt-sub-gray val-timestamp" ondblclick="editCell(this, 'timestamp')">🕒 ${data.timestamp}</div>
+
+                    </div>
+
+                </td>
+
+                <td>
+
+                    <div class="td-stacked">
+
+                        <div class="txt-main val-itemCode" ondblclick="editCell(this, 'text')">${data.itemCode}</div>
+
+                        <div class="txt-sub-orange val-itemId" ondblclick="editCell(this, 'itemId')">SP: ${data.itemId}</div>
+
+                        ${upHTML}
+
+                    </div>
+
+                </td>
+
+                <td data-code="${data.matCode}">
+
+                    <div class="td-stacked" style="align-items: flex-start;">
+
+                        <div class="col-matCode" ondblclick="editCell(this, 'matCode')">${getCodeBadge(data.matCode)}</div>
+
+                        <div class="txt-sub-gray val-unit" style="font-size: 10px; margin-top:2px;">${data.matUnit}</div>
+
+                    </div>
+
+                </td>
+
+                <td class="col-size">${getSizeBadge(data.matSize)}</td>
+
+                <td class="col-brand"><b>${data.matBrand}</b></td>
+
+                <td class="col-detail text-wrap">${data.matDetail}</td>
+
+                
+
+                <td align="center"><span class="qty-badge val-qty" ondblclick="editCell(this, 'qty')">${data.qty}</span></td>
+
+                <td class="val-printer" ondblclick="editCell(this, 'printer')"><b>${data.ptr}</b></td>
+
+                <td class="val-ctp" ondblclick="editCell(this, 'ctp')"><b>${data.ctp}</b></td>
+
+                <td ondblclick="editCell(this, 'note')">
+
+                    <div class="note-wrap">${noteHTML}</div>
+
+                </td>
+
+                <td>
+
+                    <div class="td-stacked">
+
+                        <div class="txt-main val-user" ondblclick="editCell(this, 'user')">${data.usr}</div>
+
+                        <div class="txt-sub-gray val-shift" ondblclick="editCell(this, 'shift')" style="text-transform:uppercase;">CA LÀM VIỆC: ${data.sft}</div>
+
+                    </div>
+
+                </td>
+
+                <td>
+
+                    <div class="action-cell">
+
+                        <button type="button" class="action-btn copy-up" onclick="copyToForm(this)" title="Đưa dữ liệu lên Form để nhập lại">⬆️ Form</button>
+
+                        <button type="button" class="action-btn delete" onclick="deleteSavedRow(this)" title="Xóa dòng này">❌</button>
+
+                    </div>
+
+                </td>
+
+            `;
+
+        }
+
+
+
+        // TÁCH MÃ CODE & TÊN SP TỪ DATA DEMO CŨ 59 MÓN
+
+        const rawDemoStrings = [
+
+            "Do Nguyen|2-442-897-000-00", "CTP - UQ Basesheet|2-512-919-000-00", "Tran vach Panel|2-576-102-000-00", "Adobe Photoshop 7|2-570-950-000-00",
+
+            "CorelDRAW 12|2-476-897-000-00", "Adobe Illustrator CS|2-553-442-000-00", "Adobe Acrobat 7|2-543-912-000-00", "PowerShell|2-400-371-000-00",
+
+            "Google Apps Script|2-447-150-000-00", "JavaScript|2-479-938-000-00", "Action|2-462-569-000-00", "In QK7|2-534-290-000-00",
+
+            "In Hai Au|2-429-736-000-00", "Giay Phong Thai|2-584-859-000-00", "Giay Lan Vi|2-579-264-000-00", "Giay Phung Vinh Hung|2-579-110-000-00",
+
+            "Giay Khai Hoan|2-558-768-000-00", "Bao Bi Lam Hung|2-406-825-000-00", "Xuat Phim 43 Ho Van Hue|2-428-685-000-00", "Che Ban MTD|2-529-569-000-00",
+
+            "Che Ban SG3|2-446-243-000-00", "Che Ban KTC|2-586-652-000-00", "Google Workspace|2-583-775-000-00", "Google Search|2-556-589-000-00",
+
+            "Gemini|2-477-129-000-00", "Google Lens|2-403-367-000-00", "Gmail|2-459-374-000-00", "Google Drive|2-459-681-000-00",
+
+            "Google Docs|2-425-542-000-00", "Google Sheets|2-564-450-000-00", "Google Slides|2-562-582-000-00", "Google Forms|2-490-987-000-00",
+
+            "Google Meet|2-490-536-000-00", "Google Calendar|2-494-871-000-00", "Google Keep|2-510-470-000-00", "Google Sites|2-484-206-000-00",
+
+            "YouTube|2-502-321-000-00", "YouTube Music|2-599-406-000-00", "Google News|2-560-370-000-00", "Google Books|2-552-754-000-00",
+
+            "Google Maps|2-570-818-000-00", "Google Earth|2-461-794-000-00", "Google Translate|2-433-396-000-00", "Google Photos|2-503-812-000-00",
+
+            "Google Wallet|2-466-391-000-00", "Android|2-556-876-000-00", "Google Chrome|2-567-809-000-00", "ChromeOS|2-589-850-000-00",
+
+            "Google Play Store|2-555-794-000-00", "Google Pixel|2-486-401-000-00", "Pixel Watch|2-522-304-000-00", "Google Nest|2-541-266-000-00",
+
+            "Chromecast|2-426-906-000-00", "Google Cloud Platform|2-588-620-000-00", "Google Ads|2-531-905-000-00", "Google Analytics|2-418-372-000-00",
+
+            "Google AdSense|2-529-506-000-00", "Google Business Profile|2-582-557-000-00", "Firebase|2-527-296-000-00"
+
+        ];
+
+
+
+        // KHÔI PHỤC DATA CŨ TỪ HÌNH ẢNH TRƯỚC ĐÓ 
+
+        const historicalData = [
+
+            { uid: 'U-1A2B3', date: '08/09/2026', orderId: '#D1515586', up: '12', itemCode: '96002374', itemId: '-', matCode: '9L000057-000-SM', matUnit: 'Tấm', matSize: '660x745', matBrand: 'KAIZEN', matDetail: 'UV, PRO/OFF', qty: 2, ptr: '5C2', ctp: '', note: '', timestamp: '08/09/2026 11:59:00', sft: 'CA HC', usr: 'Chi Nguyen' },
+
+            { uid: 'U-4C5D6', date: '08/09/2026', orderId: '#D1513631', up: '2', itemCode: '96002374', itemId: '-', matCode: '9L000057-000-SM', matUnit: 'Tấm', matSize: '660x745', matBrand: 'KAIZEN', matDetail: 'UV, PRO/OFF', qty: 2, ptr: '5C2', ctp: '', note: 'tk2', timestamp: '08/09/2026 11:59:00', sft: 'CA HC', usr: 'Chi Nguyen' },
+
+            { uid: 'U-7E8F9', date: '08/09/2026', orderId: '#D1516856', up: '', itemCode: '5587365', itemId: '-', matCode: '9OT105532', matUnit: 'Lít', matSize: '-', matBrand: 'Platea', matDetail: 'Hóa Chất Rửa Bản', qty: 3, ptr: '5C2', ctp: '', note: '', timestamp: '08/09/2026 12:02:00', sft: 'CA HC', usr: 'Chi Nguyen' },
+
+            { uid: 'U-0G1H2', date: '17/08/2026', orderId: '#RFHT-CB-2607-115420-BU', up: '1', itemCode: 'WNMU38004RFID', itemId: 'RBO: WALMART', matCode: 'IDP105754', matUnit: 'Tấm', matSize: '605 x 745', matBrand: 'IrisH', matDetail: 'DVO, Prepress', qty: 7, ptr: 'CD3', ctp: 'SCU', note: '20448429, Plus', timestamp: '17/08/2026 20:07:41', sft: 'CA 3', usr: 'Do Nguyen' },
+
+            { uid: 'U-3I4J5', date: '17/08/2026', orderId: '#RFHT2608-120596', up: '4', itemCode: 'WNMU38001RFID', itemId: 'RBO: WALMART', matCode: 'IDP105754', matUnit: 'Tấm', matSize: '605 x 745', matBrand: 'IrisH', matDetail: 'DVO, Prepress', qty: 6, ptr: 'CD3', ctp: 'SCU', note: '20381492, Husky', timestamp: '17/08/2026 20:15:14', sft: 'CA 3', usr: 'Do Nguyen' },
+
+            { uid: 'U-6K7L8', date: '21/08/2026', orderId: '#RFHT-CB-2608-122202', up: '6', itemCode: 'WNMU38003RFID', itemId: 'RBO: WALMART', matCode: 'IDP105754', matUnit: 'Tấm', matSize: '605 x 745', matBrand: 'IrisH', matDetail: 'DVO, Prepress', qty: 9, ptr: '5C1', ctp: 'SCU', note: '20584290, TK3', timestamp: '21/08/2026 18:37:59', sft: 'CA 3', usr: 'Do Nguyen' },
+
+            { uid: 'U-9M0N1', date: "29/08/2026", orderId: "#D1511773", up: '', itemCode: "A(HT)MK24-26072638-01", itemId: "RBO: DISNEY", matCode: "IDP105754", matUnit: 'Tấm', matSize: "605 x 745", matBrand: "IrisH", matDetail: "DVO, Prepress", qty: 8, ptr: "XL", ctp: 'MCU', note: "", timestamp: "29/08/2026 13:18:51", sft: "CA 1", usr: "Do Nguyen" },
+
+            { uid: 'U-2O3P4', date: "07/09/2026", orderId: "#D1511773", up: '', itemCode: "A(HT)MK24-26072638-01", itemId: "RBO: DISNEY", matCode: "IDP105754", matUnit: 'Tấm', matSize: "605 x 745", matBrand: "IrisH", matDetail: "DVO, Prepress", qty: 8, ptr: "XL", ctp: 'MCU', note: "Đã RIP Trắng, a Phát...", timestamp: "07/09/2026 10:31:00", sft: "CA HC", usr: "Chi Nguyen" }
+
+        ];
+
+
+
+        function populateDatalists() {
+
+            const codeList = document.getElementById('spCodeList');
+
+            const nameList = document.getElementById('spNameList');
+
+            
+
+            rawDemoStrings.forEach(str => {
+
+                const parts = str.split('|');
+
+                const optCode = document.createElement('option');
+
+                optCode.value = parts[1];
+
+                codeList.appendChild(optCode);
+
+                
+
+                const optName = document.createElement('option');
+
+                optName.value = parts[0];
+
+                nameList.appendChild(optName);
+
+            });
+
+        }
+
+
+
+        function populateDemoTable() {
+
+            const tbody = document.getElementById('resultBody');
+
+
+
+            historicalData.forEach(data => {
+
+                const tr = document.createElement('tr');
+
+                tr.innerHTML = createResultRowHTML(data);
+
+                tbody.prepend(tr); 
+
+            });
+
+            updateSTT();
+
+        }
+
+
+
+        window.onload = function() {
+
+            const y = new Date().getFullYear(), m = String(new Date().getMonth()+1).padStart(2,'0'), d = String(new Date().getDate()).padStart(2,'0');
+
+            document.getElementById('dateInput').value = `${y}-${m}-${d}`;
+
+            if(localStorage.getItem('svShift')) document.getElementById('shift').value = localStorage.getItem('svShift');
+
+            if(localStorage.getItem('svMat')) document.getElementById('materialCode').value = localStorage.getItem('svMat');
+
+            if(localStorage.getItem('svUsr')) document.getElementById('username').value = localStorage.getItem('svUsr');
+
+            
+
+            populateDatalists();
+
+            appendEmptyRow();
+
+            populateDemoTable();
+
+            filterTable();
+
+        };
+
+
+
+        document.getElementById('dataForm').addEventListener('submit', function(e) {
+
+            e.preventDefault();
+
+            const matSelect = document.getElementById('materialCode');
+
+            localStorage.setItem('svShift', document.getElementById('shift').value);
+
+            localStorage.setItem('svMat', matSelect.value);
+
+            localStorage.setItem('svUsr', document.getElementById('username').value);
+
+
+
+            const shift = document.getElementById('shift').value;
+
+            const user = document.getElementById('username').value;
+
+            const date = document.getElementById('dateInput').value.split('-').reverse().join('/'); 
+
+            
+
+            const selectedOpt = matSelect.options[matSelect.selectedIndex];
+
+            const matCode = selectedOpt.value;
+
+            const matUnit = selectedOpt.getAttribute('data-unit') || "";
+
+            const matSize = selectedOpt.getAttribute('data-size') || "";
+
+            const matBrand = selectedOpt.getAttribute('data-brand') || "";
+
+            const matDetail = selectedOpt.getAttribute('data-detail') || "";
+
+
+
+            const resultBody = document.getElementById('resultBody');
+
+            
+
+            const rows = document.querySelectorAll('.id-row');
+
+            for(let i = rows.length - 1; i >= 0; i--) {
+
+                const r = rows[i];
+
+                let finalNote = Array.from(r.querySelectorAll('.note-cb:checked')).map(cb => cb.value).join(', ');
+
+                const custom = r.querySelector('input[name="itemCustomNote[]"]').value.trim();
+
+                if(custom) finalNote = finalNote ? `${finalNote}, ${custom}` : custom;
+
+
+
+                const data = {
+
+                    uid: r.querySelector('input[name="uid[]"]').value,
+
+                    date: date,
+
+                    orderId: r.querySelector('input[name="orderId[]"]').value,
+
+                    itemUp: r.querySelector('input[name="itemUp[]"]').value,
+
+                    itemCode: r.querySelector('input[name="itemCode[]"]').value,
+
+                    itemId: r.querySelector('input[name="itemId[]"]').value,
+
+                    matCode: matCode,
+
+                    matUnit: matUnit,
+
+                    matSize: matSize,
+
+                    matBrand: matBrand,
+
+                    matDetail: matDetail,
+
+                    qty: r.querySelector('input[name="itemQty[]"]').value,
+
+                    ptr: r.querySelector('select[name="itemPrinter[]"]').value,
+
+                    ctp: r.querySelector('select[name="itemCtp[]"]').value,
+
+                    note: finalNote,
+
+                    timestamp: getFormattedDateTime(),
+
+                    sft: shift,
+
+                    usr: user
+
+                };
+
+
+
+                const tr = document.createElement('tr'); 
+
+                tr.className = 'new-row'; 
+
+                tr.innerHTML = createResultRowHTML(data);
+
+                resultBody.prepend(tr); 
+
+            }
+
+            
+
+            this.reset(); idContainer.innerHTML = ''; 
+
+            setTimeout(() => {
+
+                document.querySelectorAll('.new-row').forEach(el => el.classList.remove('new-row'));
+
+            }, 2000);
+
+            appendEmptyRow();
+
+            
+
+            const nw = new Date(); document.getElementById('dateInput').value = `${nw.getFullYear()}-${String(nw.getMonth()+1).padStart(2,'0')}-${String(nw.getDate()).padStart(2,'0')}`;
+
+            document.getElementById('shift').value = localStorage.getItem('svShift');
+
+            document.getElementById('materialCode').value = localStorage.getItem('svMat');
+
+            document.getElementById('username').value = localStorage.getItem('svUsr');
+
+            
+
+            updateSTT();
+
+            filterTable();
+
+        });
+
+    </script>
+
+</body>
+
+</html>
