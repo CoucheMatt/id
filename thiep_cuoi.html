@@ -8,17 +8,32 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* BẢNG MÀU PANTONE CHUẨN:
-       - Pantone 360 C (Xanh lá): #60B246
-       - Pantone 9061 C (Kem nhạt): #F7F4E9
-       - Pantone 021 C (Cam tươi): #FE5000
-    */
+    /* BẢNG MÀU PANTONE ĐƯỢC CHUYỂN ĐỔI SANG HEX CHO WEB */
     :root {
-      --pantone-green: #60B246;
-      --pantone-cream: #F7F4E9;
-      --pantone-orange: #FE5000;
+      /* Mặc định: Tông màu 360 C, 9061 C, 021 C */
+      --pantone-green: #60B246; /* 360 C */
+      --pantone-cream: #F7F4E9; /* 9061 C */
+      --pantone-orange: #FE5000; /* 021 C */
       --text-dark: #2B3322;
       --text-muted: #5C6652;
+    }
+
+    body.theme-2 {
+      /* Tông màu 221C, 7528C, 7630C */
+      --pantone-green: #901639; /* 221 C */
+      --pantone-cream: #F1EDE4; /* 7528 C (Được làm sáng để dễ đọc chữ) */
+      --pantone-orange: #61222E; /* 7630 C */
+      --text-dark: #2B161A;
+      --text-muted: #5E4B4F;
+    }
+
+    body.theme-3 {
+      /* Tông màu 568C, 7545C, 7762C */
+      --pantone-green: #1C463F; /* 568 C */
+      --pantone-cream: #EBECEE; /* 7545 C (Được làm sáng để dễ đọc chữ) */
+      --pantone-orange: #616F39; /* 7762 C */
+      --text-dark: #1E2325;
+      --text-muted: #454E53;
     }
 
     * {
@@ -30,28 +45,103 @@
     body {
       font-family: 'Montserrat', sans-serif;
       background-color: var(--pantone-cream);
-      background-image: radial-gradient(rgba(96, 178, 70, 0.08) 1px, transparent 0);
+      background-image: radial-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 0);
       background-size: 24px 24px;
       color: var(--text-dark);
       line-height: 1.6;
       text-align: center;
       min-height: 100vh;
       display: flex;
-      justify-content: center;
-      align-items: flex-start;
+      flex-direction: column;
+      align-items: center;
       padding: 30px 15px;
+      transition: background-color 0.4s ease;
     }
 
+    /* MENU HAMBURGER (ẨN & XỔ RA) */
+    .menu-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+    .menu-icon {
+      background: #ffffff;
+      color: var(--text-dark);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      border: 2px solid var(--pantone-green);
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+    .menu-icon:hover {
+      transform: scale(1.05);
+      background: var(--pantone-cream);
+    }
+    .theme-menu {
+      position: absolute;
+      top: 60px;
+      right: 0;
+      background: #ffffff;
+      padding: 15px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      border: 2px solid var(--pantone-green);
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      width: max-content;
+      text-align: left;
+    }
+    .theme-menu.show {
+      display: flex;
+      animation: fadeInDown 0.3s ease;
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .theme-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 10px 15px;
+      border-radius: 12px;
+      transition: background 0.3s ease;
+    }
+    .theme-option:hover {
+      background: rgba(0,0,0,0.05);
+    }
+    .color-swatch {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,0.1);
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    /* GIAO DIỆN CHÍNH THIỆP CƯỚI */
     .wedding-card {
       width: 100%;
       max-width: 900px;
-      margin: 0 auto;
       background-color: #ffffff;
-      box-shadow: 0 25px 50px -12px rgba(43, 51, 34, 0.15), 0 0 0 1px rgba(96, 178, 70, 0.2);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
       border-radius: 32px;
       overflow: hidden;
       position: relative;
       border: 3px solid var(--pantone-green);
+      transition: border-color 0.4s ease;
+      margin-top: 20px;
     }
 
     /* HERO SECTION */
@@ -67,7 +157,7 @@
     .hero-overlay {
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: linear-gradient(180deg, rgba(43, 51, 34, 0.15) 0%, rgba(30, 38, 22, 0.88) 100%);
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.88) 100%);
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
@@ -82,14 +172,12 @@
       text-transform: uppercase;
       margin-bottom: 12px;
       color: var(--pantone-cream);
-      background: rgba(96, 178, 70, 0.3);
+      background: rgba(255, 255, 255, 0.15);
       padding: 4px 18px;
       border-radius: 20px;
       backdrop-filter: blur(4px);
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
-    
-    /* XỬ LÝ TÊN CHÚ RỂ & CÔ DÂU */
     .hero-title {
       font-family: 'Alex Brush', cursive;
       font-size: 4.8rem;
@@ -101,14 +189,13 @@
       margin: 0 auto;
       word-wrap: break-word;
     }
-    .hero-title span {
-      display: inline-block;
-    }
+    .hero-title span { display: inline-block; }
     .hero-title .amp {
       color: var(--pantone-orange);
       font-size: 4.2rem;
       margin: 0 10px;
-      text-shadow: 0 0 10px rgba(254, 80, 0, 0.5);
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      transition: color 0.4s ease;
     }
 
     /* SECTION GENERAL */
@@ -126,6 +213,7 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 2px;
+      transition: color 0.4s ease;
     }
     .section-title::after {
       content: '';
@@ -135,6 +223,7 @@
       background: linear-gradient(90deg, transparent, var(--pantone-orange), transparent);
       margin: 10px auto 0;
       border-radius: 2px;
+      transition: background 0.4s ease;
     }
 
     /* COUPLE BOXES */
@@ -151,13 +240,13 @@
       padding: 35px 20px;
       background-color: var(--pantone-cream);
       border-radius: 24px;
-      border: 2px solid rgba(96, 178, 70, 0.25);
-      box-shadow: 0 10px 25px rgba(96, 178, 70, 0.08);
+      border: 2px solid rgba(0, 0, 0, 0.05);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
       transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .couple-box:hover {
       transform: translateY(-6px);
-      box-shadow: 0 18px 35px rgba(254, 80, 0, 0.15);
+      box-shadow: 0 18px 35px rgba(0, 0, 0, 0.1);
       border-color: var(--pantone-orange);
     }
     .couple-divider {
@@ -165,6 +254,7 @@
       font-size: 3.8rem;
       color: var(--pantone-orange);
       padding: 0 5px;
+      transition: color 0.4s ease;
     }
     .couple-name {
       font-family: 'Cormorant Garamond', serif;
@@ -172,6 +262,7 @@
       font-weight: 700;
       color: var(--pantone-orange);
       margin-bottom: 6px;
+      transition: color 0.4s ease;
     }
     .couple-role {
       font-size: 0.85rem;
@@ -179,16 +270,18 @@
       text-transform: uppercase;
       letter-spacing: 3px;
       font-weight: 700;
+      transition: color 0.4s ease;
     }
 
     /* COUNTDOWN SECTION */
     .countdown-section {
-      background: linear-gradient(145deg, var(--pantone-cream), #f0ecde);
+      background: linear-gradient(145deg, var(--pantone-cream), rgba(0,0,0,0.02));
       border-radius: 28px;
       margin: 0 40px;
       padding: 40px 25px;
       border: 2px solid var(--pantone-green);
-      box-shadow: inset 0 2px 10px rgba(255,255,255,0.8), 0 12px 30px rgba(96, 178, 70, 0.1);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+      transition: all 0.4s ease;
     }
     .timer-container {
       display: grid;
@@ -211,8 +304,9 @@
       height: 80px;
       line-height: 76px;
       border-radius: 50%;
-      box-shadow: 0 8px 20px rgba(96, 178, 70, 0.18);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
       border: 2px solid var(--pantone-green);
+      transition: all 0.4s ease;
     }
     .timer-label {
       font-size: 0.85rem;
@@ -226,11 +320,12 @@
     /* EVENT CARD */
     .event-card {
       background: var(--pantone-cream);
-      border: 2px solid rgba(96, 178, 70, 0.25);
+      border: 2px solid rgba(0, 0, 0, 0.05);
       border-radius: 24px;
       padding: 35px 25px;
       margin-top: 25px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+      transition: background 0.4s ease;
     }
     .event-date {
       font-family: 'Cormorant Garamond', serif;
@@ -238,249 +333,138 @@
       color: var(--pantone-orange);
       font-weight: 700;
       margin-bottom: 12px;
+      transition: color 0.4s ease;
     }
-    .event-time {
+    .event-time, .event-location {
       font-size: 1.05rem;
       color: var(--text-dark);
       margin-bottom: 15px;
     }
     .event-location {
-      font-size: 1.05rem;
       color: var(--text-muted);
       line-height: 1.8;
       margin-bottom: 30px;
     }
-    .btn-group {
-      display: flex;
-      gap: 15px;
-    }
+    .btn-group { display: flex; gap: 15px; }
     .btn {
-      flex: 1;
-      display: inline-block;
-      padding: 16px 20px;
-      border-radius: 35px;
-      text-decoration: none;
-      font-size: 0.95rem;
-      font-weight: 700;
-      transition: all 0.3s ease;
-      text-align: center;
+      flex: 1; display: inline-block; padding: 16px 20px;
+      border-radius: 35px; text-decoration: none; font-size: 0.95rem;
+      font-weight: 700; transition: all 0.3s ease; text-align: center;
     }
-    .btn-maps {
-      background: var(--pantone-green);
-      color: #ffffff;
-      box-shadow: 0 6px 18px rgba(96, 178, 70, 0.25);
-    }
-    .btn-maps:hover {
-      background: #4e9638;
-      transform: translateY(-2px);
-      box-shadow: 0 10px 22px rgba(96, 178, 70, 0.35);
-    }
-    .btn-zalo {
-      background: var(--pantone-orange);
-      color: #ffffff;
-      box-shadow: 0 6px 18px rgba(254, 80, 0, 0.25);
-    }
-    .btn-zalo:hover {
-      background: #e04600;
-      transform: translateY(-2px);
-      box-shadow: 0 10px 22px rgba(254, 80, 0, 0.35);
-    }
+    .btn-maps { background: var(--pantone-green); color: #ffffff; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15); }
+    .btn-maps:hover { filter: brightness(0.9); transform: translateY(-2px); }
+    .btn-zalo { background: var(--pantone-orange); color: #ffffff; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15); }
+    .btn-zalo:hover { filter: brightness(0.9); transform: translateY(-2px); }
 
     /* RSVP FORM */
-    .rsvp-form {
-      margin-top: 30px;
-      text-align: left;
-    }
-    .form-group {
-      margin-bottom: 20px;
-    }
-    .form-group label {
-      display: block;
-      font-size: 0.9rem;
-      color: var(--text-dark);
-      margin-bottom: 8px;
-      font-weight: 600;
-    }
+    .rsvp-form { margin-top: 30px; text-align: left; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-size: 0.9rem; color: var(--text-dark); margin-bottom: 8px; font-weight: 600; }
     .form-control {
-      width: 100%;
-      padding: 15px 18px;
-      border: 1.5px solid rgba(96, 178, 70, 0.4);
-      border-radius: 14px;
-      font-family: inherit;
-      font-size: 0.95rem;
-      background-color: var(--pantone-cream);
-      color: var(--text-dark);
-      transition: border-color 0.3s ease;
-    }
-    .form-control:focus {
-      outline: none;
-      border-color: var(--pantone-orange);
-      background-color: #ffffff;
-    }
-    .btn-submit {
-      width: 100%;
-      background: var(--pantone-green);
-      color: #fff;
-      border: none;
-      padding: 17px;
-      border-radius: 35px;
-      font-weight: 700;
-      font-size: 1.05rem;
-      cursor: pointer;
+      width: 100%; padding: 15px 18px; border: 1.5px solid rgba(0, 0, 0, 0.1);
+      border-radius: 14px; font-family: inherit; font-size: 0.95rem;
+      background-color: var(--pantone-cream); color: var(--text-dark);
       transition: all 0.3s ease;
-      box-shadow: 0 8px 20px rgba(96, 178, 70, 0.3);
     }
-    .btn-submit:hover {
-      background: #4e9638;
-      transform: translateY(-2px);
+    .form-control:focus { outline: none; border-color: var(--pantone-orange); background-color: #ffffff; }
+    .btn-submit {
+      width: 100%; background: var(--pantone-green); color: #fff;
+      border: none; padding: 17px; border-radius: 35px; font-weight: 700;
+      font-size: 1.05rem; cursor: pointer; transition: all 0.3s ease;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+    .btn-submit:hover { filter: brightness(0.9); transform: translateY(-2px); }
+
+    /* BỘ PHÁT ĐĨA CD */
+    .cd-player-wrapper { display: flex; justify-content: center; margin-top: 45px; width: 100%; }
+    .cd-player-container { cursor: pointer; display: flex; flex-direction: column; align-items: center; }
+    .cd-disk {
+      width: 400px;
+      height: 400px; 
+      border-radius: 50%;
+      background: url('https://photo-resize-zmp3.zadn.vn/w600_r1x1_jpeg/cover/a/9/e/d/a9ed142c215560ab45f6b2b433907f90.jpg') center/cover no-repeat;
+      border: 8px solid #ffffff;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3), 0 0 0 4px var(--pantone-green);
+      position: relative; transition: all 0.4s ease;
+    }
+    .cd-disk::after {
+      content: ''; position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%); 
+      width: 35px; /* Giảm lỗ CD còn một nửa so với 70px */
+      height: 35px; /* Giảm lỗ CD còn một nửa so với 70px */
+      background: #ffffff; border-radius: 50%;
+      box-shadow: 0 0 0 6px rgba(0, 0, 0, 0.15);
+    }
+    .cd-disk.playing { animation: spinCD 4s linear infinite; }
+    @keyframes spinCD { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .cd-tooltip {
+      background: rgba(0, 0, 0, 0.75); color: #fff; padding: 10px 20px;
+      border-radius: 20px; font-size: 0.9rem; margin-bottom: 20px;
+      font-weight: 500; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      border: 1px solid var(--pantone-green); backdrop-filter: blur(4px);
+      white-space: nowrap; transition: border-color 0.4s ease;
     }
 
     /* FOOTER */
-    .footer {
-      background-color: #20271a;
-      color: var(--pantone-cream);
-      padding: 45px 20px;
-      margin-top: 40px;
-    }
-    .footer-title {
-      font-family: 'Alex Brush', cursive;
-      font-size: 3.2rem;
-      color: var(--pantone-orange);
-    }
+    .footer { background-color: #1a1a1a; color: #f7f4e9; padding: 45px 20px; }
+    .footer-title { font-family: 'Alex Brush', cursive; font-size: 3.2rem; color: var(--pantone-orange); transition: color 0.4s ease; }
 
-    /* BỘ PHÁT ĐĨA CD */
-    .cd-player-container {
-      position: fixed;
-      bottom: 25px;
-      right: 25px;
-      z-index: 9999;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-    }
-    .cd-disk {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      background: url('https://photo-resize-zmp3.zadn.vn/w600_r1x1_jpeg/cover/a/9/e/d/a9ed142c215560ab45f6b2b433907f90.jpg') center/cover no-repeat;
-      border: 4px solid #ffffff;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 0 2px var(--pantone-green);
-      position: relative;
-      transition: transform 0.3s ease;
-    }
-    .cd-disk::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 20px;
-      height: 20px;
-      background: #ffffff;
-      border-radius: 50%;
-      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.15);
-    }
-    .cd-disk.playing {
-      animation: spinCD 4s linear infinite;
-    }
-    @keyframes spinCD {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    .cd-tooltip {
-      background: rgba(32, 39, 26, 0.92);
-      color: var(--pantone-cream);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 0.78rem;
-      margin-bottom: 8px;
-      font-weight: 500;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
-      border: 1px solid var(--pantone-green);
-      backdrop-filter: blur(4px);
-      white-space: nowrap;
-    }
-
-    /* OPTIMIZE DÀNH RIÊNG CHO ĐIỆN THOẠI (MOBILE) */
+    /* MOBILE OPTIMIZATION */
     @media (max-width: 768px) {
-      body {
-        padding: 0;
-        background-image: none;
+      body { padding: 0; background-image: none; }
+      .wedding-card { border-radius: 0; border: none; margin-top: 0; }
+      .hero { height: 520px; }
+      .hero-title { font-size: 3.4rem; line-height: 1.25; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+      .hero-title .amp { font-size: 2.8rem; margin: 2px 0; line-height: 1; }
+      .section { padding: 40px 20px; }
+      .couple-container { flex-direction: column; gap: 15px; }
+      .couple-box { width: 100%; padding: 25px 15px; }
+      .couple-divider { font-size: 3rem; margin: -10px 0; }
+      .countdown-section { margin: 0 15px; padding: 30px 15px; }
+      .timer-container { gap: 8px; }
+      .timer-num { width: 65px; height: 65px; line-height: 61px; font-size: 1.9rem; }
+      .btn-group { flex-direction: column; }
+      
+      .cd-disk { width: 320px; height: 320px; }
+      .cd-disk::after { 
+        width: 25px; /* Giảm lỗ CD còn một nửa so với 50px */
+        height: 25px; /* Giảm lỗ CD còn một nửa so với 50px */
       }
-      .wedding-card {
-        border-radius: 0;
-        border: none;
-      }
-      .hero {
-        height: 520px;
-      }
-      /* Tên Cô Dâu Chú Rể Xuống Dòng & Căn Giữa Hoàn Hảo */
-      .hero-title {
-        font-size: 3.4rem;
-        line-height: 1.25;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-      }
-      .hero-title .amp {
-        font-size: 2.8rem;
-        margin: 2px 0;
-        line-height: 1;
-      }
-      .section {
-        padding: 40px 20px;
-      }
-      .couple-container {
-        flex-direction: column;
-        gap: 15px;
-      }
-      .couple-box {
-        width: 100%;
-        padding: 25px 15px;
-      }
-      .couple-divider {
-        font-size: 3rem;
-        margin: -10px 0;
-      }
-      .countdown-section {
-        margin: 0 15px;
-        padding: 30px 15px;
-      }
-      .timer-container {
-        gap: 8px;
-      }
-      .timer-num {
-        width: 65px;
-        height: 65px;
-        line-height: 61px;
-        font-size: 1.9rem;
-      }
-      .timer-label {
-        font-size: 0.75rem;
-      }
-      .btn-group {
-        flex-direction: column;
-      }
-      .cd-player-container {
-        bottom: 15px;
-        right: 15px;
-      }
-      .cd-disk {
-        width: 80px;
-        height: 80px;
-      }
+      
+      .menu-container { top: 15px; right: 15px; }
     }
   </style>
 </head>
 <body>
 
+  <!-- MENU HAMBURGER BẢNG MÀU PANTONE -->
+  <div class="menu-container">
+    <div class="menu-icon" onclick="toggleMenu()" title="Chọn màu giao diện">
+      ☰
+    </div>
+    <div class="theme-menu" id="themeMenu">
+      <p style="margin-bottom: 5px; font-weight: bold; font-size: 0.95rem; color: var(--text-dark); border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 8px;">
+        Lựa chọn tông màu
+      </p>
+      <div class="theme-option" onclick="changeTheme('default')">
+        <span class="color-swatch" style="background: #60B246;"></span>
+        Tông màu 360 C, 9061C, 021C
+      </div>
+      <div class="theme-option" onclick="changeTheme('theme-2')">
+        <span class="color-swatch" style="background: #901639;"></span>
+        Tông màu 221C, 7528C, 7630C
+      </div>
+      <div class="theme-option" onclick="changeTheme('theme-3')">
+        <span class="color-swatch" style="background: #1C463F;"></span>
+        Tông màu 568C, 7545C, 7762C
+      </div>
+    </div>
+  </div>
+
   <div class="wedding-card">
     <div class="hero">
       <div class="hero-overlay">
         <div class="hero-subtitle">Save The Date</div>
-        <!-- TÊN CÔ DÂU CHÚ RỂ TỰ ĐỘNG XUỐNG DÒNG VÀ CĂN GIỮA NÉT TRÊN PHONE -->
         <h1 class="hero-title">
           <span>Quang Sáng</span>
           <span class="amp">&</span>
@@ -567,29 +551,62 @@
         </div>
         <button type="submit" class="btn-submit">Gửi Xác Nhận</button>
       </form>
+
+      <div class="cd-player-wrapper">
+        <div class="cd-player-container" onclick="toggleAudio()">
+          <div class="cd-tooltip" id="cdStatus">Nhấn để bật nhạc Hơn Cả Yêu 🎵</div>
+          <div class="cd-disk" id="cdDisk"></div>
+        </div>
+      </div>
+
     </div>
 
     <div class="footer">
       <div class="footer-title">Thank You!</div>
       <p>Rất hân hạnh được đón tiếp quý quan khách!</p>
-      <p style="color: #a0a898; font-size: 0.85rem; margin-top: 10px;">© 2026 Quang Sáng & Anh Thúy</p>
+      <p style="color: #a0a898; font-size: 0.85rem; margin-top: 10px;">@2026 Quang Sáng & Anh Thúy - 20261024-1410</p>
     </div>
   </div>
 
-  <!-- BỘ PHÁT ĐĨA CD -->
-  <div class="cd-player-container" onclick="toggleAudio()">
-    <div class="cd-tooltip" id="cdStatus">Nhấn để bật nhạc Hơn Cả Yêu 🎵</div>
-    <div class="cd-disk" id="cdDisk"></div>
-  </div>
-
-  <audio id="weddingAudio" loop preload="auto">
+  <!-- BẬT TỰ ĐỘNG PHÁT BẰNG AUTOPLAY -->
+  <audio id="weddingAudio" loop autoplay preload="auto">
     <source src="https://raw.githubusercontent.com/CoucheMatt/id/main/HonCaYeu.mp3" type="audio/mpeg">
   </audio>
 
   <script>
+    // BẬT/TẮT MENU VÀ ĐỔI THEME
+    function toggleMenu() {
+      document.getElementById('themeMenu').classList.toggle('show');
+    }
+
+    function changeTheme(themeName) {
+      document.body.className = themeName === 'default' ? '' : themeName;
+      document.getElementById('themeMenu').classList.remove('show');
+    }
+
+    document.addEventListener('click', function(event) {
+      const menu = document.getElementById('themeMenu');
+      const icon = document.querySelector('.menu-icon');
+      if (!menu.contains(event.target) && !icon.contains(event.target)) {
+        menu.classList.remove('show');
+      }
+    });
+
+    // XỬ LÝ NHẠC VÀ ĐĨA CD
     const audio = document.getElementById('weddingAudio');
     const cdDisk = document.getElementById('cdDisk');
     const cdStatus = document.getElementById('cdStatus');
+
+    // Thử kích hoạt âm thanh tự động ngay khi trang vừa load
+    window.addEventListener('DOMContentLoaded', () => {
+      audio.play().then(() => {
+        cdDisk.classList.add('playing');
+        cdStatus.innerText = 'Đang phát: Hơn Cả Yêu 🎶';
+      }).catch((err) => {
+        // Hầu hết trình duyệt chặn Autoplay nếu chưa có tương tác. Sẽ fallback sang cái click bên dưới.
+        console.log("Trình duyệt chặn autoplay, chờ tương tác từ người dùng.");
+      });
+    });
 
     function toggleAudio() {
       if (audio.paused) {
@@ -606,7 +623,10 @@
       }
     }
 
-    document.addEventListener('click', function autoPlayOnce() {
+    // Dự phòng bắt click bất kỳ đâu để chơi nhạc (vượt qua chính sách chặn autoplay của trình duyệt)
+    document.addEventListener('click', function autoPlayOnce(event) {
+      if (event.target.closest('.menu-container')) return;
+      
       if (audio.paused) {
         audio.play().then(() => {
           cdDisk.classList.add('playing');
@@ -616,7 +636,7 @@
       document.removeEventListener('click', autoPlayOnce);
     }, { once: true });
 
-    // COUNTDOWN
+    // ĐẾM NGƯỢC
     const weddingDate = new Date(2026, 9, 24, 11, 30, 0).getTime();
     function updateCountdown() {
       const now = new Date().getTime();
