@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACB CTP - Prepress QC System</title>
+    <!-- FontAwesome & Google Font (Inter) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+:root{
+  --brand:#6cc24a;
+  --brand-2:#8be06b;
+  --brand-dark:#3f8428;
+  --brand-soft:#eef9ea;
+  --navy:#07111f;
+  --navy-2:#0d1a2b;
+  --ink:#0f172a;
+  --text:#334155;
+  --muted:#64748b;
+  --line:#e6ebf0;
+  --surface:#fff;
+  --page:#f4f7f9;
+  --success:#159447;
+  --success-bg:#e8f8ee;
+  --danger:#c62828;
+  --danger-bg:#fdecec;
+  --warning:#b77908;
+  --warning-bg:#fff5db;
+  --shadow:0 10px 30px rgba(15,23,42,.06);
+  --shadow-hover:0 20px 50px rgba(15,23,42,.12);
+  --radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 15% 0%,rgba(108,194,74,.075),transparent 25%),
+    linear-gradient(180deg,#f9fbfc 0%,var(--page) 100%);
+  line-height:1.6;
+  font-size:13px;
+  -webkit-font-smoothing:antialiased;
+}
+a{text-decoration:none;color:inherit}
+button,input,select{font:inherit}
+
+/* Top utility strip */
+.top-bar{
+  min-height:34px;
+  padding:7px clamp(18px,4vw,56px);
+  background:var(--navy);
+  color:#aeb9c7;
+  border-bottom:1px solid rgba(108,194,74,.35);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  font-size:10.5px;
+}
+.top-bar strong{color:#fff}
+.top-bar i{color:var(--brand);margin-right:5px}
+.top-bar-right{display:flex;gap:18px;flex-wrap:wrap}
+
+/* Navigation */
+header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:rgba(255,255,255,.88);
+  border-bottom:1px solid rgba(226,232,240,.92);
+  backdrop-filter:blur(18px) saturate(150%);
+  -webkit-backdrop-filter:blur(18px) saturate(150%);
+  box-shadow:0 5px 22px rgba(15,23,42,.035);
+}
+.nav-container{
+  max-width:1280px;
+  min-height:72px;
+  margin:auto;
+  padding:0 26px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+}
+.brand-logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:15px;
+  font-weight:850;
+  letter-spacing:-.4px;
+  white-space:nowrap;
+}
+.brand-logo i{
+  width:40px;height:40px;
+  display:grid;place-items:center;
+  border-radius:12px;
+  color:#08120b;
+  background:linear-gradient(145deg,var(--brand-2),var(--brand));
+  box-shadow:0 10px 22px rgba(108,194,74,.22);
+}
+.brand-badge{
+  padding:4px 8px;
+  border-radius:7px;
+  color:var(--brand);
+  background:var(--navy);
+  font-size:9px;
+  font-weight:850;
+  letter-spacing:.65px;
+}
+.nav-menu{
+  list-style:none;
+  display:flex;
+  align-items:center;
+  gap:4px;
+  overflow:auto;
+}
+.nav-menu a{
+  display:block;
+  padding:8px 11px;
+  border-radius:10px;
+  color:#526174;
+  font-size:11.5px;
+  font-weight:700;
+  transition:.25s ease;
+  white-space:nowrap;
+}
+.nav-menu a:hover{
+  color:var(--ink);
+  background:#f1f5f9;
+}
+
+/* Hero */
+.hero{
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+  color:#fff;
+  text-align:center;
+  padding:82px 24px 36px;
+  background:
+    radial-gradient(circle at 77% 22%,rgba(108,194,74,.18),transparent 25%),
+    radial-gradient(circle at 18% 70%,rgba(80,145,255,.07),transparent 22%),
+    linear-gradient(135deg,#06101d 0%,#0a1626 52%,#102338 100%);
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  width:650px;height:650px;
+  right:-330px;top:-460px;
+  border:1px solid rgba(255,255,255,.055);
+  border-radius:50%;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  width:520px;height:520px;
+  left:-290px;bottom:-410px;
+  border:1px solid rgba(108,194,74,.10);
+  border-radius:50%;
+}
+.hero>*{position:relative;z-index:2}
+.hero-tag{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 14px;
+  border-radius:999px;
+  color:#b5f3a2;
+  border:1px solid rgba(108,194,74,.32);
+  background:rgba(108,194,74,.08);
+  font-size:9.5px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  font-weight:850;
+}
+.hero h1{
+  max-width:920px;
+  margin:18px auto 14px;
+  font-size:clamp(31px,4.4vw,55px);
+  line-height:1.05;
+  letter-spacing:-2px;
+  font-weight:850;
+}
+.hero h1 span{
+  color:var(--brand);
+  background:linear-gradient(135deg,#c3f5ae,var(--brand));
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.hero p{
+  max-width:710px;
+  margin:0 auto 28px;
+  color:#b5c0ce;
+  font-size:13px;
+  line-height:1.8;
+}
+.btn-cta{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  padding:12px 19px;
+  border-radius:11px;
+  background:linear-gradient(135deg,#87de6b,var(--brand));
+  color:#08120b;
+  border:1px solid rgba(255,255,255,.1);
+  font-size:11.5px;
+  font-weight:850;
+  box-shadow:0 12px 28px rgba(108,194,74,.22);
+  transition:.28s ease;
+}
+.btn-cta:hover{transform:translateY(-3px);box-shadow:0 18px 38px rgba(108,194,74,.3)}
+
+/* KPI ribbon */
+.container{
+  width:min(1280px,100%);
+  margin:0 auto;
+  padding:0 26px 22px;
+}
+.hero + .container{margin-top:-1px}
+.kpi-grid{
+  position:relative;
+  z-index:5;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+  margin-top:-4px;
+  margin-bottom:62px;
+}
+.kpi-card{
+  min-height:110px;
+  padding:18px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:rgba(255,255,255,.97);
+  box-shadow:0 16px 34px rgba(15,23,42,.09);
+}
+.kpi-label{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:var(--muted);
+  font-size:10px;
+  font-weight:750;
+  text-transform:uppercase;
+  letter-spacing:.7px;
+}
+.kpi-label i{color:var(--brand-dark)}
+.kpi-value{
+  margin-top:9px;
+  color:var(--ink);
+  font-size:25px;
+  font-weight:850;
+  letter-spacing:-.8px;
+}
+.kpi-note{margin-top:3px;color:#94a3b8;font-size:10px}
+
+/* Section headings */
+.section-header{text-align:left;margin:0 0 22px}
+.section-header .sub-title{
+  display:block;
+  margin-bottom:6px;
+  color:var(--brand-dark);
+  font-size:9.5px;
+  text-transform:uppercase;
+  letter-spacing:1.7px;
+  font-weight:850;
+}
+.section-header h2{
+  color:var(--ink);
+  font-size:clamp(20px,2.4vw,27px);
+  letter-spacing:-.75px;
+  font-weight:850;
+}
+
+/* QC dashboard cards */
+.qc-card-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
+  margin-bottom:70px;
+}
+.qc-card{
+  overflow:hidden;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:var(--surface);
+  box-shadow:var(--shadow);
+  transition:.3s ease;
+}
+.qc-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-hover)}
+.qc-card-header{
+  padding:17px 18px 13px;
+  background:linear-gradient(180deg,#fbfcfd,#f7f9fb);
+  border-bottom:1px solid var(--line);
+}
+.qc-card-header h3{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-size:13px;
+  font-weight:850;
+}
+.qc-card-header h3 i{
+  width:32px;height:32px;
+  display:grid;place-items:center;
+  color:var(--brand-dark);
+  background:var(--brand-soft);
+  border-radius:9px;
+}
+.qc-card-header > span{
+  display:inline-block;
+  margin-top:8px;
+  color:#94a3b8 !important;
+  font-size:10px !important;
+}
+.qc-card-body{padding:3px 0}
+.qc-row{
+  min-height:42px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:9px 17px;
+  border-bottom:1px solid #f0f3f6;
+}
+.qc-row:last-child{border-bottom:0}
+.qc-row:hover{background:#fafdf9}
+.qc-label{flex:1;color:#3b4a5d;font-size:11.5px;font-weight:550}
+.status-icon{
+  width:23px;height:23px;
+  display:grid;place-items:center;
+  flex:0 0 23px;
+  border-radius:50%;
+  font-size:9px;
+}
+.status-icon.yes{background:var(--success-bg);color:var(--success)}
+.status-icon.no{background:var(--danger-bg);color:var(--danger)}
+.status-icon.na{background:var(--warning-bg);color:var(--warning)}
+
+/* Schedule / information */
+.info-card-box{
+  overflow:hidden;
+  margin-bottom:70px;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:var(--surface);
+  box-shadow:var(--shadow);
+  padding:6px;
+}
+.table-wrapper{overflow-x:auto}
+.schedule-table{
+  width:100%;
+  min-width:640px;
+  border-collapse:separate;
+  border-spacing:0;
+  font-size:11.5px;
+}
+.schedule-table th{
+  padding:13px 18px;
+  background:#f7f9fb;
+  color:#475569;
+  border-bottom:1px solid var(--line);
+  font-size:9.5px;
+  text-transform:uppercase;
+  letter-spacing:.65px;
+  font-weight:850;
+  text-align:center;
+}
+.schedule-table td{
+  padding:14px 18px;
+  color:#475569;
+  border-bottom:1px solid #f0f3f6;
+  text-align:center;
+}
+.schedule-table tbody tr:last-child td{border-bottom:0}
+.schedule-table tbody tr:hover td{background:#fbfdfb}
+.schedule-table td strong{color:var(--ink);font-weight:800}
+
+/* Spec cards */
+.specs-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
+  margin-bottom:70px;
+}
+.spec-card-item{
+  position:relative;
+  overflow:hidden;
+  padding:21px;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:linear-gradient(145deg,#fff,#fbfcfd);
+  box-shadow:var(--shadow);
+  transition:.28s ease;
+}
+.spec-card-item:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
+.spec-card-item::before{
+  content:"";
+  position:absolute;
+  left:0;top:0;bottom:0;
+  width:3px;
+  background:linear-gradient(180deg,var(--brand),#9de580);
+}
+.spec-card-item h4{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  margin-bottom:14px;
+  color:var(--ink);
+  font-size:13px;
+  font-weight:850;
+}
+.spec-card-item h4 i{color:var(--brand-dark)!important}
+.spec-card-item ul{list-style:none}
+.spec-card-item ul li{
+  margin-bottom:9px;
+  color:var(--muted);
+  font-size:11px;
+}
+.spec-card-item ul li:last-child{margin-bottom:0}
+.spec-card-item ul li strong{color:#334155}
+
+/* FAQ Section */
+.faq-wrapper{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-bottom:70px;
+}
+.faq-item{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--surface);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  transition:.25s ease;
+}
+.faq-question{
+  width:100%;
+  padding:16px 20px;
+  background:none;
+  border:none;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  text-align:left;
+  font-size:13px;
+  font-weight:750;
+  color:var(--ink);
+  cursor:pointer;
+  gap:12px;
+}
+.faq-question i{
+  color:var(--brand-dark);
+  transition:transform .3s ease;
+}
+.faq-item.active .faq-question i{
+  transform:rotate(180deg);
+}
+.faq-answer{
+  max-height:0;
+  overflow:hidden;
+  padding:0 20px;
+  color:var(--text);
+  font-size:12px;
+  line-height:1.7;
+  transition:max-height .3s ease, padding .3s ease;
+}
+.faq-item.active .faq-answer{
+  max-height:300px;
+  padding:0 20px 18px 20px;
+}
+
+/* Footer */
+footer{
+  margin-top:76px;
+  padding:31px max(24px,5vw);
+  color:#94a3b8;
+  background:linear-gradient(135deg,#06101c,#101c2e);
+  border-top:2px solid var(--brand);
+  font-size:10.5px;
+}
+.footer-container{
+  width:min(1280px,100%);
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+.footer-container strong{color:#e5edf4}
+.footer-container a{color:#b6f0a3;font-weight:750}
+
+/* Mobile */
+@media(max-width:1000px){
+  .kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .qc-card-grid,.specs-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:720px){
+  .top-bar{flex-direction:column;align-items:flex-start;gap:4px;padding:8px 16px}
+  .nav-container{padding:11px 16px;align-items:flex-start;flex-direction:column;gap:10px}
+  .nav-menu{width:100%;padding-bottom:2px}
+  .nav-menu a{font-size:10.5px;padding:7px 8px}
+  .hero{padding:60px 17px 32px}
+  .hero h1{font-size:31px;letter-spacing:-1.2px}
+  .hero p{font-size:12.5px}
+  .container{padding:0 16px 16px}
+  .kpi-grid{grid-template-columns:1fr 1fr;gap:10px;margin-bottom:48px}
+  .kpi-card{min-height:100px;padding:15px}
+  .kpi-value{font-size:21px}
+  .qc-card-grid,.specs-grid{grid-template-columns:1fr;gap:15px}
+  .section-header{text-align:left}
+  .section-header h2{font-size:21px}
+  .info-card-box,.specs-grid,.faq-wrapper{margin-bottom:54px}
+  .footer-container{flex-direction:column;align-items:flex-start}
+}
+@media(max-width:430px){
+  .kpi-grid{grid-template-columns:1fr}
+  .hero h1{font-size:28px}
+  .brand-logo{font-size:14px}
+  .brand-logo i{width:36px;height:36px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+}
+    </style>
+</head>
+<body>
+
+    <!-- TOP SYSTEM BAR -->
+    <div class="top-bar">
+        <div>
+            <span><i class="fa-solid fa-chart-line"></i> Dữ liệu ID HoanThanh</span> | 
+            <span><i class="fa-solid fa-barcode"></i> Mã vận hành: <strong>20260912-2222</strong></span>
+        </div>
+        <div class="top-bar-right">
+            <span><i class="fa-solid fa-envelope"></i> contact@donguyen.net</span> | 
+            <span><i class="fa-solid fa-phone"></i> Tel: 3010</span>
+        </div>
+    </div>
+
+    <!-- MAIN NAVBAR -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="brand-logo">
+                <i class="fa-solid fa-print"></i> AVERY DENNISON <span class="brand-badge">CTP QC</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="#about">Giới Thiệu</a></li>
+                <li><a href="#qc-section">Quy Trình QC</a></li>
+                <li><a href="#schedule-section">Thời Gian Ca</a></li>
+                <li><a href="#specs-section">Cấu Hình Máy</a></li>
+                <li><a href="#faq-section">Hỏi Đáp FAQ</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- HERO BANNER -->
+    <section class="hero" id="about">
+        <span class="hero-tag"><i class="fa-solid fa-bolt"></i> Kodak Trendsetter Thermal CTP</span>
+        <h1>HỆ THỐNG GHI KẼM CTP <span>CHUYÊN NGHIỆP</span></h1>
+        <p>Trung tâm chế bản ứng dụng Kodak Prinergy Workflow tự động, đảm bảo xuất kẽm chính xác tuyệt đối theo chuẩn quốc tế cho nhà in Offset.</p>
+        <a href="#qc-section" class="btn-cta">Xem Danh Mục Kiểm Duyệt QC <i class="fa-solid fa-arrow-right"></i></a>
+    </section>
+
+    <!-- MAIN CONTAINER -->
+    <div class="container">
+
+        <div class="kpi-grid" aria-label="Tổng quan hệ thống">
+            <div class="kpi-card">
+                <div class="kpi-label"><i class="fa-solid fa-shield-halved"></i> Kiểm soát chất lượng</div>
+                <div class="kpi-value">20+</div>
+                <div class="kpi-note">Hạng mục QC đang theo dõi</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label"><i class="fa-solid fa-circle-check"></i> Trạng thái</div>
+                <div class="kpi-value">Ổn định</div>
+                <div class="kpi-note">Sẵn sàng cho vận hành</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label"><i class="fa-solid fa-layer-group"></i> Công đoạn</div>
+                <div class="kpi-value">03</div>
+                <div class="kpi-note">File • Artwork • Kẽm</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label"><i class="fa-solid fa-gears"></i> Hệ thống</div>
+                <div class="kpi-value">CTP</div>
+                <div class="kpi-note">Quy trình kiểm soát sản xuất</div>
+            </div>
+        </div>
+
+        <!-- SECTION 1: BẢNG QC CARD GRID -->
+        <div class="section-header" id="qc-section">
+            <span class="sub-title">Quality Control Standards</span>
+            <h2>TIÊU CHUẨN KIỂM SOÁT FILE & CHẤT LƯỢNG KẼM (QC)</h2>
+        </div>
+
+        <div class="qc-card-grid">
+
+            <!-- THẺ CARD 1: KIỂM FILE -->
+            <div class="qc-card">
+                <div class="qc-card-header">
+                    <h3><i class="fa-solid fa-file-shield"></i> 1. Kiểm File</h3>
+                    <span>11 Hạng mục</span>
+                </div>
+                <div class="qc-card-body">
+                    <div class="qc-row">
+                        <span class="qc-label">GLID</span>
+                        <span class="status-icon yes"><i class="fa-solid fa-check"></i></span>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Item Code</span>
+                        <span class="status-icon yes"><i class="fa-solid fa-check"></i></span>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Số UP</span>
+                        <span class="status-icon yes"><i class="fa-solid fa-check"></i></span>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Khổ in</span>
+                        <span class="status-icon yes"><i class="fa-solid fa-check"></i></span>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Số lượng màu</span>
+                        <span class="status-icon yes"><i class="fa-solid fa-check"></i></span>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Hệ màu CMYK/RGB</span>
+                        <span class="status-icon no"><i class="fa-solid fa-xmark"></i></span>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Khuôn bế Overprint</span>
+                        <span class="status-icon yes"><i class="fa-solid fa-check"></i></span>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Màu registration bon chồng màu, thông tin bài in</span>
+                        <span class="status-icon yes"><i class="fa-solid fa-check"></i></span>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Nhíp</span>
+                        <span class="status-icon na"><i class="fa-solid fa-minus"></i></span>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Colorbar</span>
+                        <span class="status-icon yes"><i class="fa-solid fa-check"></i></span>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Date</span>
+                        <span class="status-icon yes"><i class="fa-solid fa-check"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- THẺ CARD 2: AW (ARTWORK) -->
+            <div class="qc-card">
+                <div class="qc-card-header">
+                    <h3><i class="fa-solid fa-palette"></i> 2. AW (Artwork)</h3>
+                    <span>4 Hạng mục</span>
+                </div>
+                <div class="qc-card-body">
+                    <div class="qc-row">
+                        <span class="qc-label">GLID</span>
+                        <span class="status-icon yes"><i class="fa-solid fa-check"></i></span>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Item Code</span>
+                        <span class="status-icon yes"><i class="fa-solid fa-check"></i></span>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Date</span>
+                        <span class="status-icon yes"><i class="fa-solid fa-check"></i></span>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Số lượng màu</span>
+                        <span class="status-icon yes"><i class="fa-solid fa-check"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- THẺ CARD 3: CHẤT LƯỢNG KẼM -->
+            <div class="qc-card">
+                <div class="qc-card-header">
+                    <h3><i class="fa-solid fa-layer-group"></i> 3. Chất Lượng Kẽm</h3>
+                    <span>5 Hạng mục</span>
+                </div>
+                <div class="qc-card-body">
+                    <div class="qc-row">
+                        <span class="qc-label">Trầy xước</span>
+                        <span class="status-icon yes"><i class="fa-solid fa-check"></i></span>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Xéo kẽm</span>
+                        <span class="status-icon yes"><i class="fa-solid fa-check"></i></span>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Bắt màng</span>
+                        <span class="status-icon yes"><i class="fa-solid fa-check"></i></span>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Dơ keo</span>
+                        <span class="status-icon na"><i class="fa-solid fa-minus"></i></span>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Đo tram</span>
+                        <span class="status-icon na"><i class="fa-solid fa-minus"></i></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- SECTION 2: BẢNG LỊCH BỮA ĂN -->
+        <div class="section-header" id="schedule-section">
+            <span class="sub-title">Shift Schedule</span>
+            <h2>THỜI GIAN BỮA ĂN & NGHỈ CA VẬN HÀNH</h2>
+        </div>
+
+        <div class="info-card-box">
+            <div class="table-wrapper">
+                <table class="schedule-table">
+                    <thead>
+                        <tr>
+                            <th>Thời gian ca ăn</th>
+                            <th>Giờ bắt đầu</th>
+                            <th>Giờ kết thúc</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Bữa trưa</strong></td><td>10h50</td><td>11h40</td></tr>
+                        <tr><td><strong>Bữa chiều</strong></td><td>17h20</td><td>18h00</td></tr>
+                        <tr><td><strong>Ca tối (ca 18h – 06h sáng)</strong></td><td>21h00</td><td>21h50</td></tr>
+                        <tr><td><strong>Bữa khuya (2h sáng)</strong></td><td>01h00</td><td>02h00</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION 3: CẤU HÌNH THIẾT BỊ CTP -->
+        <div class="section-header" id="specs-section">
+            <span class="sub-title">Production Capacity</span>
+            <h2>THÔNG SỐ VẬN HÀNH MÁY & KẼM CTP</h2>
+        </div>
+
+        <div class="specs-grid">
+            <div class="spec-card-item">
+                <h4><i class="fa-solid fa-ruler-combined"></i> Quy Cách Kẽm Offset</h4>
+                <ul>
+                    <li>• <strong>Khổ 605 x 745 mm:</strong>&nbsp;Chuẩn máy in 4 con.</li>
+                    <li>• <strong>Khổ 660 x 745 mm:</strong>&nbsp;Khổ trung kẹp gờ chuẩn xưởng.</li>
+                    <li>• <strong>Gripper:</strong>&nbsp;38mm - 45mm theo cấu hình máy in.</li>
+                </ul>
+            </div>
+
+            <div class="spec-card-item">
+                <h4><i class="fa-solid fa-gears"></i> Hệ Thống RIP & Máy Ghi</h4>
+                <ul>
+                    <li>• <strong>Workflow:</strong>&nbsp;Kodak Prinergy System bản quyền.</li>
+                    <li>• <strong>Thiết bị ghi:</strong>&nbsp;Kodak Trendsetter Thermal CTP.</li>
+                    <li>• <strong>Độ phân giải:</strong>&nbsp;2400 DPI (AM 175 LPI / FM).</li>
+                </ul>
+            </div>
+
+            <div class="spec-card-item">
+                <h4><i class="fa-solid fa-id-badge"></i> Thông Tin Phụ Trách</h4>
+                <ul>
+                    <li>• <strong>Quản lý:</strong>&nbsp;Do Nguyen | ID: 20260912-2222</li>
+                    <li>• <strong>Email:</strong>&nbsp;contact@donguyen.net</li>
+                    <li>• <strong>Số nội bộ (Tel):</strong>&nbsp;3010</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SECTION 4: CÂU HỎI THƯỜNG GẶP (FAQ) -->
+        <div class="section-header" id="faq-section">
+            <span class="sub-title">Knowledge Base</span>
+            <h2>CÂU HỎI THƯỜNG GẶP (FAQ)</h2>
+        </div>
+
+        <div class="faq-wrapper">
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>1. Tại sao hệ màu RGB lại bị đánh dấu đỏ (Không chấp nhận) trong quá trình QC File?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    Trong công nghệ in Offset, thiết bị ghi kẽm CTP và máy in chỉ chấp nhận hệ màu CMYK (bốn màu mực gốc) hoặc màu Spot (Pantone). File thiết kế định dạng RGB khi xuất ra máy in sẽ bị sai lệch màu nghiêm trọng hoặc tách màu không chính xác.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>2. Tiêu chuẩn Gripper (Nhíp) mặc định của kẽm CTP là bao nhiêu?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    Khoảng cách nhíp tiêu chuẩn thường dao động từ 38mm đến 45mm tùy theo dòng máy in Offset tại xưởng sản xuất. Việc kiểm tra khổ nhíp nhằm đảm bảo hình ảnh trên kẽm không bị đè vào vùng kẹp gờ của máy in.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>3. Thiết bị ghi kẽm CTP Kodak Trendsetter hỗ trợ độ phân giải tối đa bao nhiêu?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    Hệ thống ghi kẽm CTP Kodak Trendsetter Thermal hỗ trợ độ phân giải chuẩn 2400 DPI với tràm AM 175 LPI hoặc công nghệ tràm hạt ngẫu nhiên FM (Staccato), giúp tái tạo chi tiết hình ảnh cực kỳ sắc nét.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>4. Cần xử lý thế nào khi kiểm tra kẽm ghi xong bị hiện tượng "Dơ keo" hoặc "Trầy xước"?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    Nếu phát hiện kẽm bị dơ keo hoặc trầy xước bề mặt, kỹ thuật viên cần ngay lập tức dừng ca in, vệ sinh lại lô màng/đường bả keo của máy hiện kẽm, và cho ghi lại bản kẽm mới nếu vết trầy nằm trong vùng phần tử in (image area).
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>5. Làm sao để liên hệ hỗ trợ kỹ thuật chế bản CTP khi gặp sự cố bài in?</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    Bạn có thể liên hệ trực tiếp phụ trách phòng chế bản CTP qua email <strong>contact@donguyen.net</strong> hoặc gọi điện thoại nội bộ số <strong>Tel: 3010</strong> để được hỗ trợ kiểm tra và xử lý sự cố lập tức.
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FOOTER CHÍNH THỨC -->
+    <footer>
+        <div class="footer-container">
+            <div>
+                <p><strong>© 2026 Do Nguyen | 20260912-2222 | 📊 Dữ liệu ID HoanThanh</strong></p>
+                <p style="margin-top: 2px;">Email: contact@donguyen.net | Tel: 3010</p>
+            </div>
+            <div>
+                Website công ty: <a href="https://donguyen.net" target="_blank">donguyen.net</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS ĐIỀU KHIỂN FAQ -->
+    <script>
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.parentElement;
+                faqItem.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
