@@ -15,7 +15,7 @@
   --brand-dark:#3f8428;
   --brand-soft:#eef9ea;
   --navy:#07111f;
-  --navy-2:#0d1a2b;
+  --navy-2:#0Demo 1a2b;
   --ink:#0f172a;
   --text:#334155;
   --muted:#64748b;
@@ -259,8 +259,15 @@ header{
 }
 .kpi-note{margin-top:3px;color:#94a3b8;font-size:10px}
 
-/* Section headings */
-.section-header{text-align:left;margin:0 0 22px}
+/* Section headings & Controls */
+.section-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin:0 0 22px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
 .section-header .sub-title{
   display:block;
   margin-bottom:6px;
@@ -276,6 +283,33 @@ header{
   letter-spacing:-.75px;
   font-weight:850;
 }
+.btn-toggle-compare {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 9px;
+  background: var(--navy);
+  color: #fff;
+  border: 1px solid rgba(108,194,74,.4);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .25s ease;
+  box-shadow: 0 4px 12px rgba(7,17,31,.15);
+}
+.btn-toggle-compare i { color: var(--brand); }
+.btn-toggle-compare:hover {
+  background: var(--navy-2);
+  border-color: var(--brand);
+  transform: translateY(-1px);
+}
+.btn-toggle-compare.active {
+  background: var(--brand-dark);
+  color: #fff;
+  border-color: var(--brand-2);
+}
+.btn-toggle-compare.active i { color: #fff; }
 
 /* Team Section Titles */
 .team-title-banner {
@@ -296,7 +330,7 @@ header{
   border-left: 4px solid var(--danger);
 }
 
-/* QC dashboard cards */
+/* QC dashboard cards & Multi-column Icons */
 .qc-card-grid{
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
@@ -342,13 +376,42 @@ header{
   min-height:42px;
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:8px;
   padding:9px 17px;
   border-bottom:1px solid #f0f3f6;
 }
 .qc-row:last-child{border-bottom:0}
 .qc-row:hover{background:#fafdf9}
 .qc-label{flex:1;color:#3b4a5d;font-size:11.5px;font-weight:550}
+
+.status-icon-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.status-icon-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.col-header-label {
+  font-size: 8.5px;
+  font-weight: 800;
+  color: var(--muted);
+  text-transform: uppercase;
+  display: none; /* Hiển thị khi ở chế độ so sánh */
+}
+.compare-active .col-header-label {
+  display: block;
+}
+.demo2-col {
+  display: none; /* Mặc định ẩn Demo 2 */
+}
+.compare-active .demo2-col {
+  display: flex; /* Hiện Demo 2 khi bấm So sánh */
+}
+
 .status-icon{
   width:23px;height:23px;
   display:grid;place-items:center;
@@ -360,45 +423,12 @@ header{
 .status-icon.no{background:var(--danger-bg);color:var(--danger)}
 .status-icon.na{background:var(--warning-bg);color:var(--warning)}
 
-/* Bảng so sánh Demo 1 vs Demo 2 */
-.comparison-table-container {
-  margin-top: 35px;
-  margin-bottom: 70px;
+/* An Card Demo 2 rieng biet khi so sanh duoc bat */
+#section-demo-2 {
+  transition: all .3s ease;
 }
-.comparison-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  font-size: 11.5px;
-}
-.comparison-table th {
-  padding: 13px 18px;
-  background: #f7f9fb;
-  color: #475569;
-  border-bottom: 2px solid var(--line);
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: .65px;
-  font-weight: 850;
-  text-align: center;
-}
-.comparison-table th:first-child { text-align: left; }
-.comparison-table td {
-  padding: 12px 18px;
-  color: #475569;
-  border-bottom: 1px solid #f0f3f6;
-  text-align: center;
-}
-.comparison-table td:first-child { text-align: left; font-weight: 600; color: var(--ink); }
-.comparison-table tbody tr:hover td { background: #fbfdfb; }
-.badge-cat {
-  padding: 3px 8px;
-  border-radius: 5px;
-  background: #e2e8f0;
-  font-size: 9px;
-  font-weight: 700;
-  color: var(--muted);
-  margin-right: 6px;
+.compare-active-mode #section-demo-2 {
+  display: none;
 }
 
 /* Schedule / information */
@@ -598,8 +628,8 @@ footer{
             <span><i class="fa-solid fa-barcode"></i> Mã vận hành: <strong>20260912-2222</strong></span>
         </div>
         <div class="top-bar-right">
-            <span><i class="fa-solid fa-envelope"></i> contact@donguyen.net</span> | 
-            <span><i class="fa-solid fa-phone"></i> Tel: 3010</span>
+            <span><i class="fa-solid fa-envelope"></i> contact@abc.net</span> | 
+            <span><i class="fa-solid fa-phone"></i> Tel: 0000</span>
         </div>
     </div>
 
@@ -628,7 +658,7 @@ footer{
     </section>
 
     <!-- MAIN CONTAINER -->
-    <div class="container">
+    <div class="container" id="main-app-container">
 
         <div class="kpi-grid" aria-label="Tổng quan hệ thống">
             <div class="kpi-card">
@@ -655,137 +685,278 @@ footer{
 
         <!-- SECTION 1: BẢNG QC CARD GRID -->
         <div class="section-header" id="qc-section">
-          
-            <h2>TIÊU CHUẨN KIỂM SOÁT FILE & CHẤT LƯỢNG KẼM</h2>
+            <div>
+                <h2>TIÊU CHUẨN KIỂM SOÁT FILE & CHẤT LƯỢNG KẼM</h2>
+            </div>
+            <button class="btn-toggle-compare" id="toggleCompareBtn">
+                <i class="fa-solid fa-code-compare"></i> <span id="btnText">Bật So sánh (Demo 1 vs Demo 2)</span>
+            </button>
         </div>
 
-        <!-- BẢNG Demo 1 -->
+        <!-- BẢNG Demo 1 (Ghép Icon So sánh Demo 1 & Demo 2) -->
         <div class="team-title-banner">
             <i class="fa-solid fa-users"></i> Demo 1: 19+
         </div>
         <div class="qc-card-grid">
 
-            <!-- THẺ CARD 1: KIỂM FILE Demo 1 -->
+            <!-- THẺ CARD 1: KIỂM FILE -->
             <div class="qc-card">
                 <div class="qc-card-header">
-                    <h3><i class="fa-solid fa-file-shield"></i> 1. Kiểm File (Demo 1)</h3>
+                    <h3><i class="fa-solid fa-file-shield"></i> 1. Kiểm File</h3>
                     <span>11 Hạng mục</span>
                 </div>
                 <div class="qc-card-body">
-                    <div class="qc-row"><span class="qc-label">GLID</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Item Code</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Số UP</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Khổ in</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Số lượng màu</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Hệ màu CMYK/RGB</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Trapping</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Tràn màu</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Khuôn bế Overprint</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Thuộc tính Overprint</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Màu registration bon chồng màu, thông tin bài in</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Nhíp</span><span class="status-icon na"><i class="fa-solid fa-minus"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Colorbar</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Date</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                    <div class="qc-row">
+                        <span class="qc-label">GLID</span>
+                        <div class="status-icon-group">
+                            <div class="status-icon-col"><span class="col-header-label">Demo 1</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                            <div class="status-icon-col demo2-col"><span class="col-header-label">Demo 2</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                        </div>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Item Code</span>
+                        <div class="status-icon-group">
+                            <div class="status-icon-col"><span class="col-header-label">Demo 1</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                            <div class="status-icon-col demo2-col"><span class="col-header-label">Demo 2</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                        </div>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Số UP</span>
+                        <div class="status-icon-group">
+                            <div class="status-icon-col"><span class="col-header-label">Demo 1</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                            <div class="status-icon-col demo2-col"><span class="col-header-label">Demo 2</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                        </div>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Khổ in</span>
+                        <div class="status-icon-group">
+                            <div class="status-icon-col"><span class="col-header-label">Demo 1</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                            <div class="status-icon-col demo2-col"><span class="col-header-label">Demo 2</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
+                        </div>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Số lượng màu</span>
+                        <div class="status-icon-group">
+                            <div class="status-icon-col"><span class="col-header-label">Demo 1</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                            <div class="status-icon-col demo2-col"><span class="col-header-label">Demo 2</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                        </div>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Hệ màu CMYK/RGB</span>
+                        <div class="status-icon-group">
+                            <div class="status-icon-col"><span class="col-header-label">Demo 1</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
+                            <div class="status-icon-col demo2-col"><span class="col-header-label">Demo 2</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
+                        </div>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Trapping</span>
+                        <div class="status-icon-group">
+                            <div class="status-icon-col"><span class="col-header-label">Demo 1</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
+                            <div class="status-icon-col demo2-col"><span class="col-header-label">Demo 2</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
+                        </div>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Tràn màu</span>
+                        <div class="status-icon-group">
+                            <div class="status-icon-col"><span class="col-header-label">Demo 1</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                            <div class="status-icon-col demo2-col"><span class="col-header-label">Demo 2</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
+                        </div>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Khuôn bế Overprint</span>
+                        <div class="status-icon-group">
+                            <div class="status-icon-col"><span class="col-header-label">Demo 1</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                            <div class="status-icon-col demo2-col"><span class="col-header-label">Demo 2</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
+                        </div>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Thuộc tính Overprint</span>
+                        <div class="status-icon-group">
+                            <div class="status-icon-col"><span class="col-header-label">Demo 1</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                            <div class="status-icon-col demo2-col"><span class="col-header-label">Demo 2</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
+                        </div>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Màu registration bon chồng màu, thông tin bài in</span>
+                        <div class="status-icon-group">
+                            <div class="status-icon-col"><span class="col-header-label">Demo 1</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                            <div class="status-icon-col demo2-col"><span class="col-header-label">Demo 2</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
+                        </div>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Nhíp</span>
+                        <div class="status-icon-group">
+                            <div class="status-icon-col"><span class="col-header-label">Demo 1</span><span class="status-icon na"><i class="fa-solid fa-minus"></i></span></div>
+                            <div class="status-icon-col demo2-col"><span class="col-header-label">Demo 2</span><span class="status-icon na"><i class="fa-solid fa-minus"></i></span></div>
+                        </div>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Colorbar</span>
+                        <div class="status-icon-group">
+                            <div class="status-icon-col"><span class="col-header-label">Demo 1</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                            <div class="status-icon-col demo2-col"><span class="col-header-label">Demo 2</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
+                        </div>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Date</span>
+                        <div class="status-icon-group">
+                            <div class="status-icon-col"><span class="col-header-label">Demo 1</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                            <div class="status-icon-col demo2-col"><span class="col-header-label">Demo 2</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- THẺ CARD 2: AW Demo 1 -->
+            <!-- THẺ CARD 2: AW (Artwork) -->
             <div class="qc-card">
                 <div class="qc-card-header">
-                    <h3><i class="fa-solid fa-palette"></i> 2. AW (Artwork Demo 1)</h3>
+                    <h3><i class="fa-solid fa-palette"></i> 2. AW (Artwork)</h3>
                     <span>4 Hạng mục</span>
                 </div>
                 <div class="qc-card-body">
-                    <div class="qc-row"><span class="qc-label">GLID</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Item Code</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Date</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Số lượng màu</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                    <div class="qc-row">
+                        <span class="qc-label">GLID</span>
+                        <div class="status-icon-group">
+                            <div class="status-icon-col"><span class="col-header-label">Demo 1</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                            <div class="status-icon-col demo2-col"><span class="col-header-label">Demo 2</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                        </div>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Item Code</span>
+                        <div class="status-icon-group">
+                            <div class="status-icon-col"><span class="col-header-label">Demo 1</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                            <div class="status-icon-col demo2-col"><span class="col-header-label">Demo 2</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                        </div>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Date</span>
+                        <div class="status-icon-group">
+                            <div class="status-icon-col"><span class="col-header-label">Demo 1</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                            <div class="status-icon-col demo2-col"><span class="col-header-label">Demo 2</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                        </div>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Số lượng màu</span>
+                        <div class="status-icon-group">
+                            <div class="status-icon-col"><span class="col-header-label">Demo 1</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                            <div class="status-icon-col demo2-col"><span class="col-header-label">Demo 2</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- THẺ CARD 3: CHẤT LƯỢNG KẼM Demo 1 -->
+            <!-- THẺ CARD 3: CHẤT LƯỢNG KẼM -->
             <div class="qc-card">
                 <div class="qc-card-header">
-                    <h3><i class="fa-solid fa-layer-group"></i> 3. Chất Lượng Kẽm (Demo 1)</h3>
+                    <h3><i class="fa-solid fa-layer-group"></i> 3. Chất Lượng Kẽm</h3>
                     <span>4 Hạng mục</span>
                 </div>
                 <div class="qc-card-body">
-                    <div class="qc-row"><span class="qc-label">Trầy xước</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Xéo kẽm</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Bắt màng</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Dơ keo</span><span class="status-icon na"><i class="fa-solid fa-minus"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Đo tram</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                    <div class="qc-row">
+                        <span class="qc-label">Trầy xước</span>
+                        <div class="status-icon-group">
+                            <div class="status-icon-col"><span class="col-header-label">Demo 1</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                            <div class="status-icon-col demo2-col"><span class="col-header-label">Demo 2</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
+                        </div>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Xéo kẽm</span>
+                        <div class="status-icon-group">
+                            <div class="status-icon-col"><span class="col-header-label">Demo 1</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                            <div class="status-icon-col demo2-col"><span class="col-header-label">Demo 2</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
+                        </div>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Bắt màng</span>
+                        <div class="status-icon-group">
+                            <div class="status-icon-col"><span class="col-header-label">Demo 1</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                            <div class="status-icon-col demo2-col"><span class="col-header-label">Demo 2</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
+                        </div>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Dơ keo</span>
+                        <div class="status-icon-group">
+                            <div class="status-icon-col"><span class="col-header-label">Demo 1</span><span class="status-icon na"><i class="fa-solid fa-minus"></i></span></div>
+                            <div class="status-icon-col demo2-col"><span class="col-header-label">Demo 2</span><span class="status-icon na"><i class="fa-solid fa-minus"></i></span></div>
+                        </div>
+                    </div>
+                    <div class="qc-row">
+                        <span class="qc-label">Đo tram</span>
+                        <div class="status-icon-group">
+                            <div class="status-icon-col"><span class="col-header-label">Demo 1</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                            <div class="status-icon-col demo2-col"><span class="col-header-label">Demo 2</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
         </div>
 
-        <!-- BẢNG Demo 2 -->
-        <div class="team-title-banner team-b">
-            <i class="fa-solid fa-triangle-exclamation"></i> Demo 2: 9+
+        <!-- BẢNG Demo 2 (Chỉ hiển thị khi KHÔNG bật so sánh) -->
+        <div id="section-demo-2">
+            <div class="team-title-banner team-b">
+                <i class="fa-solid fa-triangle-exclamation"></i> Demo 2: 9+
+            </div>
+            <div class="qc-card-grid">
+
+                <!-- THẺ CARD 1: KIỂM FILE Demo 2 -->
+                <div class="qc-card">
+                    <div class="qc-card-header">
+                        <h3><i class="fa-solid fa-file-shield"></i> 1. Kiểm File (Demo 2)</h3>
+                        <span>5 Hạng mục</span>
+                    </div>
+                    <div class="qc-card-body">
+                        <div class="qc-row"><span class="qc-label">GLID</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                        <div class="qc-row"><span class="qc-label">Item Code</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                        <div class="qc-row"><span class="qc-label">Số UP</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                        <div class="qc-row"><span class="qc-label">Khổ in</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
+                        <div class="qc-row"><span class="qc-label">Số lượng màu</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                        <div class="qc-row"><span class="qc-label">Hệ màu CMYK/RGB</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
+                        <div class="qc-row"><span class="qc-label">Trapping</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
+                        <div class="qc-row"><span class="qc-label">Tràn màu</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
+                        <div class="qc-row"><span class="qc-label">Khuôn bế Overprint</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
+                        <div class="qc-row"><span class="qc-label">Thuộc tính Overprint</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
+                        <div class="qc-row"><span class="qc-label">Màu registration bon chồng màu, thông tin bài in</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
+                        <div class="qc-row"><span class="qc-label">Nhíp</span><span class="status-icon na"><i class="fa-solid fa-minus"></i></span></div>
+                        <div class="qc-row"><span class="qc-label">Colorbar</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
+                        <div class="qc-row"><span class="qc-label">Date</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                    </div>
+                </div>
+
+                <!-- THẺ CARD 2: AW Demo 2 -->
+                <div class="qc-card">
+                    <div class="qc-card-header">
+                        <h3><i class="fa-solid fa-palette"></i> 2. AW (Artwork Demo 2)</h3>
+                        <span>4 Hạng mục</span>
+                    </div>
+                    <div class="qc-card-body">
+                        <div class="qc-row"><span class="qc-label">GLID</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                        <div class="qc-row"><span class="qc-label">Item Code</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                        <div class="qc-row"><span class="qc-label">Date</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                        <div class="qc-row"><span class="qc-label">Số lượng màu</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
+                    </div>
+                </div>
+
+                <!-- THẺ CARD 3: CHẤT LƯỢNG KẼM Demo 2 -->
+                <div class="qc-card">
+                    <div class="qc-card-header">
+                        <h3><i class="fa-solid fa-layer-group"></i> 3. Chất Lượng Kẽm (Demo 2)</h3>
+                        <span>0 Hạng mục</span>
+                    </div>
+                    <div class="qc-card-body">
+                        <div class="qc-row"><span class="qc-label">Trầy xước</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
+                        <div class="qc-row"><span class="qc-label">Xéo kẽm</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
+                        <div class="qc-row"><span class="qc-label">Bắt màng</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
+                        <div class="qc-row"><span class="qc-label">Dơ keo</span><span class="status-icon na"><i class="fa-solid fa-minus"></i></span></div>
+                        <div class="qc-row"><span class="qc-label">Đo tram</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
+                    </div>
+                </div>
+
+            </div>
         </div>
-        <div class="qc-card-grid">
-
-            <!-- THẺ CARD 1: KIỂM FILE Demo 2 -->
-            <div class="qc-card">
-                <div class="qc-card-header">
-                    <h3><i class="fa-solid fa-file-shield"></i> 1. Kiểm File (Demo 2)</h3>
-                    <span>5 Hạng mục</span>
-                </div>
-                <div class="qc-card-body">
-                    <div class="qc-row"><span class="qc-label">GLID</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Item Code</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Số UP</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Khổ in</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Số lượng màu</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Hệ màu CMYK/RGB</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Trapping</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Tràn màu</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Khuôn bế Overprint</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Thuộc tính Overprint</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Màu registration bon chồng màu, thông tin bài in</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Nhíp</span><span class="status-icon na"><i class="fa-solid fa-minus"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Colorbar</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Date</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
-                </div>
-            </div>
-
-            <!-- THẺ CARD 2: AW Demo 2 -->
-            <div class="qc-card">
-                <div class="qc-card-header">
-                    <h3><i class="fa-solid fa-palette"></i> 2. AW (Artwork Demo 2)</h3>
-                    <span>4 Hạng mục</span>
-                </div>
-                <div class="qc-card-body">
-                    <div class="qc-row"><span class="qc-label">GLID</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Item Code</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Date</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Số lượng màu</span><span class="status-icon yes"><i class="fa-solid fa-check"></i></span></div>
-                </div>
-            </div>
-
-            <!-- THẺ CARD 3: CHẤT LƯỢNG KẼM Demo 2 -->
-            <div class="qc-card">
-                <div class="qc-card-header">
-                    <h3><i class="fa-solid fa-layer-group"></i> 3. Chất Lượng Kẽm (Demo 2)</h3>
-                    <span>0 Hạng mục</span>
-                </div>
-                <div class="qc-card-body">
-                    <div class="qc-row"><span class="qc-label">Trầy xước</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Xéo kẽm</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Bắt màng</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Dơ keo</span><span class="status-icon na"><i class="fa-solid fa-minus"></i></span></div>
-                    <div class="qc-row"><span class="qc-label">Đo tram</span><span class="status-icon no"><i class="fa-solid fa-xmark"></i></span></div>
-                </div>
-            </div>
-
-        </div>
-
-     
 
         <!-- SECTION 2: BẢNG LỊCH BỮA ĂN -->
         <div class="section-header" id="schedule-section">
-         
             <h2>THỜI GIAN BỮA ĂN & NGHỈ CA VẬN HÀNH</h2>
         </div>
 
@@ -811,7 +982,6 @@ footer{
 
         <!-- SECTION 3: CẤU HÌNH THIẾT BỊ CTP -->
         <div class="section-header" id="specs-section">
-        
             <h2>THÔNG SỐ VẬN HÀNH MÁY & KẼM CTP</h2>
         </div>
 
@@ -837,16 +1007,15 @@ footer{
             <div class="spec-card-item">
                 <h4><i class="fa-solid fa-id-badge"></i> Thông Tin Phụ Trách</h4>
                 <ul>
-                    <li>• <strong>Quản lý:</strong>&nbsp;Do Nguyen | ID: 20260912-2222</li>
-                    <li>• <strong>Email:</strong>&nbsp;contact@donguyen.net</li>
-                    <li>• <strong>Số nội bộ (Tel):</strong>&nbsp;3010</li>
+                    <li>• <strong>Quản lý:</strong>&nbsp;ABC | ID: 20260912-2222</li>
+                    <li>• <strong>Email:</strong>&nbsp;contact@abc.net</li>
+                    <li>• <strong>Số nội bộ (Tel):</strong>&nbsp;0000</li>
                 </ul>
             </div>
         </div>
 
         <!-- SECTION 4: CÂU HỎI THƯỜNG GẶP (FAQ) -->
         <div class="section-header" id="faq-section">
-          
             <h2>CÂU HỎI THƯỜNG GẶP (FAQ)</h2>
         </div>
 
@@ -897,7 +1066,7 @@ footer{
                     <i class="fa-solid fa-chevron-down"></i>
                 </button>
                 <div class="faq-answer">
-                    Bạn có thể liên hệ trực tiếp phụ trách phòng chế bản CTP qua email <strong>contact@donguyen.net</strong> hoặc gọi điện thoại nội bộ số <strong>Tel: 3010</strong> để được hỗ trợ kiểm tra và xử lý sự cố lập tức.
+                    Bạn có thể liên hệ trực tiếp phụ trách phòng chế bản CTP qua email <strong>contact@abc.net</strong> hoặc gọi điện thoại nội bộ số <strong>Tel: 0000</strong> để được hỗ trợ kiểm tra và xử lý sự cố lập tức.
                 </div>
             </div>
         </div>
@@ -909,21 +1078,42 @@ footer{
         <div class="footer-container">
             <div>
                 <p><strong>© 2026 Do Nguyen | 20260912-2222 | 📊 Dữ liệu ID HoanThanh</strong></p>
-                <p style="margin-top: 2px;">Email: contact@donguyen.net | Tel: 3010</p>
+                <p style="margin-top: 2px;">Email: contact@abc.net | Tel: 0000</p>
             </div>
             <div>
-                Website công ty: <a href="https://donguyen.net" target="_blank">donguyen.net</a>
+                Website công ty: <a href="https://abc.net" target="_blank">abc.net</a>
             </div>
         </div>
     </footer>
 
-    <!-- JS ĐIỀU KHIỂN FAQ -->
+    <!-- JS ĐIỀU KHIỂN FAQ VÀ NÚT SO SÁNH DEMO 1 VS DEMO 2 -->
     <script>
+        // JS FAQ Accordion
         document.querySelectorAll('.faq-question').forEach(button => {
             button.addEventListener('click', () => {
                 const faqItem = button.parentElement;
                 faqItem.classList.toggle('active');
             });
+        });
+
+        // JS Toggle So sánh Demo 1 & Demo 2
+        const toggleBtn = document.getElementById('toggleCompareBtn');
+        const container = document.getElementById('main-app-container');
+        const btnText = document.getElementById('btnText');
+
+        let isComparing = false;
+
+        toggleBtn.addEventListener('click', () => {
+            isComparing = !isComparing;
+            if (isComparing) {
+                container.classList.add('compare-active', 'compare-active-mode');
+                toggleBtn.classList.add('active');
+                btnText.textContent = 'Tắt So sánh (Đang hiện Demo 1 & 2)';
+            } else {
+                container.classList.remove('compare-active', 'compare-active-mode');
+                toggleBtn.classList.remove('active');
+                btnText.textContent = 'Bật So sánh (Demo 1 vs Demo 2)';
+            }
         });
     </script>
 </body>
