@@ -47,7 +47,7 @@
             border: 1px solid var(--card-border);
             border-radius: 28px;
             padding: 40px;
-            max-width: 880px;
+            max-width: 1140px; /* Mở rộng chiều ngang cho PC */
             width: 100%;
             box-shadow: var(--shadow-lg);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -152,12 +152,12 @@
 
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 14px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
         }
 
         .project-card {
-            background-color: rgba(242, 233, 234, 0.45); /* Pantone 9061 C nhạt */
+            background-color: rgba(242, 233, 234, 0.45);
             border: 1px solid rgba(226, 215, 217, 0.7);
             border-radius: 16px;
             padding: 18px;
@@ -189,7 +189,216 @@
             line-height: 1.55;
         }
 
-        /* Phần Timeline - Lịch sử làm việc */
+        /* Dự án Email Chuẩn Hóa */
+        .project-card-featured {
+            grid-column: 1 / -1;
+            background: #FAF5EE;
+            border: 1px solid #E8DFD1;
+            border-radius: 16px;
+            padding: 22px 24px;
+            transition: all 0.25s ease;
+        }
+
+        .project-card-featured:hover {
+            box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+            border-color: #D6C8B4;
+        }
+
+        .featured-header {
+            font-size: 14.5px;
+            line-height: 1.6;
+            color: #334155;
+            margin-bottom: 18px;
+        }
+
+        .featured-title-bold {
+            font-weight: 800;
+            color: #0f172a;
+        }
+
+        .featured-features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 10px;
+            font-size: 13px;
+            color: #334155;
+            line-height: 1.45;
+        }
+
+        .feature-item .icon {
+            font-size: 16px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .feature-item strong {
+            color: #0f172a;
+        }
+
+        /* Box Cấu trúc tiêu đề */
+        .email-structure-box {
+            background: #ffffff;
+            border: 1px solid #E2E8F0;
+            border-radius: 14px;
+            padding: 16px 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            margin-bottom: 20px;
+        }
+
+        .structure-title {
+            font-size: 13.5px;
+            font-weight: 800;
+            color: #1e3a8a;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .subject-preview-bar {
+            background: #F1F5F9;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-size: 15px;
+            font-family: 'SFMono-Regular', Consolas, monospace;
+            color: #0f172a;
+            margin-bottom: 14px;
+        }
+
+        .subject-preview-bar .tag-id {
+            font-weight: 800;
+            color: #1e293b;
+        }
+
+        .subject-preview-bar .title-text {
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .structure-explain-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            font-size: 12.5px;
+            color: #475569;
+            line-height: 1.45;
+        }
+
+        .explain-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 4px;
+        }
+
+        .explain-item .bullet {
+            color: #2563eb;
+            font-size: 11px;
+            margin-top: 1px;
+        }
+
+        .explain-item strong {
+            color: #1e293b;
+        }
+
+        /* Tool Tạo Mã Ticket Nhanh theo ảnh đính kèm */
+        .ticket-tool-box {
+            background: #F4F7FA;
+            border: 1px solid #DCE4EC;
+            border-radius: 14px;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .tool-label {
+            font-size: 14px;
+            font-weight: 800;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tool-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .dept-select-wrap {
+            position: relative;
+        }
+
+        .dept-input {
+            width: 140px;
+            padding: 7px 12px;
+            border: 1.5px solid #6CC24A;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #0f172a;
+            outline: none;
+            background: #ffffff;
+            transition: all 0.2s;
+            text-transform: uppercase;
+        }
+
+        .dept-input:focus {
+            box-shadow: 0 0 0 3px rgba(108, 194, 74, 0.25);
+        }
+
+        .ticket-code-display {
+            background: #ffffff;
+            border: 1px solid #DCE4EC;
+            border-radius: 8px;
+            padding: 7px 16px;
+            font-family: 'SFMono-Regular', Consolas, monospace;
+            font-size: 15px;
+            font-weight: 800;
+            color: #51a332;
+            letter-spacing: 0.5px;
+            min-width: 190px;
+            text-align: center;
+        }
+
+        .btn-tool {
+            background: #ffffff;
+            border: 1px solid #CBD5E1;
+            border-radius: 8px;
+            padding: 7px 14px;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #334155;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-tool:hover {
+            background: #F8FAFC;
+            border-color: #94A3B8;
+            color: #0F172A;
+            transform: translateY(-1px);
+        }
+
+        .btn-tool:active {
+            transform: translateY(0);
+        }
+
+        /* Timeline Kinh nghiệm làm việc */
         .timeline-section {
             margin-bottom: 32px;
         }
@@ -255,7 +464,7 @@
             margin-bottom: 4px;
         }
 
-        /* Khung hiển thị tỉ lệ sử dụng phần mềm trong Timeline */
+        /* Khung hiển thị tỉ lệ sử dụng phần mềm */
         .timeline-software-block {
             background: rgba(248, 250, 252, 0.85);
             border: 1px solid #e2e8f0;
@@ -275,7 +484,7 @@
 
         .software-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 10px 16px;
         }
 
@@ -411,8 +620,41 @@
             box-shadow: 0 14px 28px rgba(108, 194, 74, 0.42);
         }
 
+        /* Notification Toast */
+        .toast-notify {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #0f172a;
+            color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 13.5px;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .toast-notify.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 992px) {
+            .featured-features-grid { grid-template-columns: repeat(2, 1fr); }
+            .structure-explain-grid { grid-template-columns: repeat(2, 1fr); }
+            .software-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
         @media (max-width: 768px) {
             .software-grid { grid-template-columns: repeat(2, 1fr); }
+            .ticket-tool-box { flex-direction: column; align-items: flex-start; }
+            .tool-controls { width: 100%; justify-content: flex-start; }
         }
 
         @media (max-width: 576px) {
@@ -421,8 +663,12 @@
             .avatar { width: 80px; height: 80px; }
             .action-area { flex-direction: column; align-items: flex-start; }
             .projects-grid { grid-template-columns: 1fr; }
+            .featured-features-grid { grid-template-columns: 1fr; }
+            .structure-explain-grid { grid-template-columns: 1fr; }
             .software-grid { grid-template-columns: 1fr; }
             .btn-contact { width: 100%; justify-content: center; }
+            .tool-controls { flex-direction: column; width: 100%; }
+            .dept-input, .ticket-code-display, .btn-tool { width: 100%; text-align: center; justify-content: center; }
         }
     </style>
 </head>
@@ -456,21 +702,111 @@
         <div class="projects-section">
             <div class="section-title">🚀 Dự án tiêu biểu</div>
             <div class="projects-grid">
+                
                 <div class="project-card">
                     <div class="project-icon">📂</div>
                     <div class="project-name">Phần mềm Tìm kiếm Thư mục</div>
                     <div class="project-desc">Công cụ hỗ trợ tra cứu, lọc và quản lý cấu trúc thư mục/tập tin nhanh chóng cho công việc văn phòng.</div>
                 </div>
-                <div class="project-card">
-                    <div class="project-icon">📧</div>
-                    <div class="project-name">Hệ Thống Soạn Thảo & Gửi Email Chuẩn Hóa</div>
-                    <div class="project-desc">Ứng dụng Web hỗ trợ tạo mã Phiếu yêu cầu tự động, chèn thời gian thực, phòng ban và quản lý gửi thư nội bộ chuyên nghiệp.</div>
-                </div>
+                
                 <div class="project-card">
                     <div class="project-icon">📋</div>
                     <div class="project-name">Form Biểu mẫu Cập nhật Dữ liệu</div>
                     <div class="project-desc">Hệ thống biểu mẫu trực tuyến giúp thu thập, đồng bộ và cập nhật dữ liệu tự động vào cơ sở dữ liệu/Bảng tính Google.</div>
                 </div>
+
+                <!-- Dự án Email Chuẩn Hóa & Tool Tạo Ticket -->
+                <div class="project-card-featured">
+                    <div class="featured-header">
+                        🚀 <span class="featured-title-bold">Hệ Thống Quản Lý Email & Tra Cứu Yêu Cầu Theo Ticket ID:</span> Giải pháp chuyên nghiệp giúp chuẩn hóa quy trình gửi email công việc, hỗ trợ <strong>mã định danh Ticket ID duy nhất</strong> để tra cứu & tải lại nội dung email cũ tức thì, tích hợp bộ soạn thảo HTML đa năng cho các phòng ban IT, Chế bản, QC, Sản xuất & Vận hành.
+                    </div>
+
+                    <div class="featured-features-grid">
+                        <div class="feature-item">
+                            <span class="icon">⚡</span>
+                            <div><strong>Định danh Ticket ID:</strong> Tự động cấp mã định danh duy nhất theo thời gian thực</div>
+                        </div>
+                        <div class="feature-item">
+                            <span class="icon">📝</span>
+                            <div><strong>Soạn thảo Rich Text:</strong> Tùy chỉnh định dạng văn bản, màu sắc và tự động chuẩn hóa bảng từ Excel/Sheets</div>
+                        </div>
+                        <div class="feature-item">
+                            <span class="icon">📁</span>
+                            <div><strong>Quản lý tệp đa dạng:</strong> Đính kèm tệp trực tiếp (tối ưu ảnh chụp màn hình) hoặc trích xuất link từ Google Drive</div>
+                        </div>
+                        <div class="feature-item">
+                            <span class="icon">🎛️</span>
+                            <div><strong>Đồng bộ bộ phận:</strong> Tự động khớp tiền tố tiêu đề (IT, HR, PP, QC...) theo từng phòng ban xử lý</div>
+                        </div>
+                        <div class="feature-item" style="grid-column: 1 / -1;">
+                            <span class="icon">📊</span>
+                            <div><strong>Ghi nhận tự động:</strong> Lưu trữ lịch sử gửi mail vào Google Spreadsheets để tiện đối soát</div>
+                        </div>
+                    </div>
+
+                    <div class="email-structure-box">
+                        <div class="structure-title">📌 Cấu trúc Tiêu đề Email chuẩn hóa:</div>
+                        <div class="subject-preview-bar">
+                            <span class="tag-id">[IT-20260913-3737]</span> <span class="title-text">Nâng cấp phần mềm QLTM</span>
+                        </div>
+                        <div class="structure-explain-grid">
+                            <div class="explain-item">
+                                <span class="bullet">◆</span>
+                                <div><strong>IT:</strong> Tiền tố Bộ phận (Công nghệ thông tin).</div>
+                            </div>
+                            <div class="explain-item">
+                                <span class="bullet">◆</span>
+                                <div><strong>20260913:</strong> Ngày gửi (Năm-Tháng-Ngày: 13/09/2026).</div>
+                            </div>
+                            <div class="explain-item">
+                                <span class="bullet">◆</span>
+                                <div><strong>3737:</strong> Mã số 4 chữ số ngẫu nhiên chống trùng lặp.</div>
+                            </div>
+                            <div class="explain-item">
+                                <span class="bullet">◆</span>
+                                <div><strong>Nâng cấp phần mềm QLTM:</strong> Nội dung tiêu đề công việc.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TÍCH HỢP TOOL TẠO MÃ TICKET NHANH (DÙNG MỤC ĐÍCH KHÁC) -->
+                    <div class="ticket-tool-box">
+                        <div class="tool-label">
+                            ⚡ Tool Tạo Mã Ticket Nhanh (Dùng mục đích khác)
+                        </div>
+                        <div class="tool-controls">
+                            <!-- Tiền tố tùy biến chuẩn quốc tế có danh sách gợi ý nhiều phòng ban -->
+                            <div class="dept-select-wrap">
+                                <input type="text" id="deptPrefix" class="dept-input" value="IT" list="deptOptions" placeholder="Tiền tố..." placeholder="IT, HR...">
+                                <datalist id="deptOptions">
+                                    <option value="IT">IT - Công Nghệ Thông Tin</option>
+                                    <option value="HR">HR - Nhân Sự</option>
+                                    <option value="PP">PP - Kế Hoạch Sản Xuất</option>
+                                    <option value="QC">QC - Kiểm Soát Chất Lượng</option>
+                                    <option value="PROD">PROD - Sản Xuất In</option>
+                                    <option value="LOG">LOG - Kho & Vận Chuyển</option>
+                                    <option value="FIN">FIN - Tài Chính Kế Toán</option>
+                                    <option value="MKT">MKT - Truyền Thông Marketing</option>
+                                </datalist>
+                            </div>
+
+                            <!-- Hiển thị Mã Ticket được sinh ra -->
+                            <div class="ticket-code-display" id="ticketCodeDisplay">IT–20260914–2458</div>
+
+                            <!-- Nút Sao Chép -->
+                            <button type="button" class="btn-tool" id="btnCopyTicket">
+                                📋 Sao chép
+                            </button>
+
+                            <!-- Nút Tạo Mã Mới -->
+                            <button type="button" class="btn-tool" id="btnNewTicket">
+                                🔄 Tạo mã mới
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
         </div>
 
@@ -852,5 +1188,87 @@
         </div>
     </div>
 
+    <!-- Thông báo Toast khi sao chép -->
+    <div id="toastNotify" class="toast-notify">Đã sao chép mã Ticket vào bộ nhớ tạm!</div>
+
+    <!-- JAVASCRIPT XỬ LÝ TOOL TẠO MÃ TICKET TỰ ĐỘNG -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const deptInput = document.getElementById('deptPrefix');
+            const displayBox = document.getElementById('ticketCodeDisplay');
+            const btnCopy = document.getElementById('btnCopyTicket');
+            const btnNew = document.getElementById('btnNewTicket');
+            const toast = document.getElementById('toastNotify');
+
+            // Hàm tạo ngày dạng YYYYMMDD
+            function getFormattedDate() {
+                const now = new Date();
+                const yyyy = now.getFullYear();
+                const mm = String(now.getMonth() + 1).padStart(2, '0');
+                const dd = String(now.getDate()).padStart(2, '0');
+                return `${yyyy}${mm}${dd}`;
+            }
+
+            // Hàm sinh 4 số ngẫu nhiên
+            function getRandom4Digits() {
+                return Math.floor(1000 + Math.random() * 9000);
+            }
+
+            // Hàm tổng hợp tạo Mã Ticket
+            function generateTicketCode() {
+                let prefix = deptInput.value.trim().toUpperCase() || 'IT';
+                const dateStr = getFormattedDate();
+                const randomStr = getRandom4Digits();
+                return `${prefix}–${dateStr}–${randomStr}`;
+            }
+
+            // Cập nhật lại giao diện mã
+            function updateTicketDisplay() {
+                displayBox.textContent = generateTicketCode();
+            }
+
+            // Đổi mã tự động mỗi 3 giây (3s)
+            let autoInterval = setInterval(updateTicketDisplay, 3000);
+
+            // Sự kiện khi bấm tạo mới thủ công
+            btnNew.addEventListener('click', function () {
+                updateTicketDisplay();
+                // Reset lại đếm ngược 3s khi bấm thủ công
+                clearInterval(autoInterval);
+                autoInterval = setInterval(updateTicketDisplay, 3000);
+            });
+
+            // Thay đổi tiền tố từ ô input
+            deptInput.addEventListener('input', function () {
+                updateTicketDisplay();
+            });
+
+            // Sao chép mã ticket vào Clipboard
+            btnCopy.addEventListener('click', function () {
+                const textToCopy = displayBox.textContent;
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    showToast(`Đã sao chép: ${textToCopy}`);
+                }).catch(() => {
+                    // Fallback nếu trình duyệt cũ
+                    const tempInput = document.createElement('input');
+                    tempInput.value = textToCopy;
+                    document.body.appendChild(tempInput);
+                    tempInput.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(tempInput);
+                    showToast(`Đã sao chép: ${textToCopy}`);
+                });
+            });
+
+            // Hàm hiển thị Toast Notification
+            function showToast(msg) {
+                toast.textContent = msg;
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2000);
+            }
+        });
+    </script>
 </body>
 </html>
