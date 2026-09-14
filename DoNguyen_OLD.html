@@ -4,15 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giới Thiệu Cá Nhân - Tech & Design Enthusiast</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #6CC24A; /* Pantone 360 C */
-            --primary-gradient: linear-gradient(135deg, #6CC24A 0%, #51a332 100%);
+            --primary-dark: #51a332;
+            --primary-gradient: linear-gradient(135deg, #6CC24A 0%, #469628 100%);
+            --bar-gradient: linear-gradient(90deg, #6CC24A 0%, #3b82f6 100%);
             --text-main: #0f172a;
             --text-sub: #475569;
             --bg-pantone: #F2E9EA; /* Pantone 9061 C */
-            --card-bg: rgba(255, 255, 255, 0.95);
+            --card-bg: rgba(255, 255, 255, 0.96);
+            --card-border: rgba(255, 255, 255, 0.9);
+            --shadow-lg: 0 20px 45px -12px rgba(108, 194, 74, 0.2);
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.03);
         }
 
         * {
@@ -23,131 +28,156 @@
         }
 
         body {
-            background-color: var(--bg-pantone); /* Nền ngoài cùng Pantone 9061 C */
+            background-color: var(--bg-pantone);
+            background-image: 
+                radial-gradient(at 10% 10%, rgba(108, 194, 74, 0.12) 0px, transparent 50%),
+                radial-gradient(at 90% 90%, rgba(242, 233, 234, 0.8) 0px, transparent 50%);
+            background-attachment: fixed;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 30px 20px;
+            padding: 40px 20px;
         }
 
         .card {
             background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            border-radius: 24px;
-            padding: 36px;
-            max-width: 850px;
-            box-shadow: 0 20px 40px -15px rgba(108, 194, 74, 0.15);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 28px;
+            padding: 40px;
+            max-width: 880px;
+            width: 100%;
+            box-shadow: var(--shadow-lg);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         /* Mã phiên bản / Ngày cập nhật - Căn phải, không khung */
         .doc-update-info {
             font-size: 12px;
-            font-family: monospace;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
             color: #94a3b8;
             text-align: right;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
+            letter-spacing: 0.3px;
         }
 
         /* Header Profile */
         .profile-header {
             display: flex;
             align-items: center;
-            gap: 20px;
-            margin-bottom: 24px;
+            gap: 24px;
+            margin-bottom: 28px;
         }
 
         .avatar {
-            width: 90px;
-            height: 90px;
+            width: 96px;
+            height: 96px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid #ffffff;
-            box-shadow: 0 8px 16px rgba(108, 194, 74, 0.25);
+            border: 4px solid #ffffff;
+            box-shadow: 0 10px 20px rgba(108, 194, 74, 0.28);
             flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .avatar:hover {
+            transform: scale(1.04);
         }
 
         .author-name {
-            color: var(--primary);
-            font-size: 20px;
-            font-weight: 700;
+            color: var(--primary-dark);
+            font-size: 22px;
+            font-weight: 800;
             margin-bottom: 6px;
+            letter-spacing: -0.2px;
         }
 
         .badge {
             align-self: flex-start;
             background: rgba(108, 194, 74, 0.15);
-            color: #3b7324;
+            color: #2e591c;
             font-size: 12px;
             font-weight: 700;
-            padding: 4px 12px;
+            padding: 5px 14px;
             border-radius: 20px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
+            letter-spacing: 0.6px;
+            margin-bottom: 10px;
             display: inline-block;
+            box-shadow: 0 2px 6px rgba(108, 194, 74, 0.1);
         }
 
         .main-title {
             color: var(--text-main);
-            font-size: 22px;
-            font-weight: 700;
-            line-height: 1.3;
+            font-size: 23px;
+            font-weight: 800;
+            line-height: 1.35;
+            letter-spacing: -0.3px;
         }
 
         .description {
             color: var(--text-sub);
             font-size: 15px;
-            line-height: 1.7;
-            margin-bottom: 28px;
+            line-height: 1.8;
+            margin-bottom: 32px;
+        }
+
+        .description p {
+            margin-bottom: 12px;
+        }
+
+        .description p:last-child {
+            margin-bottom: 0;
         }
 
         /* Section Title chung */
         .section-title {
             font-size: 15px;
-            font-weight: 700;
+            font-weight: 800;
             color: var(--text-main);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 14px;
+            letter-spacing: 0.7px;
+            margin-bottom: 16px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         /* Phần Dự án tiêu biểu */
         .projects-section {
-            margin-bottom: 28px;
+            margin-bottom: 32px;
         }
 
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 12px;
+            gap: 14px;
         }
 
         .project-card {
-            background-color: rgba(242, 233, 234, 0.5); /* 50% Pantone 9061 C */
-            border: 1px solid rgba(242, 233, 234, 0.8);
-            border-radius: 14px;
-            padding: 16px;
-            transition: all 0.2s ease;
+            background-color: rgba(242, 233, 234, 0.45); /* Pantone 9061 C nhạt */
+            border: 1px solid rgba(226, 215, 217, 0.7);
+            border-radius: 16px;
+            padding: 18px;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .project-card:hover {
             border-color: var(--primary);
-            box-shadow: 0 6px 16px rgba(108, 194, 74, 0.15);
-            transform: translateY(-2px);
+            background-color: #ffffff;
+            box-shadow: 0 10px 22px rgba(108, 194, 74, 0.18);
+            transform: translateY(-3px);
         }
 
         .project-icon {
-            font-size: 20px;
-            margin-bottom: 8px;
+            font-size: 22px;
+            margin-bottom: 10px;
         }
 
         .project-name {
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 700;
             color: var(--text-main);
             margin-bottom: 6px;
@@ -156,24 +186,24 @@
         .project-desc {
             font-size: 13px;
             color: var(--text-sub);
-            line-height: 1.5;
+            line-height: 1.55;
         }
 
         /* Phần Timeline - Lịch sử làm việc */
         .timeline-section {
-            margin-bottom: 28px;
+            margin-bottom: 32px;
         }
 
         .timeline {
             position: relative;
-            padding-left: 20px;
+            padding-left: 22px;
             border-left: 2px solid #e2e8f0;
             margin-left: 8px;
         }
 
         .timeline-item {
             position: relative;
-            margin-bottom: 18px;
+            margin-bottom: 32px;
         }
 
         .timeline-item:last-child {
@@ -183,41 +213,110 @@
         .timeline-item::before {
             content: '';
             position: absolute;
-            left: -27px;
+            left: -29px;
             top: 4px;
-            width: 10px;
-            height: 10px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
             background: var(--primary);
             border: 2px solid #ffffff;
-            box-shadow: 0 0 0 2px var(--primary);
+            box-shadow: 0 0 0 3px rgba(108, 194, 74, 0.3);
         }
 
         .timeline-date {
             font-size: 12px;
-            font-weight: 700;
-            color: var(--primary);
+            font-weight: 800;
+            color: var(--primary-dark);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 2px;
+            letter-spacing: 0.6px;
+            margin-bottom: 3px;
         }
 
         .timeline-location {
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 700;
             color: var(--text-main);
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
         .timeline-desc {
-            font-size: 13px;
+            font-size: 13.5px;
             color: var(--text-sub);
-            line-height: 1.6;
+            line-height: 1.7;
+            margin-bottom: 14px;
+        }
+
+        .timeline-desc ul {
+            padding-left: 18px;
+            margin-top: 6px;
+        }
+
+        .timeline-desc li {
+            margin-bottom: 4px;
+        }
+
+        /* Khung hiển thị tỉ lệ sử dụng phần mềm trong Timeline */
+        .timeline-software-block {
+            background: rgba(248, 250, 252, 0.85);
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 14px 16px;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
+        }
+
+        .software-block-title {
+            font-size: 11px;
+            font-weight: 800;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 10px;
+        }
+
+        .software-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px 16px;
+        }
+
+        .software-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .software-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11.5px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .software-percentage {
+            color: var(--primary-dark);
+            font-weight: 800;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 7px;
+            background-color: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--bar-gradient);
+            border-radius: 10px;
+            transition: width 0.4s ease;
         }
 
         /* Phân loại các nhóm kỹ năng */
         .skill-group {
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
         .group-title {
@@ -239,36 +338,38 @@
             background-color: #f1f5f9;
             color: #334155;
             border: 1px solid #e2e8f0;
-            padding: 6px 14px;
+            padding: 7px 15px;
             border-radius: 20px;
             font-size: 13px;
-            font-weight: 500;
+            font-weight: 600;
             transition: all 0.2s ease;
+            box-shadow: var(--shadow-sm);
         }
 
         .tag:hover {
-            background-color: var(--primary);
+            background: var(--primary-gradient);
             color: #ffffff;
             border-color: var(--primary);
             transform: translateY(-2px);
+            box-shadow: 0 5px 14px rgba(108, 194, 74, 0.3);
         }
 
         /* Khu vực Thông tin liên hệ */
         .action-area {
-            margin-top: 32px;
-            padding-top: 24px;
+            margin-top: 36px;
+            padding-top: 26px;
             border-top: 1px solid #e2e8f0;
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
-            gap: 16px;
+            gap: 18px;
         }
 
         .contact-info {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
             font-size: 14px;
             color: var(--text-sub);
         }
@@ -280,9 +381,9 @@
         }
 
         .contact-item a {
-            color: var(--primary);
+            color: var(--primary-dark);
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
             transition: color 0.2s;
         }
 
@@ -296,26 +397,32 @@
             gap: 10px;
             background: var(--primary-gradient);
             color: #ffffff;
-            padding: 12px 26px;
-            border-radius: 12px;
-            font-weight: 600;
+            padding: 13px 28px;
+            border-radius: 14px;
+            font-weight: 700;
             font-size: 15px;
             text-decoration: none;
-            box-shadow: 0 8px 20px rgba(108, 194, 74, 0.3);
+            box-shadow: 0 10px 24px rgba(108, 194, 74, 0.32);
             transition: all 0.3s ease;
         }
 
         .btn-contact:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 24px rgba(108, 194, 74, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 14px 28px rgba(108, 194, 74, 0.42);
+        }
+
+        @media (max-width: 768px) {
+            .software-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media (max-width: 576px) {
-            .card { padding: 24px; }
-            .profile-header { flex-direction: column; align-items: flex-start; }
-            .avatar { width: 75px; height: 75px; }
+            .card { padding: 24px; border-radius: 20px; }
+            .profile-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+            .avatar { width: 80px; height: 80px; }
             .action-area { flex-direction: column; align-items: flex-start; }
             .projects-grid { grid-template-columns: 1fr; }
+            .software-grid { grid-template-columns: 1fr; }
+            .btn-contact { width: 100%; justify-content: center; }
         }
     </style>
 </head>
@@ -336,9 +443,14 @@
         </div>
 
         <!-- Giới thiệu -->
-        <p class="description">
-            Chào bạn! Mình không phải là coder chuyên nghiệp theo trường lớp, mà là người đam mê công nghệ và thích "mò mẫm" trải nghiệm thực tế. Tích lũy qua nhiều năm xử lý công việc, mình có kinh nghiệm thực chiến đa dạng từ thiết kế đồ họa, tự động hóa văn phòng, quản trị hệ thống hosting/server cho đến xây dựng website và tích hợp hệ thống.
-        </p>
+        <div class="description">
+            <p>
+                Chào bạn! Mình không trưởng thành từ môi trường đào tạo lập trình chính quy, mà phát triển năng lực qua quá trình <strong>mò mẫm, làm chủ công nghệ và ứng dụng thực tế</strong> để tối ưu hiệu suất công việc. 
+            </p>
+            <p>
+                Sở trường lớn nhất của mình là <strong>tư duy giải quyết vấn đề</strong>: Nhận diện điểm nghẽn trong quy trình làm việc thủ công và ứng dụng công cụ kỹ thuật để số hóa, tự động hóa chúng. Với hơn 20 năm gắn bó trong ngành in ấn, quản trị hệ thống và tự động hóa văn phòng, mình có khả năng bao quát và xử lý trơn tru từ khâu chuẩn hóa dữ liệu, thiết kế kỹ thuật, kiểm soát chất lượng file PDF/CTP đến xây dựng báo cáo quản trị chuyên sâu cho Giám sát bộ phận.
+            </p>
+        </div>
 
         <!-- Dự án tiêu biểu -->
         <div class="projects-section">
@@ -364,38 +476,282 @@
 
         <!-- Timeline Kinh nghiệm làm việc -->
         <div class="timeline-section">
-            <div class="section-title">💼 Lịch sử làm việc</div>
+            <div class="section-title">💼 Lịch sử làm việc & Tỉ lệ phần mềm sử dụng</div>
             <div class="timeline">
+                
+                <!-- Giai đoạn 2006 – 2010 -->
                 <div class="timeline-item">
                     <div class="timeline-date">2006 – 2010</div>
                     <div class="timeline-location">Phú Nhuận, TP.HCM</div>
-                    <div class="timeline-desc">Thiết kế đồ họa, bình file in ấn, điều độ công việc và quản lý tiến độ đi in gia công.</div>
+                    <div class="timeline-desc">
+                        Phụ trách chuyên môn thiết kế đồ họa thương mại và kỹ thuật chế bản in ấn:
+                        <ul>
+                            <li>Trực tiếp thực hiện thiết kế mẫu, xử lý hình ảnh, dàn trang bài in và bình file theo khổ tay in của nhà máy.</li>
+                            <li>Điều độ ca sản xuất, lập kế hoạch giao nhận bài in và phối hợp với các xưởng in gia công ngoài để đảm bảo tiến độ đơn hàng.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="timeline-software-block">
+                        <div class="software-block-title">📊 Tỉ lệ sử dụng phần mềm giai đoạn 2006 - 2010:</div>
+                        <div class="software-grid">
+                            <div class="software-item">
+                                <div class="software-info"><span>CorelDRAW</span><span class="software-percentage">30%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 30%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Adobe Photoshop</span><span class="software-percentage">30%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 30%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Adobe Illustrator</span><span class="software-percentage">100%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 100%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Word</span><span class="software-percentage">100%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 100%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Excel</span><span class="software-percentage">100%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 100%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Adobe Acrobat</span><span class="software-percentage">100%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 100%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>PitStop</span><span class="software-percentage">0%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Quite Imposing</span><span class="software-percentage">0%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Google Docs</span><span class="software-percentage">0%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Google Sheets</span><span class="software-percentage">0%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Lập trình & tự động hoá</span><span class="software-percentage">0%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 0%;"></div></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
+                <!-- Giai đoạn 2011 -->
                 <div class="timeline-item">
                     <div class="timeline-date">2011</div>
                     <div class="timeline-location">Hà Nội</div>
-                    <div class="timeline-desc">Thiết kế đồ họa, trực tiếp vận hành và xử lý bài in trên máy in nhanh kỹ thuật số (KTS).</div>
+                    <div class="timeline-desc">
+                        Chuyên viên thiết kế & Vận hành sản xuất In nhanh Kỹ thuật số (KTS):
+                        <ul>
+                            <li>Xử lý mỹ thuật và kỹ thuật cho các dòng sản phẩm in nhanh cao cấp, chỉnh màu hệ CMYK chuẩn xác.</li>
+                            <li>Trực tiếp điều khiển, vận hành thiết bị in KTS chuyên dụng; tối ưu hóa quy trình từ khâu tiếp nhận file đến ra sản phẩm hoàn thiện.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="timeline-software-block">
+                        <div class="software-block-title">📊 Tỉ lệ sử dụng phần mềm năm 2011:</div>
+                        <div class="software-grid">
+                            <div class="software-item">
+                                <div class="software-info"><span>Adobe Photoshop</span><span class="software-percentage">40%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 40%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Adobe Illustrator</span><span class="software-percentage">100%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 100%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>CorelDRAW</span><span class="software-percentage">10%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 10%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Adobe Acrobat</span><span class="software-percentage">100%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 100%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Word</span><span class="software-percentage">20%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 20%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Excel</span><span class="software-percentage">50%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 50%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>PitStop</span><span class="software-percentage">0%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Quite Imposing</span><span class="software-percentage">10%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 10%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Google Docs</span><span class="software-percentage">0%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Google Sheets</span><span class="software-percentage">20%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 20%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Lập trình & tự động hoá</span><span class="software-percentage">0%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 0%;"></div></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
+                <!-- Giai đoạn 2011 – 2015 -->
                 <div class="timeline-item">
                     <div class="timeline-date">2011 – 2015</div>
                     <div class="timeline-location">Công ty Chế bản - Tân Phú, TP.HCM</div>
-                    <div class="timeline-desc">Bình file chế bản, kiểm tra kỹ thuật tập tin trước khi xuất kẽm (CTP) và phim.</div>
+                    <div class="timeline-desc">
+                        Kỹ thuật viên Chế bản:
+                        <ul>
+                            <li>Bình file chế bản các bộ tay in phức tạp, kiểm soát Trapping, tràn màu (Bleed), bù hao góc đóng quyển.</li>
+                            <li>Kiểm tra Preflight chuyên sâu bằng Acrobat/PitStop, phát hiện sớm các lỗi font chữ, màu Overprint, sai kích thước trước khi xuất kẽm CTP hoặc phim.</li>
+                            <li>Bắt đầu nghiên cứu ứng dụng Script/Macro để tự động hóa các thao tác lặp lại trong quá trình xử lý file Adobe Illustrator, Excel, CorelDRAW, Adobe Photoshop                             .</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="timeline-software-block">
+                        <div class="software-block-title">📊 Tỉ lệ sử dụng phần mềm giai đoạn 2011 - 2015:</div>
+                        <div class="software-grid">
+                            <div class="software-item">
+                                <div class="software-info"><span>Quite Imposing</span><span class="software-percentage">80%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 80%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Adobe Acrobat</span><span class="software-percentage">90%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 90%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>PitStop</span><span class="software-percentage">30%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 30%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>CorelDRAW</span><span class="software-percentage">90%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 90%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Adobe Illustrator</span><span class="software-percentage">100%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 100%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Adobe Photoshop</span><span class="software-percentage">20%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 20%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Excel</span><span class="software-percentage">30%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 30%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Word</span><span class="software-percentage">5%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 5%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Google Docs</span><span class="software-percentage">0%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Google Sheets</span><span class="software-percentage">0%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Lập trình & tự động hoá</span><span class="software-percentage">20%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 20%;"></div></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
+                <!-- Giai đoạn 2015 – Hiện tại -->
                 <div class="timeline-item">
                     <div class="timeline-date">2015 – Hiện tại</div>
                     <div class="timeline-location">Long An</div>
                     <div class="timeline-desc">
-                        Kiểm tra định dạng file PDF trước khi ghi kẽm cho thợ in; xử lý các sự cố kỹ thuật trong quá trình in ấn & máy ghi kẽm; tổng hợp báo cáo sản lượng đơn hàng, vật tư kẽm định kỳ hàng ngày, tuần, quý, năm.
+                        Chuyên viên Kỹ thuật Chế bản, Tự động hóa Quy trình & Báo cáo Quản trị:
+                        <ul>
+                            <li>Chịu trách nhiệm thẩm định 100% định dạng tập tin PDF chuẩn mực trước khi xuất kẽm CTP cho thợ vận hành máy in Offset.</li>
+                            <li>Kiểm tra Preflight chuyên sâu bằng Acrobat, phát hiện sớm các lỗi font chữ, màu Overprint, sai kích thước trước khi xuất kẽm CTP.</li>
+                            <li>Trực tiếp xử lý nhanh các sự cố kỹ thuật in trong ca, lỗi hệ thống ghi kẽm CTP và cân chỉnh sai số thiết bị.</li>
+                            <li><strong>Tổng hợp, phân tích số liệu báo cáo cho Giám sát bộ phận:</strong> Xây dựng các Dashboard theo dõi tự động sản lượng đơn hàng, định mức tiêu hao vật tư kẽm, hoá chất hiệu suất từng ca làm việc (Theo ngày/tuần/quý/năm) bằng Excel, Google Sheets kết hợp Google Apps Script & VBA.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="timeline-software-block">
+                        <div class="software-block-title">📊 Tỉ lệ sử dụng phần mềm giai đoạn 2015 - Hiện tại:</div>
+                        <div class="software-grid">
+                            <div class="software-item">
+                                <div class="software-info"><span>Adobe Acrobat</span><span class="software-percentage">100%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 100%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Excel</span><span class="software-percentage">100%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 100%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Google Sheets</span><span class="software-percentage">100%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 100%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>PitStop</span><span class="software-percentage">1%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 1%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Quite Imposing</span><span class="software-percentage">5%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 5%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Word</span><span class="software-percentage">4%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 4%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Google Docs</span><span class="software-percentage">30%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 30%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Adobe Illustrator</span><span class="software-percentage">5%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 5%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Adobe Photoshop</span><span class="software-percentage">0%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>CorelDRAW</span><span class="software-percentage">0%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="software-item">
+                                <div class="software-info"><span>Lập trình & tự động hoá</span><span class="software-percentage">40%</span></div>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 40%;"></div></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
 
         <!-- Danh sách Kỹ năng phân nhóm -->
         <div class="section-title">🛠️ Kỹ năng chuyên môn</div>
+
+        <!-- Nhóm Thống kê & Báo cáo số liệu -->
+        <div class="skill-group">
+            <div class="group-title">📊 Thống kê & Báo cáo số liệu</div>
+            <div class="tag-container">
+                <span class="tag">Báo cáo sản lượng đơn hàng</span>
+                <span class="tag">Quản lý vật tư & kẽm in</span>
+                <span class="tag">Báo cáo định kỳ (Ngày/Tuần/Quý/Năm)</span>
+                <span class="tag">Tổng hợp & Phân tích dữ liệu</span>
+                <span class="tag">Dashboard Google Sheets</span>
+                <span class="tag">Tự động hóa báo cáo</span>
+            </div>
+        </div>
 
         <div class="skill-group">
             <div class="group-title">🤖 Trí tuệ nhân tạo (AI & LLMs)</div>
@@ -415,6 +771,7 @@
                 <span class="tag">CorelDRAW 12</span>
                 <span class="tag">Adobe Illustrator CS</span>
                 <span class="tag">Adobe Acrobat 7</span>
+                <span class="tag">PitStop</span>
                 <span class="tag">Action</span>
             </div>
         </div>
